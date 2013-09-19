@@ -6,9 +6,8 @@ public class PlayerController : MonoBehaviour {
 	public float movespeed;
 	public GameObject reticulePrefab;
 	
-	public GUIText debugText;
-	
 	private GameObject reticule;
+	private GameObject actionTile;
 	private float turnSmoothing = 90f;
 	
 	void Start()
@@ -26,28 +25,47 @@ public class PlayerController : MonoBehaviour {
 		}
 		
 		Move(movementHorizontal, movementVertical);
-		
+	}
+	
+	private void LateUpdate()
+	{
+		if( reticule != null)			
+			SnapReticuleToActionTile();
+	}
+	
+	// Snaps the Player's reticule to the current action tile
+	private void SnapReticuleToActionTile()
+	{	
 		GameObject tile = GetActionTile();
+		actionTile = tile;
 		if ( tile != null)
 		{
-			debugText.text = tile.name;
+			if( !reticule.activeInHierarchy)
+				reticule.SetActive(true);
+			SnapReticuleToTarget(actionTile);
 		}
 		else
 		{
-			debugText.text = "";
+			if( reticule.activeInHierarchy)
+				reticule.SetActive(false);
 		}
 	}
 	
-	// Spawn a reticule from the Player using the assigned Prefab
+	// Snaps the reticule's position and rotation to match a target
+	private void SnapReticuleToTarget(GameObject target)
+	{
+		reticule.transform.position = target.transform.position;
+		reticule.transform.rotation = target.transform.rotation;
+		
+		// Might need to change YOffset based on what is selected.
+		const float targetYOffset = 0.25f;
+		reticule.transform.position = target.transform.position + Vector3.up * targetYOffset;
+	}
+	
+	// Spawns a reticule using the reticule Prefab
 	private void SpawnReticule()
 	{
-		// Configure the initial offset for the reticule
-		float xOffset = 0.0f;
-		float yOffset = -0.75f;
-		float zOffset = 1f;
-		Vector3 offset = new Vector3(xOffset, yOffset, zOffset);
-		
-		reticule = (GameObject) Instantiate (reticulePrefab, transform.position + offset, Quaternion.identity);
+		reticule = (GameObject) Instantiate (reticulePrefab, Vector3.zero, Quaternion.identity);
 		reticule.transform.parent = transform;
 	}
 	
@@ -68,25 +86,28 @@ public class PlayerController : MonoBehaviour {
 		rigidbody.MoveRotation(newRotation);
 	}
 	
-	void TryAction()
-	{
-		
-	}
-	
 	GameObject GetActionTile()
 	{
+		// The Player tries to act on the tile in front of him - assumes no tiles overlap in Y
+		float zOffset = 1.0f;
+		Vector3 actionOffset = new Vector3(0.0f, 0.0f, zOffset);
+		Vector3 actionPosition = transform.position + transform.forward * actionOffset.magnitude;
+		
+		// Should use a constant for a grid size...
+		const float TILESIZE_HALF = 1.0f / 2;
+		
+		// From all tiles, find the that our action position overlaps
 		GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
-		GameObject closestTile = null;
-		float bestD = Mathf.Infinity;
+		GameObject actionTile = null;
 		foreach( GameObject tile in tiles)
 		{
-			float dToTileSquared = (tile.transform.position - reticule.transform.position).sqrMagnitude;
-			if (dToTileSquared < bestD)
+			if( Mathf.Abs ((actionPosition.x - tile.transform.position.x) ) < TILESIZE_HALF && 
+				Mathf.Abs( ( actionPosition.z - tile.transform.position.z)) < TILESIZE_HALF)
 			{
-				bestD = dToTileSquared;
-				closestTile = tile;
+					actionTile = tile;
 			}
 		}
-		return closestTile;
+		
+		return actionTile;
 	}
 }
