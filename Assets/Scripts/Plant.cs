@@ -8,36 +8,41 @@ using System;
  */
 public class Plant : MonoBehaviour {
 	
-	private int daysOld;
-	private int daysSinceGrowth;
-	private int daysSinceWatered;
-	private bool isWatered;
+	private int nightsOld;
+	private int nightsSinceGrowth;
+	private int nightsSinceWatered;	
 	private PlantStates plantState;
 	
-	// These are 0 indexed basically, i.e. 0 days to grow still requires 1 night
-	public int daysToGrow;
+	private const int NEVER_WATERED = -1;
+	
+	public int nightsPerGrowth;
 	public int dryNightsAllowed;
 	
 	public Material seedMat;
 	public Material sproutMat;
 	public Material adultMat;
-	public Material dessicatedMat;
+	public Material witheredMat;
 	
 	public enum PlantStates
 	{
 		Seed = 0,
 		Sprout = 1,
 		Adult = 2,
-		Dessicated = 3
+		Withered = 3
 	}
 	
 	// Use this for initialization
 	void Start ()
 	{
-		daysOld = 0;
-		daysSinceGrowth = 0;
-		daysSinceWatered = 0;
-		RemoveWater();
+		nightsOld = 0;
+		nightsSinceGrowth = 0;
+		nightsSinceWatered = NEVER_WATERED;
+		if (nightsPerGrowth == 0)
+		{
+			Debug.LogError("nightsPerGrowth is 0 which is invalid. Setting to 1.");
+			nightsPerGrowth = 1;
+		}
+		FlagAsDry();
 	}
 	
 	// Stub method for testing 
@@ -59,24 +64,16 @@ public class Plant : MonoBehaviour {
 	 */
 	public void Water()
 	{
-		if(!isWatered)
-		{
-			daysSinceWatered = 0;
-			isWatered = true;
-			light.enabled = true;
-		}		
+		nightsSinceWatered = 0;
+		light.enabled = true;
 	}
 	
 	/**
 	 * Remove the water effect and mark the plant as unwatered.
 	 */
-	public void RemoveWater() 
+	public void FlagAsDry() 
 	{
-		if(isWatered)
-		{
-			isWatered = false;
-			light.enabled = false;
-		}
+		light.enabled = false;
 	}
 	
 	/**
@@ -84,28 +81,32 @@ public class Plant : MonoBehaviour {
 	 * growing, and aging the plant should go here.
 	 */
 	public void NightlyUpdate()
-	{
-		if(!isWatered)
-		{
-			daysSinceWatered++;
-		}		
-		// If equal to tolerance, that's okay
-		if(daysSinceWatered > dryNightsAllowed)
+	{		
+		// Check if the plant will need water tomorrow
+		if(nightsSinceWatered == NEVER_WATERED) {
+			nightsSinceWatered = 0;
+		} 
+		
+		// If plant was dry on night change, kill it
+		if(!hasEnoughWater())
 		{
 			Wither();
-		}		
+		}
+		
+		nightsSinceWatered++;
+		if(!hasEnoughWater())
+		{
+			FlagAsDry();			
+		}
+		
+		nightsSinceGrowth++;		
 		// If it was watered recently enough and it's old enough for the stage, grow.
-		if(daysSinceGrowth >= daysToGrow && daysSinceWatered <= dryNightsAllowed)
+		if(nightsSinceGrowth >= nightsPerGrowth && !isWithered())
 		{
 			Grow();
 		}
-		else
-		{		
-			daysSinceGrowth++;
-		}
 		
-		daysOld++;
-		RemoveWater();
+		nightsOld++;
 		RenderPlantState();
 	}
 	
@@ -114,11 +115,11 @@ public class Plant : MonoBehaviour {
 	 */
 	private void Grow()
 	{		
-		Debug.Log(String.Format("GROWING ({0})): DaysSinceGrowth ({1}) GrowthSpeed ({2}) new PlantState ({3})", 
-			name, daysSinceGrowth, daysToGrow, (int) plantState+1));
 		if((int) plantState < Enum.GetValues(typeof(PlantStates)).Length-1)
 		{
-			daysSinceGrowth = 0;
+			Debug.Log(String.Format("GROWING ({0})): DaysSinceGrowth ({1}) GrowthSpeed ({2}) new PlantState ({3})", 
+				name, nightsSinceGrowth, nightsPerGrowth, (int) plantState+1));
+			nightsSinceGrowth = 0;
 			plantState++;
 		}
 	}
@@ -128,8 +129,26 @@ public class Plant : MonoBehaviour {
 	 */
 	private void Wither()
 	{
-		Debug.Log(String.Format("WITHERING ({0}): Not watered for ({1}) days.", name, daysSinceWatered));
-		plantState = PlantStates.Dessicated;
+		Debug.Log(String.Format("WITHERING ({0}): Not watered for ({1}) days.", name, nightsSinceWatered));
+		plantState = PlantStates.Withered;
+	}
+	
+	/**
+	 * If plant has been watered within its allowed threshold, it
+	 * qualifies as having been watered.
+	 */
+	private bool hasEnoughWater() {
+		if (nightsSinceWatered <= dryNightsAllowed) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Return if the plant is withered.
+	 */
+	private bool isWithered() {
+		return plantState == PlantStates.Withered;
 	}
 	
 	/**
@@ -149,9 +168,9 @@ public class Plant : MonoBehaviour {
 		{
 			renderer.material = adultMat;
 		}
-		else if(plantState == PlantStates.Dessicated)
+		else if(plantState == PlantStates.Withered)
 		{
-			renderer.material = dessicatedMat;
+			renderer.material = witheredMat;
 		}
 	}
 }
