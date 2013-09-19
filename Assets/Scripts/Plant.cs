@@ -10,13 +10,14 @@ public class Plant : MonoBehaviour {
 	
 	private int nightsOld;
 	private int nightsSinceGrowth;
-	private int nightsSinceWatered;	
+	private bool neverWatered;
 	private PlantStates plantState;
 	
-	private const int NEVER_WATERED = -1;
+	private const int MIN_LIFE = 0;
 	
 	public int nightsPerGrowth;
-	public int dryNightsAllowed;
+	public int maxLife;	
+	private int curLife;
 	
 	public Material seedMat;
 	public Material sproutMat;
@@ -31,17 +32,23 @@ public class Plant : MonoBehaviour {
 		Withered = 3
 	}
 	
-	// Use this for initialization
+	// Use this for initialization, catch unset public vars.
 	void Start ()
 	{
 		nightsOld = 0;
 		nightsSinceGrowth = 0;
-		nightsSinceWatered = NEVER_WATERED;
+		curLife = maxLife;
 		if (nightsPerGrowth == 0)
 		{
 			Debug.LogError("nightsPerGrowth is 0 which is invalid. Setting to 1.");
 			nightsPerGrowth = 1;
 		}
+		if (maxLife == 0)
+		{
+			Debug.LogError("maxLife is 0 which is invalid. Setting to 1.");
+			maxLife = 1;
+		}
+		neverWatered = true;
 		FlagAsDry();
 	}
 	
@@ -64,7 +71,8 @@ public class Plant : MonoBehaviour {
 	 */
 	public void Water()
 	{
-		nightsSinceWatered = 0;
+		neverWatered = false;
+		curLife = maxLife;
 		light.enabled = true;
 	}
 	
@@ -82,21 +90,12 @@ public class Plant : MonoBehaviour {
 	 */
 	public void NightlyUpdate()
 	{		
-		// Check if the plant will need water tomorrow
-		if(nightsSinceWatered == NEVER_WATERED) {
-			nightsSinceWatered = 0;
-		} 
-		
-		// If plant was dry on night change, kill it
-		if(!hasEnoughWater())
-		{
+		// Tick down plant health and warn user if health low
+		curLife--;			
+		if(curLife < MIN_LIFE) {
 			Wither();
-		}
-		
-		nightsSinceWatered++;
-		if(!hasEnoughWater())
-		{
-			FlagAsDry();			
+		} else if (curLife == MIN_LIFE) {
+			FlagAsDry();
 		}
 		
 		nightsSinceGrowth++;		
@@ -114,7 +113,13 @@ public class Plant : MonoBehaviour {
 	 * Put the plant in it's next stage and reset the days since last growth.
 	 */
 	private void Grow()
-	{		
+	{	
+		// Plants that have never been watered can't grow
+		if (neverWatered)
+		{
+			Debug.Log(String.Format("COULD NOT GROW ({0}): Never watered.", name));
+			return;
+		}
 		if((int) plantState < Enum.GetValues(typeof(PlantStates)).Length-1)
 		{
 			Debug.Log(String.Format("GROWING ({0})): DaysSinceGrowth ({1}) GrowthSpeed ({2}) new PlantState ({3})", 
@@ -125,25 +130,17 @@ public class Plant : MonoBehaviour {
 	}
 	
 	/**
-	 * Set the plant to withered state.
+	 * Set the plant to withered state if not already.
 	 */
 	private void Wither()
 	{
-		Debug.Log(String.Format("WITHERING ({0}): Not watered for ({1}) days.", name, nightsSinceWatered));
-		plantState = PlantStates.Withered;
-	}
-	
-	/**
-	 * If plant has been watered within its allowed threshold, it
-	 * qualifies as having been watered.
-	 */
-	private bool hasEnoughWater() {
-		if (nightsSinceWatered <= dryNightsAllowed) {
-			return true;
+		if(!isWithered())
+		{
+			Debug.Log(String.Format("WITHERING ({0}): CurLife reached {1}.", name, curLife));
+			plantState = PlantStates.Withered;
 		}
-		return false;
 	}
-	
+
 	/**
 	 * Return if the plant is withered.
 	 */
