@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour {
 		TryHoe();
 		TryPlanting();
 		TryPicking();
+		TryWatering();
 	}
 	
 	private void LateUpdate()
@@ -156,6 +157,26 @@ public class PlayerController : MonoBehaviour {
 					Inventory inventory = (Inventory) GetComponent<Inventory>();
 					tile.Pick();
 					inventory.addItem(Inventory.RADISH);
+				}
+			}
+		}
+	}
+	
+	/*
+	 * If tile has a plant and player isn't out of water, water it.
+	 */
+	void TryWatering()
+	{
+		bool isFire3 = Input.GetButtonDown("Fire3");
+		if(isFire3)
+		{
+			if(actionTile != null)
+			{
+				GroundTile tile = (GroundTile) actionTile.GetComponent<GroundTile>();
+				Plant plant = tile.getPlant();
+				if (plant != null)
+				{
+					plant.Water();
 				}
 			}
 		}

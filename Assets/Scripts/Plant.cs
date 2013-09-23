@@ -55,10 +55,6 @@ public class Plant : MonoBehaviour {
 	// Stub method for testing 
 	void Update ()
 	{
-		if(Input.GetKeyDown("x"))
-		{
-			Water();
-		}
 		if(Input.GetKeyDown("z"))
 		{
 			NightlyUpdate();
