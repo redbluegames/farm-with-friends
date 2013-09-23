@@ -6,6 +6,7 @@ public class GroundTile : MonoBehaviour {
 	public Material dirtMaterial;
 	public Material grassMaterial;
 	public Material soilMaterial;
+	public GameObject dirtFXPrefab;
 	
 	public enum GroundState
 	{
@@ -63,5 +64,16 @@ public class GroundTile : MonoBehaviour {
 		case GroundState.Soil :
 			break;
 		}
+		
+		SpawnDirtFX();
+	}
+	
+	/*
+	 * Spawns dirt fx with default orientation
+	*/
+	private void SpawnDirtFX()
+	{
+		GameObject fx = (GameObject) Instantiate (dirtFXPrefab, transform.position, Quaternion.LookRotation(Vector3.up, Vector3.back));
+		Destroy (fx, 2.0f);
 	}
 }

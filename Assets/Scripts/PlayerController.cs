@@ -5,6 +5,8 @@ public class PlayerController : MonoBehaviour {
 	
 	public float movespeed;
 	public GameObject reticulePrefab;
+	public AudioClip digSound;
+	public AudioClip digSoundFail;
 	
 	private GameObject reticule;
 	private GameObject actionTile;
@@ -18,13 +20,16 @@ public class PlayerController : MonoBehaviour {
 	void FixedUpdate () {
 		float movementHorizontal = Input.GetAxis("Horizontal");
 		float movementVertical = Input.GetAxis ("Vertical");
-	
+
 		if(movementHorizontal != 0f || movementVertical != 0f)
 		{
 			Rotate(movementHorizontal, movementVertical);
 		}
-		
+
 		Move(movementHorizontal, movementVertical);
+	}
+	
+	void Update() {
 		TryHoe ();
 	}
 	
@@ -99,9 +104,14 @@ public class PlayerController : MonoBehaviour {
 			{
 				GroundTile tile = (GroundTile) actionTile.GetComponent<GroundTile>();
 				tile.Hoe ();
+				
+				AudioSource.PlayClipAtPoint(digSound, transform.position);
 			}
+			else {	
+				AudioSource.PlayClipAtPoint(digSoundFail, transform.position);
+			}
+				
 		}
-			
 	}
 	
 	GameObject GetActionTile()
