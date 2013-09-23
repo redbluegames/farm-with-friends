@@ -8,6 +8,8 @@ public class GroundTile : MonoBehaviour {
 	public Material soilMaterial;
 	public GameObject dirtFXPrefab;
 	
+	static public float SIZE = 1.0f;
+	
 	public enum GroundState
 	{
 		Dirt,
