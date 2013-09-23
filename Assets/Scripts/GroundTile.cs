@@ -17,20 +17,10 @@ public class GroundTile : MonoBehaviour {
 		Soil
 	}
 	
-	private GroundState state;
+	private GroundState state = GroundState.Dirt;
 	
-	// Use this for initialization
 	void Start () {
-		float rand = Random.Range(0.0f, 1.0f);
-		
-		if(rand < 0.75f)
-		{
-			SetState (GroundState.Grass);
-		}
-		else
-		{
-			SetState (GroundState.Dirt);
-		}
+		SetState (state);
 	}
 	
 	public void SetState(GroundState newState)
