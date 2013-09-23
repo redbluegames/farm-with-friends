@@ -3,10 +3,17 @@ using System.Collections;
 
 public class InventoryGUI : MonoBehaviour {
 
-    public Inventory inventory;
+    //public Inventory inventory;
+	public GameObject player;
 	
+	private Inventory inventory;
 	private string radishMsg;
-
+	
+	void Start()
+	{
+		inventory = (Inventory) player.GetComponent<Inventory>();
+	}
+	
     void OnGUI()
     {	
 		radishMsg = "Radishes: " + inventory.getRadishCount();
