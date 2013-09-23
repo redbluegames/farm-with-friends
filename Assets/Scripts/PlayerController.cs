@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour {
 		}
 		
 		Move(movementHorizontal, movementVertical);
+		TryHoe ();
 	}
 	
 	private void LateUpdate()
@@ -84,6 +85,23 @@ public class PlayerController : MonoBehaviour {
 		Quaternion newRotation = Quaternion.Lerp(rigidbody.rotation, desiredRotation, turnSmoothing * Time.deltaTime);
         
 		rigidbody.MoveRotation(newRotation);
+	}
+	
+	/*
+	 * Attempts to hoe the action tile
+	*/
+	void TryHoe()
+	{
+		bool isFire1 = Input.GetButtonDown("Fire1");
+		if(isFire1)
+		{
+			if(actionTile != null)
+			{
+				GroundTile tile = (GroundTile) actionTile.GetComponent<GroundTile>();
+				tile.Hoe ();
+			}
+		}
+			
 	}
 	
 	GameObject GetActionTile()

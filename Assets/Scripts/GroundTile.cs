@@ -14,6 +14,8 @@ public class GroundTile : MonoBehaviour {
 		Soil
 	}
 	
+	private GroundState state;
+	
 	// Use this for initialization
 	void Start () {
 		float rand = Random.Range(0.0f, 1.0f);
@@ -41,6 +43,25 @@ public class GroundTile : MonoBehaviour {
 		else if(newState == GroundState.Soil)
 		{
 			renderer.material = soilMaterial;
+		}
+		state = newState;
+	}
+	
+	/*
+	 * Hoe the tile, changing states as appropriate
+	*/
+	public void Hoe()
+	{
+		switch (state)
+		{
+		case GroundState.Dirt :
+			SetState( GroundState.Soil);
+			break;
+		case GroundState.Grass :
+			SetState( GroundState.Dirt);
+			break;
+		case GroundState.Soil :
+			break;
 		}
 	}
 }
