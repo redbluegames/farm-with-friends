@@ -30,7 +30,9 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	void Update() {
-		TryHoe ();
+		TryHoe();
+		TryPlanting();
+		TryPicking();
 	}
 	
 	private void LateUpdate()
@@ -111,6 +113,51 @@ public class PlayerController : MonoBehaviour {
 				AudioSource.PlayClipAtPoint(digSoundFail, transform.position);
 			}
 				
+		}
+	}
+	
+	/*
+	 * Check if the user tried planting and if so, check that location is
+	 * a valid place to plant. Then plant it and handle inventory changes.
+	 */
+	void TryPlanting()
+	{
+		bool isFire2 = Input.GetButtonDown("Fire2");
+		if(isFire2)
+		{
+			if(actionTile != null)
+			{
+				GroundTile tile = (GroundTile) actionTile.GetComponent<GroundTile>();
+				if (tile.isSoil()) {
+					Inventory inventory = (Inventory) GetComponent<Inventory>();
+					if (inventory.removeItem(Inventory.RADISH_SEED))
+					{
+						tile.Plant ();
+					}
+				}
+			}
+		}
+	}
+	
+	/*
+	 * Check if the tile is a valid tile to be picked and if so, pick it
+	 * and handle inventory changes.
+	 */
+	void TryPicking()
+	{
+		bool isFire2 = Input.GetButtonDown("Fire2");
+		if(isFire2)
+		{
+			if(actionTile != null)
+			{
+				GroundTile tile = (GroundTile) actionTile.GetComponent<GroundTile>();
+				Plant plant = tile.getPlant();
+				if (plant != null && plant.isRipe()) {
+					Inventory inventory = (Inventory) GetComponent<Inventory>();
+					tile.Pick();
+					inventory.addItem(Inventory.RADISH);
+				}
+			}
 		}
 	}
 	

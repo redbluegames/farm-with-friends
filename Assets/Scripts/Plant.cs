@@ -144,8 +144,16 @@ public class Plant : MonoBehaviour {
 	/**
 	 * Return if the plant is withered.
 	 */
-	private bool isWithered() {
+	public bool isWithered() {
 		return plantState == PlantStates.Withered;
+	}
+	
+	/**
+	 * Return if the plant is ready to be picked.
+	 */
+	public bool isRipe()
+	{
+		return plantState == PlantStates.Adult;
 	}
 	
 	/**

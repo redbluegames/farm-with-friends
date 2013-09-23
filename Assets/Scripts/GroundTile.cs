@@ -7,6 +7,8 @@ public class GroundTile : MonoBehaviour {
 	public Material grassMaterial;
 	public Material soilMaterial;
 	public GameObject dirtFXPrefab;
+	public GameObject plantPrefab;
+	private GameObject curPlant;
 	
 	static public float SIZE = 1.0f;
 	
@@ -14,7 +16,8 @@ public class GroundTile : MonoBehaviour {
 	{
 		Dirt,
 		Grass,
-		Soil
+		Soil,
+		Planted
 	}
 	
 	private GroundState state = GroundState.Dirt;
@@ -55,9 +58,68 @@ public class GroundTile : MonoBehaviour {
 			break;
 		case GroundState.Soil :
 			break;
+		case GroundState.Planted :
+			SetState( GroundState.Soil);
+			DestroyPlant();
+			break;
 		}
 		
 		SpawnDirtFX();
+	}
+	
+	/*
+	 * Pick the plant by setting the statuses appropriately
+	 * and destroying the object.
+	 */
+	public void Pick()
+	{
+		SetState(GroundState.Soil);
+		DestroyPlant();
+	}
+	
+	/*
+	 * Plant a plant on the tile.
+	 */
+	public void Plant()
+	{
+		SetState( GroundState.Planted);
+		SpawnPlant();
+	}
+	
+	/*
+	 * Remove the plant from the tile.
+	 */
+	public void DestroyPlant()
+	{
+		Destroy (curPlant);
+	}
+	
+	/*
+	 * Return the instantiated plant.
+	 */
+	public Plant getPlant()
+	{
+		if (curPlant == null)
+		{
+			return null;
+		}
+		return curPlant.GetComponent<Plant>();
+	}
+
+	/*
+	 * Return whether the ground state is currently soil.
+	*/
+	public bool isSoil()
+	{
+		return state == GroundState.Soil;
+	}
+	
+	/*
+	 * Spawn a plant on the tile.
+	*/
+	private void SpawnPlant()
+	{
+		curPlant = (GameObject) Instantiate (plantPrefab, transform.position, Quaternion.LookRotation(Vector3.up, Vector3.back));
 	}
 	
 	/*

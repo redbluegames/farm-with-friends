@@ -8,6 +8,7 @@ public class HUD : MonoBehaviour {
 	
 	private Inventory inventory;
 	private string radishMsg;
+	private string radishSeedMsg;
 	
 	void Start()
 	{
@@ -16,7 +17,10 @@ public class HUD : MonoBehaviour {
 	
     void OnGUI()
     {	
-		radishMsg = "Radishes: " + inventory.getRadishCount();
-        GUI.Label(new Rect(10, Screen.height - 100, 100, 20), radishMsg);
+		// TODO this is silly to perform a get every single frame. 
+		radishMsg = "Radishes: " + inventory.getItemCount(Inventory.RADISH);
+		radishSeedMsg = "Radish Seeds: " + inventory.getItemCount(Inventory.RADISH_SEED);
+        GUI.Label(new Rect(10, Screen.height - 100, 120, 100), radishMsg);
+        GUI.Label(new Rect(10, Screen.height - 85, 120, 100), radishSeedMsg);
     }
 }
