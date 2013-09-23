@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class InventoryGUI : MonoBehaviour {
+public class HUD : MonoBehaviour {
 
     //public Inventory inventory;
 	public GameObject player;
