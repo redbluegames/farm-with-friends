@@ -2,12 +2,7 @@
 using System.Collections;
 
 public class WorldTime : MonoBehaviour {
-	
-	public GUIText timeGUI;
-	public GUIText hourGUI;
-	public GUIText minuteGUI;
-	public GUIText dayGUI;
-	
+
 	public Light sun;
 	
 	private int day;
@@ -38,11 +33,6 @@ public class WorldTime : MonoBehaviour {
 	
 	void Update () {
 		IncrementTimeInGame(Time.deltaTime);
-		
-		timeGUI.text = "Total Time: " + dayTimeInGame;
-		minuteGUI.text = "Minute: " + GetDayTimeInMinutes() % GAMEMINUTES_PER_GAMEHOUR;
-		hourGUI.text = "Hour: " + GetDayTimeInHours();
-		dayGUI.text = "Day: " + day;
 	}
 	
 	/*
@@ -65,8 +55,21 @@ public class WorldTime : MonoBehaviour {
 	*/
 	public void GoToNextDay()
 	{
+		AdvancePlants();
+
 		day++;
 		SetGameTimeToHour (DAWN);
+	}
+
+	private void AdvancePlants()
+	{
+		GameObject[] plantObjs = GameObject.FindGameObjectsWithTag("Plant");
+		Plant plant = null;
+		foreach(GameObject plantObj in plantObjs)
+		{
+			plant = (Plant) plantObj.GetComponent<Plant>();
+			plant.NightlyUpdate();
+		}
 	}
 	
 	// Set the game time to the specified total second
@@ -83,7 +86,25 @@ public class WorldTime : MonoBehaviour {
 	{
 		SetGameTime (hours * GAMESECONDS_PER_GAMEMINUTE * GAMEMINUTES_PER_GAMEHOUR);
 	}	
-	
+
+	// Gets the current minute
+	public float GetMinute()
+	{
+		return GetDayTimeInMinutes () % GAMEMINUTES_PER_GAMEHOUR;
+	}
+
+	// Get the hour
+	public float GetHour()
+	{
+		return GetDayTimeInHours ();
+	}
+
+	// Get the day
+	public float GetDay()
+	{
+		return day;
+	}
+
 	// Returns the total Game Time passed in Game Minutes
 	public float GetDayTimeInMinutes()
 	{

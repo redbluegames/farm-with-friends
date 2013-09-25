@@ -52,15 +52,6 @@ public class Plant : MonoBehaviour {
 		FlagAsDry();
 	}
 	
-	// Stub method for testing 
-	void Update ()
-	{
-		if(Input.GetKeyDown("z"))
-		{
-			NightlyUpdate();
-		}
-	}
-	
 	/**
 	 * If the plant is already watered, set it as watered and
 	 * make it visually obvious.

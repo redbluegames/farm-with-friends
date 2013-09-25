@@ -11,9 +11,14 @@ public class HUD : MonoBehaviour {
 
 	private string radishMsg;
 	private string radishSeedMsg;
+
+	private WorldTime gametime;
 	
 	void Start()
 	{
+		GameObject obj = GameObject.FindGameObjectWithTag("WorldTime");
+		gametime = (WorldTime) obj.GetComponent<WorldTime>();
+
 		inventory = (Inventory) player.GetComponent<Inventory>();
 	}
 	
@@ -25,6 +30,11 @@ public class HUD : MonoBehaviour {
 
 	private void DrawPlayerHUD()
 	{
+		GUI.BeginGroup(new Rect(10, 10, 120, 100));
+		GUI.Label (new Rect(0, 0, 120, 100), "Day: " + gametime.GetDay());
+		GUI.Label (new Rect(0, 15, 120, 100), "Hour: " + gametime.GetHour());
+		GUI.Label (new Rect(0, 30, 120, 100), "Minute: " + gametime.GetMinute());
+		GUI.EndGroup();
 	}
 
 	private void DrawInventory()

@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour {
 		TryPlanting();
 		TryPicking();
 		TryWatering();
+		TryDebugs();
 	}
 	
 	private void LateUpdate()
@@ -189,6 +190,15 @@ public class PlayerController : MonoBehaviour {
 					plant.Water();
 				}
 			}
+		}
+	}
+
+	void TryDebugs()
+	{
+		if(Input.GetKeyDown ("z"))
+		{
+			WorldTime worldtime = (WorldTime) GameObject.FindGameObjectWithTag("WorldTime").GetComponent<WorldTime>();
+			worldtime.GoToNextDay();
 		}
 	}
 	
