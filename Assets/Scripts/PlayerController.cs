@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
         // Get input values
         float horizontal = Input.GetAxisRaw ("Horizontal");
         float vertical = Input.GetAxisRaw ("Vertical");
-     
+
         // Determine move direction from target values
         float targetSpeed = 0.0f;
         Vector3 targetDirection = new Vector3 (horizontal, 0.0f, vertical);
@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour
  */
     void TryHoe ()
     {
-        bool isFire1 = Input.GetButtonDown ("Fire1");
+        bool isFire1 = Input.GetButtonDown ("Weapon1");
         if (isFire1) {
             if (actionTile != null) {
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
@@ -126,7 +126,7 @@ public class PlayerController : MonoBehaviour
   */
     void TryPlanting ()
     {
-        bool isFire2 = Input.GetButtonDown ("Fire2");
+        bool isFire2 = Input.GetButtonDown ("Item");
         if (isFire2) {
             if (actionTile != null) {
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
@@ -146,7 +146,7 @@ public class PlayerController : MonoBehaviour
   */
     void TryPicking ()
     {
-        bool isFire2 = Input.GetButtonDown ("Fire2");
+        bool isFire2 = Input.GetButtonDown ("Action");
         if (isFire2) {
             if (actionTile != null) {
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour
   */
     void TryWatering ()
     {
-        bool isFire3 = Input.GetButtonDown ("Fire3");
+        bool isFire3 = Input.GetButtonDown ("Weapon2");
         if (isFire3) {
             if (actionTile != null) {
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
