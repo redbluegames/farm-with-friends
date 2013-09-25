@@ -161,7 +161,8 @@ public class PlayerController : MonoBehaviour
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
                 if (tile.isSoil ()) {
                     Inventory inventory = (Inventory)GetComponent<Inventory> ();
-                    if (inventory.hasItem (ItemDatabase.RADISH_SEEDS) && inventory.removeItem (ItemDatabase.RADISH_SEEDS)) {
+                    if (inventory.HasItem (ItemDatabase.RADISH_SEEDS) &&
+                            inventory.RemoveItem (ItemDatabase.RADISH_SEEDS, 1)) {
                         tile.Plant ();
                     }
                 }
@@ -183,7 +184,7 @@ public class PlayerController : MonoBehaviour
                 if (plant != null && plant.isRipe ()) {
                     Inventory inventory = (Inventory)GetComponent<Inventory> ();
                     tile.Pick ();
-                    inventory.addItem (ItemDatabase.RADISH);
+                    inventory.AddItem (ItemDatabase.RADISH, 1);
                 }
             }
         }
@@ -211,6 +212,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown ("z")) {
             WorldTime worldtime = (WorldTime)GameObject.FindGameObjectWithTag ("WorldTime").GetComponent<WorldTime> ();
             worldtime.GoToNextDay ();
+        }
+        if (Input.GetKeyDown ("i")) {
+            Shop shop = (Shop)GameObject.FindGameObjectWithTag ("Shop").GetComponent<Shop> ();
+            shop.StartBuying();
         }
     }
  

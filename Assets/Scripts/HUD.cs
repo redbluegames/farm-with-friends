@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class HUD : MonoBehaviour
@@ -38,8 +38,8 @@ public class HUD : MonoBehaviour
     {
         // TODO this is silly to perform a get every single frame.
         moneyMsg = "Shellings: " + inventory.money;
-        radishMsg = "Radishes: " + inventory.getItemCount (ItemDatabase.RADISH);
-        radishSeedMsg = "Radish Seeds: " + inventory.getItemCount (ItemDatabase.RADISH_SEEDS);
+        radishMsg = "Radishes: " + inventory.GetItemCount (ItemDatabase.RADISH);
+        radishSeedMsg = "Radish Seeds: " + inventory.GetItemCount (ItemDatabase.RADISH_SEEDS);
         GUI.Label (new Rect (10, Screen.height - 115, 120, 100), moneyMsg);
         GUI.Label (new Rect (10, Screen.height - 100, 120, 100), radishMsg);
         GUI.Label (new Rect (10, Screen.height - 85, 120, 100), radishSeedMsg);

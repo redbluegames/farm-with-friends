@@ -9,7 +9,7 @@ public class ItemDatabase : MonoBehaviour
     public static readonly int RADISH_SEEDS = 1;
     public Item[] items = new Item[10];
 
-    void Start ()
+    void Awake ()
     {
         Item radish = (Item)ScriptableObject.CreateInstance (typeof(Item));
         radish.name = "Radish";

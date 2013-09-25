@@ -6,11 +6,13 @@ using System;
 public class Inventory : MonoBehaviour
 {
     public int money;
-    public ItemDatabase itemDB;
-    private Dictionary<int, int> itemCounts;
 
-    void Start ()
+    ItemDatabase itemDB;
+    Dictionary<int, int> itemCounts;
+
+    void Awake ()
     {
+        itemDB = (ItemDatabase)GameObject.Find ("ItemDatabase").GetComponent<ItemDatabase> ();
         itemCounts = new Dictionary<int, int> ();
         itemCounts.Add (ItemDatabase.RADISH_SEEDS, 9);
     }
@@ -19,14 +21,14 @@ public class Inventory : MonoBehaviour
     void Update ()
     {
         if (Input.GetKeyDown ("p")) {
-            addItem (ItemDatabase.RADISH_SEEDS);
+            AddItem (ItemDatabase.RADISH_SEEDS, 1);
         }
     }
 
     /*
   * Add specified amount of money to player.
   */
-    public void addMoney (int amount)
+    public void AddMoney (int amount)
     {
         money += amount;
     }
@@ -34,14 +36,14 @@ public class Inventory : MonoBehaviour
     /*
   * Take away specified amount of money from player.
   */
-    public bool removeMoney (int amount)
+    public bool RemoveMoney (int amount)
     {
-        if (hasMoney (amount)) {
+        if (HasMoney (amount)) {
             money -= amount;
             return true;
         } 
         Debug.LogWarning (String.Format (
-         "Tried to remove more money ({0}) than player had ({1})." +
+         "Tried to remove more money ({0}) than player had ({1}). " +
          "Perform hasMoney check to protect this call.", amount, money));
         return false;
     }
@@ -50,67 +52,71 @@ public class Inventory : MonoBehaviour
   * Check if player has specified amount of money. Return
   * true if they do.
   */
-    public bool hasMoney (int amount)
+    public bool HasMoney (int amount)
     {
         return money < amount ? false : true;
     }
 
     /*
-  * Add an item if possible. Return true if added.
-  */
-    public bool addItem (int itemID)
+     * Add the provided amount of an item if possible. Return true if addded, otherwise false.
+     */
+    public bool AddItem (int itemID, int count)
     {
-        int value = 0;
-        if (!hasItem (itemID)) {
-            itemCounts.Add (itemID, 1);
+        if (!HasItem (itemID)) {
+            itemCounts.Add (itemID, count);
             return true;
-        } else if (itemCounts.TryGetValue (itemID, out value)) {
-            // TODO Max count??? Might be item dependent?
-            itemCounts [itemID] = value + 1;
-            return true;
-        }
-        return false;
-    }
- 
-    /*
-  * Remove an item if possible. Return true if removed.
-  */
-    public bool removeItem (int itemID)
-    {
-        int value = 0;
-        if (!hasItem (itemID)) {
-            Debug.LogWarning ("Tried to remove item that never existed in inventory.");
-            return false;
-        } else if (itemCounts.TryGetValue (itemID, out value)) {
-            if (value - 1 < 0) {
-                itemCounts.Remove (itemID);
-                return false;
-            } else if (value - 1 == 0) {
-                itemCounts.Remove (itemID);
-                return true;
-            } else {
-                itemCounts [itemID] = value - 1;
+        } else {
+            if (itemDB.GetItem (itemID).maxCount >= itemCounts [itemID] + count) {
+                itemCounts [itemID] += count;
                 return true;
             }
+            return false;
+        }
+    }
+
+    /*
+  * Remove the provided amount of an item if possible. Return true if removed.
+  */
+    public bool RemoveItem (int itemID, int count)
+    {
+        if (!HasItem (itemID)) {
+            Debug.LogWarning ("Tried to remove item that never existed in inventory.");
+            return false;
+        } else if (HasCountOfItem (itemID, count)) {
+            if (itemCounts [itemID] - count == 0) {
+                itemCounts.Remove (itemID);
+            } else {
+                itemCounts [itemID] -= count;
+            }
+            return true;
         }
         return false;
     }
 
     /*
-  * Return whether the inventory contains the specified item using itemID.
-  */
-    public bool hasItem (int itemID)
+     * Return whether the inventory contains the specified item using itemID.
+     */
+    public bool HasItem (int itemID)
     {
         return itemCounts.ContainsKey (itemID);
+    }
+
+    /*
+     * Return true if the inventory contains at least the provided count of
+     * a specified item.
+     */
+    public bool HasCountOfItem (int itemID, int count)
+    {
+        return itemCounts [itemID] >= count;
     }
 
     /*
   * Return the count of a provided item, 0 if it does not exist
   * (or is 0).
   */
-    public int getItemCount (int itemID)
+    public int GetItemCount (int itemID)
     {
-        if (!hasItem (itemID)) {
+        if (!HasItem (itemID)) {
             return 0;
         }
         return itemCounts [itemID];
@@ -119,7 +125,7 @@ public class Inventory : MonoBehaviour
     /*
   * Return all the items owned by the player inventory, including their counts.
   */
-    public Dictionary<int, int> getItems ()
+    public Dictionary<int, int> GetItems ()
     {
         return itemCounts;
     }
