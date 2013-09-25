@@ -10,9 +10,6 @@ public class Inventory : MonoBehaviour {
 
 	private Dictionary<int, int> itemCounts;
 
-	private const int MAX_VEGIES = 100;
-	private const int MAX_SEEDS = 200;
-
 	void Start ()
 	{
 		itemCounts = new Dictionary<int, int>();
@@ -66,7 +63,7 @@ public class Inventory : MonoBehaviour {
 	public bool addItem(int itemID)
 	{
 		int value = 0;
-		if (!itemCounts.ContainsKey(itemID))
+		if (!hasItem(itemID))
 		{
 			itemCounts.Add(itemID, 1);
 			return true;
@@ -85,16 +82,19 @@ public class Inventory : MonoBehaviour {
 	public bool removeItem(int itemID)
 	{
 		int value = 0;
-		if (!itemCounts.ContainsKey(itemID))
+		if (!hasItem(itemID))
 		{
-			Debug.LogError("Tried to remove item that never existed in inventory.");
+			Debug.LogWarning("Tried to remove item that never existed in inventory.");
 			return false;
 		} else if (itemCounts.TryGetValue(itemID, out value))
 		{
 			if (value - 1 < 0) {
-				itemCounts[itemID] = 0;
+				itemCounts.Remove(itemID);
 				return false;
-			} else {
+			} else if (value -1 == 0) {
+				itemCounts.Remove(itemID);
+				return true;
+			}else {
 				itemCounts[itemID] = value - 1;
 				return true;
 			}
@@ -103,15 +103,31 @@ public class Inventory : MonoBehaviour {
 	}
 
 	/*
+	 * Return whether the inventory contains the specified item using itemID.
+	 */
+	public bool hasItem(int itemID)
+	{
+		return itemCounts.ContainsKey(itemID);
+	}
+
+	/*
 	 * Return the count of a provided item, 0 if it does not exist
 	 * (or is 0).
 	 */
 	public int getItemCount(int itemID)
 	{
-		if (!itemCounts.ContainsKey(itemID))
+		if (!hasItem(itemID))
 		{
-			itemCounts.Add(itemID, 0);
+			return 0;
 		}
 		return itemCounts[itemID];
+	}
+
+	/*
+	 * Return all the items owned by the player inventory, including their counts.
+	 */
+	public Dictionary<int, int> getItems()
+	{
+		return itemCounts;
 	}
 }

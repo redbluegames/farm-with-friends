@@ -141,7 +141,7 @@ public class PlayerController : MonoBehaviour {
 				GroundTile tile = (GroundTile) actionTile.GetComponent<GroundTile>();
 				if (tile.isSoil()) {
 					Inventory inventory = (Inventory) GetComponent<Inventory>();
-					if (inventory.removeItem(ItemDatabase.RADISH_SEEDS))
+					if (inventory.hasItem(ItemDatabase.RADISH_SEEDS) && inventory.removeItem(ItemDatabase.RADISH_SEEDS))
 					{
 						tile.Plant ();
 					}
