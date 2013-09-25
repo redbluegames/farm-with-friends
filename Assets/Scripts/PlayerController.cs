@@ -10,26 +10,22 @@ public class PlayerController : MonoBehaviour {
 	
 	private GameObject reticule;
 	private GameObject actionTile;
-	private float turnSmoothing = 90f;
+	
+	private Vector3 moveDirection;
+	
+	void Awake()
+	{
+		moveDirection = transform.TransformDirection(Vector3.forward);
+	}
 	
 	void Start()
 	{
 		SpawnReticule();
 	}
 	
-	void FixedUpdate () {
-		float movementHorizontal = Input.GetAxis("Horizontal");
-		float movementVertical = Input.GetAxis ("Vertical");
-
-		if(movementHorizontal != 0f || movementVertical != 0f)
-		{
-			Rotate(movementHorizontal, movementVertical);
-		}
-
-		Move(movementHorizontal, movementVertical);
-	}
-	
 	void Update() {
+		Move();
+		
 		TryHoe();
 		TryPlanting();
 		TryPicking();
@@ -78,22 +74,36 @@ public class PlayerController : MonoBehaviour {
 		reticule.transform.parent = transform;
 	}
 	
-	void Move(float horizontal, float vertical)
+	void Move()
 	{
-		Vector3 targetDirection = new Vector3(horizontal, 0.0f, vertical);
-		Vector3 movementDelta = (targetDirection * movespeed * Time.deltaTime);
+		// Get input values
+		float horizontal = Input.GetAxisRaw("Horizontal");
+		float vertical = Input.GetAxisRaw("Vertical");
 		
-		rigidbody.MovePosition(rigidbody.position + movementDelta);
-	}
-	
-	void Rotate(float horizontal, float vertical)
-	{
+		// Determine move direction from target values
+		float targetSpeed = 0.0f;
 		Vector3 targetDirection = new Vector3(horizontal, 0.0f, vertical);
-		Quaternion desiredRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
-		Quaternion newRotation = Quaternion.Lerp(rigidbody.rotation, desiredRotation, turnSmoothing * Time.deltaTime);
-        
-		rigidbody.MoveRotation(newRotation);
-	}
+		if(targetDirection != Vector3.zero)
+		{
+			moveDirection = Vector3.RotateTowards(moveDirection, targetDirection, Mathf.Infinity, 1000);
+			moveDirection = moveDirection.normalized;
+			
+			targetSpeed = movespeed; 
+		}
+		
+		
+		// Get movement vector
+		Vector3 movement = (moveDirection * targetSpeed ) * Time.deltaTime;
+		
+		// Apply movement vector
+		CharacterController biped = GetComponent<CharacterController>();
+		biped.Move (movement);
+		
+		// Rotate to face the direction of movement immediately
+		if(moveDirection != Vector3.zero) {
+			transform.rotation = Quaternion.LookRotation(moveDirection);
+		}
+	}	
 	
 	/*
 	 * Attempts to hoe the action tile
