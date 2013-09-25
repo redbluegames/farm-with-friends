@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     private GameObject reticule;
     private GameObject actionTile;
     private Vector3 moveDirection;
+    private float gravity = -20.0f;
+    private float verticalSpeed = 0.0f;
+    private CollisionFlags collisionFlags;
 
     void Awake ()
     {
@@ -23,6 +26,8 @@ public class PlayerController : MonoBehaviour
  
     void Update ()
     {
+        ApplyGravity ();
+
         Move ();
      
         TryHoe ();
@@ -70,7 +75,31 @@ public class PlayerController : MonoBehaviour
         reticule = (GameObject)Instantiate (reticulePrefab, Vector3.zero, Quaternion.identity);
         reticule.transform.parent = transform;
     }
- 
+
+    /*
+     * Sets vertical speed to the expected value based on whether or not the Player is grounded.
+     */
+    private void ApplyGravity ()
+    {
+        if (IsGrounded ()) {
+            verticalSpeed = 0.0f;
+        } else {
+            verticalSpeed += gravity * Time.deltaTime;
+        }
+    }
+
+    /*
+     * Checks to see if the Player is grounded by checking collision flags.
+     */
+    private bool IsGrounded ()
+    {
+        return (collisionFlags & CollisionFlags.CollidedBelow) != 0;
+    }
+
+    /*
+     * Apply movement in the Player's desired directions according to the various speed
+     * and movement variables.
+     */
     void Move ()
     {
         // Get input values
@@ -86,14 +115,14 @@ public class PlayerController : MonoBehaviour
          
             targetSpeed = movespeed; 
         }
-     
-     
+
         // Get movement vector
-        Vector3 movement = (moveDirection * targetSpeed) * Time.deltaTime;
-     
+        Vector3 movement = (moveDirection * targetSpeed) + new Vector3 (0.0f, verticalSpeed, 0.0f);
+        movement *= Time.deltaTime;
+
         // Apply movement vector
         CharacterController biped = GetComponent<CharacterController> ();
-        biped.Move (movement);
+        collisionFlags = biped.Move (movement);
      
         // Rotate to face the direction of movement immediately
         if (moveDirection != Vector3.zero) {
@@ -102,8 +131,8 @@ public class PlayerController : MonoBehaviour
     }    
  
     /*
-  * Attempts to hoe the action tile
- */
+     * Attempts to hoe the action tile
+     */
     void TryHoe ()
     {
         bool isFire1 = Input.GetButtonDown ("Weapon1");
@@ -113,7 +142,7 @@ public class PlayerController : MonoBehaviour
                 tile.Hoe ();
              
                 AudioSource.PlayClipAtPoint (digSound, transform.position);
-            } else { 
+            } else {
                 AudioSource.PlayClipAtPoint (digSoundFail, transform.position);
             }
              
@@ -121,9 +150,9 @@ public class PlayerController : MonoBehaviour
     }
  
     /*
-  * Check if the user tried planting and if so, check that location is
-  * a valid place to plant. Then plant it and handle inventory changes.
-  */
+     * Check if the user tried planting and if so, check that location is
+     * a valid place to plant. Then plant it and handle inventory changes.
+     */
     void TryPlanting ()
     {
         bool isFire2 = Input.GetButtonDown ("Item");
@@ -141,9 +170,9 @@ public class PlayerController : MonoBehaviour
     }
  
     /*
-  * Check if the tile is a valid tile to be picked and if so, pick it
-  * and handle inventory changes.
-  */
+     * Check if the tile is a valid tile to be picked and if so, pick it
+     * and handle inventory changes.
+    */
     void TryPicking ()
     {
         bool isFire2 = Input.GetButtonDown ("Action");
@@ -161,8 +190,8 @@ public class PlayerController : MonoBehaviour
     }
  
     /*
-  * If tile has a plant and player isn't out of water, water it.
-  */
+     * If tile has a plant and player isn't out of water, water it.
+     */
     void TryWatering ()
     {
         bool isFire3 = Input.GetButtonDown ("Weapon2");
