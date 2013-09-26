@@ -5,11 +5,12 @@ public class HUD : MonoBehaviour
 {
     //public Inventory inventory;
     public GameObject player;
-    private Inventory inventory;
-    private string moneyMsg;
-    private string radishMsg;
-    private string radishSeedMsg;
-    private WorldTime gametime;
+
+    Inventory inventory;
+    string moneyMsg;
+    string radishMsg;
+    string radishSeedMsg;
+    WorldTime gametime;
 
     void Start ()
     {
@@ -37,7 +38,7 @@ public class HUD : MonoBehaviour
     private void DrawInventory ()
     {
         // TODO this is silly to perform a get every single frame.
-        moneyMsg = "Shellings: " + inventory.money;
+        moneyMsg = "Shellings: " + inventory.money + "\n";
         radishMsg = "Radishes: " + inventory.GetItemCount (ItemDatabase.RADISH);
         radishSeedMsg = "Radish Seeds: " + inventory.GetItemCount (ItemDatabase.RADISH_SEEDS);
         GUI.Label (new Rect (10, Screen.height - 115, 120, 100), moneyMsg);

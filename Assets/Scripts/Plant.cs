@@ -8,14 +8,19 @@ using System;
  */
 public class Plant : MonoBehaviour
 {
-    private int nightsOld;
-    private int nightsSinceGrowth;
-    private bool neverWatered;
-    private PlantStates plantState;
-    private const int MIN_LIFE = 0;
+    int nightsOld;
+    int nightsSinceGrowth;
+    bool neverWatered;
+    PlantStates plantState;
+    const int MIN_LIFE = 0;
+    int curLife;
+
+    // Public Attributes
     public int nightsPerGrowth;
     public int maxLife;
-    private int curLife;
+
+    // Mats and FX
+    public GameObject waterFXPrefab;
     public Material seedMat;
     public Material sproutMat;
     public Material adultMat;
@@ -55,7 +60,8 @@ public class Plant : MonoBehaviour
     {
         neverWatered = false;
         curLife = maxLife;
-        light.enabled = true;
+        SpawnWaterFX();
+        light.enabled = false;
     }
 
     /**
@@ -63,7 +69,7 @@ public class Plant : MonoBehaviour
   */
     public void FlagAsDry ()
     {
-        light.enabled = false;
+        light.enabled = true;
     }
 
     /**
@@ -149,5 +155,15 @@ public class Plant : MonoBehaviour
         } else if (plantState == PlantStates.Withered) {
             renderer.material = witheredMat;
         }
+    }
+
+    /*
+     * Spawns water fx with default orientation.
+     */
+    private void SpawnWaterFX ()
+    {
+        GameObject fx = (GameObject)Instantiate (waterFXPrefab, transform.position,
+                Quaternion.LookRotation (Vector3.up, Vector3.back));
+        Destroy (fx, 2.0f);
     }
 }

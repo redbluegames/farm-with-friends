@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     public float movespeed;
     public GameObject reticulePrefab;
+    public AudioClip waterSound;
     public AudioClip digSound;
     public AudioClip digSoundFail;
     private GameObject reticule;
@@ -201,6 +202,7 @@ public class PlayerController : MonoBehaviour
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
                 Plant plant = tile.getPlant ();
                 if (plant != null) {
+                    AudioSource.PlayClipAtPoint (waterSound, transform.position);
                     plant.Water ();
                 }
             }

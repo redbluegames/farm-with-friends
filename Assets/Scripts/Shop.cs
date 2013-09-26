@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Shop : MonoBehaviour
 {
     Inventory playerInventory;
     Inventory shopInventory;
     ItemDatabase itemDB;
-    string[] itemNames;
+    string[] itemDisplayText;
     ShopState state;
     readonly int SHOP_HEIGHT = (3 * Screen.height / 4);
     readonly int SHOP_WIDTH = (3 * Screen.width / 4);
@@ -29,6 +30,8 @@ public class Shop : MonoBehaviour
         shopInventory = GetComponent<Inventory> ();
         itemDB = (ItemDatabase)GameObject.Find ("ItemDatabase").GetComponent<ItemDatabase> ();
         shopInventory.AddItem (ItemDatabase.RADISH_SEEDS, INFINITE);
+        shopInventory.AddItem (ItemDatabase.ONION_SEEDS, INFINITE);
+        shopInventory.AddItem (ItemDatabase.POTATO_SEEDS, INFINITE);
     }
 
     /*
@@ -39,13 +42,14 @@ public class Shop : MonoBehaviour
         if (state == ShopState.NONE) {
             return;
         }
+        GUI.skin.button.wordWrap = true;
         GUI.BeginGroup (new Rect (WIDTH_PADDING, HEIGHT_PADDING, SHOP_WIDTH, SHOP_HEIGHT));
         int gridSelection = UNSELECTED;
         if (state == ShopState.BUYING) {
             GUI.Box (new Rect (0, 0, SHOP_WIDTH, SHOP_HEIGHT), "BUYING");
-            itemNames = RetrieveItemNames (shopInventory);
+            itemDisplayText = RetrieveItemTexts (shopInventory);
             gridSelection = GUI.SelectionGrid (new Rect (0, 10, SHOP_WIDTH, SHOP_HEIGHT - 10 -BTN_HEIGHT),
-             gridSelection, itemNames, 8);
+             gridSelection, itemDisplayText, 8);
             if (gridSelection != UNSELECTED) {
                 if (CanBuy (gridSelection, 1)) {
                     BuyItem (gridSelection, 1);
@@ -59,10 +63,10 @@ public class Shop : MonoBehaviour
             }
         }
         if (state == ShopState.SELLING) {
-            itemNames = RetrieveItemNames (playerInventory);
+            itemDisplayText = RetrieveItemTexts (playerInventory);
             GUI.Box (new Rect (0, 0, SHOP_WIDTH, SHOP_HEIGHT), "SELLING");
             gridSelection = GUI.SelectionGrid (new Rect (0, 10, SHOP_WIDTH, SHOP_HEIGHT - 10 -BTN_HEIGHT),
-             gridSelection, itemNames, 8);
+             gridSelection, itemDisplayText, 8);
             if (gridSelection != UNSELECTED) {
                 SellItem (gridSelection, 1);
             }
@@ -84,7 +88,7 @@ public class Shop : MonoBehaviour
      */
     private void SellItem (int grid, int count)
     {
-        Item item = itemDB.GetItem(itemNames[grid]);
+        Item item = itemDB.GetItemByName(itemDisplayText[grid].Split('\n')[0]);
         playerInventory.RemoveItem (item.id, count);
         playerInventory.AddMoney (item.sellPrice * count);
     }
@@ -94,7 +98,7 @@ public class Shop : MonoBehaviour
      */
     private bool CanBuy (int grid, int count)
     {
-        Item item = itemDB.GetItem(itemNames[grid]);
+        Item item = itemDB.GetItemByName(itemDisplayText[grid].Split('\n')[0]);
         int totalCost = item.price * count;
         return playerInventory.HasMoney (totalCost);
     }
@@ -106,7 +110,7 @@ public class Shop : MonoBehaviour
      */
     private bool BuyItem (int grid, int count)
     {
-        Item item = itemDB.GetItem(itemNames[grid]);
+        Item item = itemDB.GetItemByName(itemDisplayText[grid].Split('\n')[0]);
         int totalCost = item.price * count;
         if (playerInventory.HasMoney(totalCost)) {
             playerInventory.AddItem (item.id, count);
@@ -121,15 +125,23 @@ public class Shop : MonoBehaviour
      * Retrieve all the owned items and get the item names to display in
      * the shopping gui.
      */
-    private string[] RetrieveItemNames (Inventory inventory)
+    private string[] RetrieveItemTexts (Inventory inventory)
     {
-        string[] names = new string[inventory.GetItems ().Count];
+        string[] itemTexts = new string[inventory.GetItems ().Count];
         int index = 0;
+        Item item;
         foreach (int itemID in inventory.GetItems().Keys) {
-            names [index] = itemDB.GetItem (itemID).itemName;
+            item = itemDB.GetItem (itemID);
+            itemTexts [index] = item.itemName + "\n";
+            if (state == ShopState.BUYING){
+                itemTexts [index] += String.Format ("Price: {0}\n\n", item.price);
+            } else if (state == ShopState.SELLING) {
+                itemTexts [index] += String.Format ("Price: {0}\n\n", item.sellPrice);
+            }
+            itemTexts [index] += item.description;
             index++;
         }
-        return names;
+        return itemTexts;
     }
 
     public void StartBuying ()
