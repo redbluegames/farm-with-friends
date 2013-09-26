@@ -3,21 +3,27 @@ using System.Collections;
 
 public class HUD : MonoBehaviour
 {
-    //public Inventory inventory;
-    public GameObject player;
-
+    GameObject player;
+    GameObject player2;
     Inventory inventory;
+    Inventory inventory2;
     string moneyMsg;
     string radishMsg;
     string radishSeedMsg;
     WorldTime gametime;
+    int numPlayers;
 
     void Start ()
     {
         GameObject obj = GameObject.FindGameObjectWithTag ("WorldTime");
         gametime = (WorldTime)obj.GetComponent<WorldTime> ();
 
+        player = GameObject.Find ("Player1");
         inventory = (Inventory)player.GetComponent<Inventory> ();
+        if (GameObject.FindGameObjectsWithTag ("Player").Length == 2) {
+            player2 = GameObject.Find ("Player2");
+            inventory2 = (Inventory)player2.GetComponent<Inventory> ();
+        }
     }
  
     void OnGUI ()
@@ -38,11 +44,21 @@ public class HUD : MonoBehaviour
     private void DrawInventory ()
     {
         // TODO this is silly to perform a get every single frame.
-        moneyMsg = "Shellings: " + inventory.money + "\n";
-        radishMsg = "Radishes: " + inventory.GetItemCount (ItemDatabase.RADISH);
-        radishSeedMsg = "Radish Seeds: " + inventory.GetItemCount (ItemDatabase.RADISH_SEEDS);
-        GUI.Label (new Rect (10, Screen.height - 115, 120, 100), moneyMsg);
-        GUI.Label (new Rect (10, Screen.height - 100, 120, 100), radishMsg);
-        GUI.Label (new Rect (10, Screen.height - 85, 120, 100), radishSeedMsg);
+        // Draw player 1's
+        inventory = (Inventory)GameObject.Find ("Player1").GetComponent<Inventory> ();
+        string inventoryMsg = "Shellings: " + inventory.money + "\n";
+        inventoryMsg += "Radishes: " + inventory.GetItemCount (ItemDatabase.RADISH) + "\n";
+        inventoryMsg += "Radish Seeds: " + inventory.GetItemCount (ItemDatabase.RADISH_SEEDS);
+        GUI.Label (new Rect (10, Screen.height - 115, 120, 100), inventoryMsg);
+
+        // Now draw player 2's
+        if (inventory2 != null) {
+            inventory2 = (Inventory)GameObject.Find ("Player2").GetComponent<Inventory> ();
+            inventoryMsg = "Shellings: " + inventory2.money + "\n";
+            inventoryMsg += "Radishes: " + inventory2.GetItemCount (ItemDatabase.RADISH) + "\n";
+            inventoryMsg += "Radish Seeds: " + inventory2.GetItemCount (ItemDatabase.RADISH_SEEDS);
+            GUI.Label (new Rect (10 + (Screen.width / 2), Screen.height - 115, 120, 100), inventoryMsg);
+        }
+
     }
 }
