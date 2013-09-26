@@ -6,15 +6,22 @@ using System;
 public class Inventory : MonoBehaviour
 {
     public int money;
-
     ItemDatabase itemDB;
     Dictionary<int, int> itemCounts;
+    public int equippedItemKey = -1;
+    int equippedItemIndex = -1;
 
     void Awake ()
     {
         itemCounts = new Dictionary<int, int> ();
         itemDB = (ItemDatabase)GameObject.Find ("ItemDatabase").GetComponent<ItemDatabase> ();
         itemCounts.Add (ItemDatabase.RADISH_SEEDS, 9);
+    }
+
+    void Start()
+    {
+        // Equip the radish seeds that were put in on Awake
+        EquipNextItem ();
     }
 
     // Stub method for testing 
@@ -62,16 +69,19 @@ public class Inventory : MonoBehaviour
      */
     public bool AddItem (int itemID, int count)
     {
+        bool isAddSuccessful;
         if (!HasItem (itemID)) {
             itemCounts.Add (itemID, count);
-            return true;
+            isAddSuccessful = true;
         } else {
             if (itemDB.GetItem (itemID).maxCount >= itemCounts [itemID] + count) {
                 itemCounts [itemID] += count;
-                return true;
+                isAddSuccessful = true;
             }
-            return false;
+            isAddSuccessful = false;
         }
+
+        return isAddSuccessful;
     }
 
     /*
@@ -85,6 +95,7 @@ public class Inventory : MonoBehaviour
         } else if (HasCountOfItem (itemID, count)) {
             if (itemCounts [itemID] - count == 0) {
                 itemCounts.Remove (itemID);
+                EquipNextItem();
             } else {
                 itemCounts [itemID] -= count;
             }
@@ -128,5 +139,44 @@ public class Inventory : MonoBehaviour
     public Dictionary<int, int> GetItems ()
     {
         return itemCounts;
+    }
+
+    /*
+     * Iterates through the dictionary of items, storing the key of an
+     * "Equipped" item
+     */
+    public void EquipNextItem ()
+    {
+        // If there are no items in the inventory, equip a null item
+        if(itemCounts.Count == 0)
+        {
+            equippedItemIndex = -1;
+            equippedItemKey = -1;
+            return;
+        }
+
+        // Increment the item index, which marks our place in the Dictionary
+        equippedItemIndex ++;
+        if (equippedItemIndex >= itemCounts.Count) {
+            equippedItemIndex = 0;
+        }
+
+        // Search the dictionary for the next item
+        int i = 0;
+        foreach (KeyValuePair<int, int> item in itemCounts) {
+            if (i == equippedItemIndex) {
+                equippedItemKey = item.Key;
+                break;
+            }
+            i++;
+         }
+    }
+
+    public Item GetEquippedItem ()
+    {
+        if (equippedItemIndex == -1) {
+            return null;
+        }
+        return itemDB.GetItem (equippedItemKey);
     }
 }

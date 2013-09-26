@@ -7,7 +7,6 @@ public class GroundTile : MonoBehaviour
     public Material grassMaterial;
     public Material soilMaterial;
     public GameObject dirtFXPrefab;
-    public GameObject plantPrefab;
     private GameObject curPlant;
     static public float SIZE = 1.0f;
  
@@ -74,10 +73,10 @@ public class GroundTile : MonoBehaviour
     /*
   * Plant a plant on the tile.
   */
-    public void Plant ()
+    public void Plant (GameObject plantPrefab)
     {
         SetState (GroundState.Planted);
-        SpawnPlant ();
+        SpawnPlant (plantPrefab);
     }
  
     /*
@@ -110,7 +109,7 @@ public class GroundTile : MonoBehaviour
     /*
   * Spawn a plant on the tile.
  */
-    private void SpawnPlant ()
+    private void SpawnPlant (GameObject plantPrefab)
     {
         curPlant = (GameObject)Instantiate (plantPrefab, transform.position, Quaternion.LookRotation (Vector3.up, Vector3.back));
     }

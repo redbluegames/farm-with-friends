@@ -9,4 +9,5 @@ public class Item : ScriptableObject
     public int maxCount;
     public int price;
     public int sellPrice;
+    public GameObject plantPrefab;
 }

@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
 
     void Start ()
     {
+        TryCycleItems ();
         SpawnReticule ();
     }
  
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
         TryPlanting ();
         TryPicking ();
         TryWatering ();
+        TryCycleItems ();
         TryDebugs ();
     }
  
@@ -146,7 +148,7 @@ public class PlayerController : MonoBehaviour
             } else {
                 AudioSource.PlayClipAtPoint (digSoundFail, transform.position);
             }
-             
+
         }
     }
  
@@ -162,15 +164,16 @@ public class PlayerController : MonoBehaviour
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
                 if (tile.isSoil ()) {
                     Inventory inventory = (Inventory)GetComponent<Inventory> ();
-                    if (inventory.HasItem (ItemDatabase.RADISH_SEEDS) &&
-                            inventory.RemoveItem (ItemDatabase.RADISH_SEEDS, 1)) {
-                        tile.Plant ();
+                    if (inventory.GetEquippedItem () != null) {
+                        GameObject plant = inventory.GetEquippedItem ().plantPrefab;
+                        tile.Plant (plant);
+                        inventory.RemoveItem (inventory.GetEquippedItem ().id, 1);
                     }
                 }
             }
         }
     }
- 
+
     /*
      * Check if the tile is a valid tile to be picked and if so, pick it
      * and handle inventory changes.
@@ -209,6 +212,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void TryCycleItems ()
+    {
+        // ToDo: This is the only way I could think to get button down for XBOX users
+        // and scroll wheel for PC. Should rework control scheme.
+        if (Input.GetButtonDown ("SwapItemXBOX") || Input.GetAxis ("SwapItemPC") > 0) {
+            CycleItems ();
+        }
+    }
+
+    void CycleItems()
+    {
+        Inventory inventory = (Inventory)GetComponent<Inventory> ();
+        inventory.EquipNextItem ();
+    }
+
     void TryDebugs ()
     {
         if (Input.GetKeyDown ("z")) {
@@ -217,7 +235,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown ("i")) {
             Shop shop = (Shop)GameObject.FindGameObjectWithTag ("Shop").GetComponent<Shop> ();
-            shop.StartBuying();
+            shop.StartBuying ();
         }
     }
  
@@ -242,5 +260,14 @@ public class PlayerController : MonoBehaviour
         }
 
         return actionTile;
+    }
+
+    public Item GetEquippedItem()
+    {
+        Inventory inventory = (Inventory)GetComponent<Inventory> ();
+        if (inventory.GetEquippedItem () == null)
+            return null;
+
+        return inventory.GetEquippedItem ();
     }
 }

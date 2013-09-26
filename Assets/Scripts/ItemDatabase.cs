@@ -10,7 +10,7 @@ public class ItemDatabase : MonoBehaviour
     public static readonly int ONION = 2;
     public static readonly int ONION_SEEDS = 3;
     public static readonly int POTATO = 4;
-    public static readonly int POTATO_SEEDS = 4;
+    public static readonly int POTATO_SEEDS = 5;
     public Item[] items = new Item[10];
 
     void Awake ()
@@ -32,6 +32,7 @@ public class ItemDatabase : MonoBehaviour
         radishSeeds.price = 5;
         radishSeeds.sellPrice = 2;
         radishSeeds.id = RADISH_SEEDS;
+        radishSeeds.plantPrefab = (GameObject) Resources.Load("Radish");
         items [RADISH_SEEDS] = radishSeeds;
 
         Item onion = (Item)ScriptableObject.CreateInstance (typeof(Item));
@@ -51,6 +52,7 @@ public class ItemDatabase : MonoBehaviour
         onionSeeds.price = 5;
         onionSeeds.sellPrice = 2;
         onionSeeds.id = ONION_SEEDS;
+        onionSeeds.plantPrefab = (GameObject) Resources.Load("Onion");
         items [ONION_SEEDS] = onionSeeds;
 
         Item potato = (Item)ScriptableObject.CreateInstance (typeof(Item));
@@ -70,6 +72,7 @@ public class ItemDatabase : MonoBehaviour
         potatoSeeds.price = 5;
         potatoSeeds.sellPrice = 2;
         potatoSeeds.id = POTATO_SEEDS;
+        potatoSeeds.plantPrefab = (GameObject) Resources.Load("Potato");
         items [POTATO_SEEDS] = potatoSeeds;
     }
 

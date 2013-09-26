@@ -44,5 +44,18 @@ public class HUD : MonoBehaviour
         GUI.Label (new Rect (10, Screen.height - 115, 120, 100), moneyMsg);
         GUI.Label (new Rect (10, Screen.height - 100, 120, 100), radishMsg);
         GUI.Label (new Rect (10, Screen.height - 85, 120, 100), radishSeedMsg);
+
+
+        Item equippedItem = player.GetComponent<PlayerController> ().GetEquippedItem ();
+        string itemName = "";
+        if (equippedItem == null) {
+          itemName = "No Item Equipped";
+        } else {
+           itemName = equippedItem.itemName;
+        }
+        float itemLabelWidth = 100;
+        float itemLabelHeight = 100;
+        float itemLabelYOffset = 80;
+        GUI.Label (new Rect (Screen.width - itemLabelWidth, itemLabelYOffset, itemLabelWidth, itemLabelHeight), itemName);
     }
 }
