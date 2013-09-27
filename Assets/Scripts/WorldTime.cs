@@ -7,7 +7,7 @@ public class WorldTime : MonoBehaviour
     public AudioClip roosterSound;
     private int day;
     private float dayTimeInGame;
-    public static int SECONDS_PER_GAMEDAY = 240;
+    public static int SECONDS_PER_GAMEDAY = 60;
     public static int GAMEHOURS_PER_GAMEDAY = 24;
     public static int GAMEMINUTES_PER_GAMEHOUR = 60;
     public static int GAMESECONDS_PER_GAMEMINUTE = 60;
