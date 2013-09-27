@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip waterSound;
     public AudioClip digSound;
     public AudioClip digSoundFail;
+    public AudioClip backpackSound;
     public PlayerNum playerNum;
     private GameObject reticule;
     private GameObject actionTile;
@@ -222,6 +223,7 @@ public class PlayerController : MonoBehaviour
                     Inventory inventory = (Inventory)GetComponent<Inventory> ();
                     tile.Pick ();
                     inventory.AddItem (ItemDatabase.RADISH, 1);
+                    AudioSource.PlayClipAtPoint (backpackSound, transform.position);
                 }
             }
         }
