@@ -4,6 +4,7 @@ using System.Collections;
 public class WorldTime : MonoBehaviour
 {
     public Light sun;
+    public AudioClip roosterSound;
     private int day;
     private float dayTimeInGame;
     public static int SECONDS_PER_GAMEDAY = 240;
@@ -14,6 +15,9 @@ public class WorldTime : MonoBehaviour
     private static float SECONDS_PER_GAMEMINUTE = SECONDS_PER_GAMEHOUR / GAMEMINUTES_PER_GAMEHOUR;
     private static float SECONDS_PER_GAMESECOND = SECONDS_PER_GAMEMINUTE / GAMESECONDS_PER_GAMEMINUTE;
     private static float DAWN = 6.0f;
+
+    public Transform startPointP1;
+    public Transform startPointP2;
 
     void Start ()
     {
@@ -50,6 +54,24 @@ public class WorldTime : MonoBehaviour
     public void GoToNextDay ()
     {
         AdvancePlants ();
+
+        // Snap both players to start points
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach(GameObject player in players)
+        {
+            Transform startPoint;
+            if(player.name == "Player1")
+            {
+                startPoint = startPointP1;
+            }
+            else
+            {
+                startPoint = startPointP2;
+            }
+            player.GetComponent<PlayerController>().SnapToPoint(startPoint);
+        }
+
+        AudioSource.PlayClipAtPoint (roosterSound, transform.position);
 
         day++;
         SetGameTimeToHour (DAWN);

@@ -270,10 +270,6 @@ public class PlayerController : MonoBehaviour
 
     void TryDebugs ()
     {
-        if (Input.GetKeyDown ("z")) {
-            WorldTime worldtime = (WorldTime)GameObject.FindGameObjectWithTag ("WorldTime").GetComponent<WorldTime> ();
-            worldtime.GoToNextDay ();
-        }
         bool isAtShop = false;
         switch (playerNum) {
         case PlayerNum.ONE:
@@ -319,5 +315,10 @@ public class PlayerController : MonoBehaviour
             return null;
 
         return inventory.GetEquippedItem ();
+    }
+
+    public void SnapToPoint(Transform point)
+    {
+        transform.position = point.transform.position;
     }
 }
