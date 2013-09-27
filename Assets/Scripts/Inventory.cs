@@ -33,16 +33,16 @@ public class Inventory : MonoBehaviour
     }
 
     /*
-  * Add specified amount of money to player.
-  */
+     * Add specified amount of money to player.
+     */
     public void AddMoney (int amount)
     {
         money += amount;
     }
 
     /*
-  * Take away specified amount of money from player.
-  */
+     * Take away specified amount of money from player.
+     */
     public bool RemoveMoney (int amount)
     {
         if (HasMoney (amount)) {
@@ -56,9 +56,9 @@ public class Inventory : MonoBehaviour
     }
 
     /*
-  * Check if player has specified amount of money. Return
-  * true if they do.
-  */
+     * Check if player has specified amount of money. Return
+     * true if they do.
+     */
     public bool HasMoney (int amount)
     {
         return money < amount ? false : true;
@@ -85,8 +85,8 @@ public class Inventory : MonoBehaviour
     }
 
     /*
-  * Remove the provided amount of an item if possible. Return true if removed.
-  */
+     * Remove the provided amount of an item if possible. Return true if removed.
+     */
     public bool RemoveItem (int itemID, int count)
     {
         if (!HasItem (itemID)) {
@@ -122,9 +122,9 @@ public class Inventory : MonoBehaviour
     }
 
     /*
-  * Return the count of a provided item, 0 if it does not exist
-  * (or is 0).
-  */
+     * Return the count of a provided item, 0 if it does not exist
+     * (or is 0).
+     */
     public int GetItemCount (int itemID)
     {
         if (!HasItem (itemID)) {
@@ -134,8 +134,8 @@ public class Inventory : MonoBehaviour
     }
 
     /*
-  * Return all the items owned by the player inventory, including their counts.
-  */
+     * Return all the items owned by the player inventory, including their counts.
+     */
     public Dictionary<int, int> GetItems ()
     {
         return itemCounts;

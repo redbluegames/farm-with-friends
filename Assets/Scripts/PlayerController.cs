@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip waterSound;
     public AudioClip digSound;
     public AudioClip digSoundFail;
+    public PlayerNum playerNum;
     private GameObject reticule;
     private GameObject actionTile;
     private Vector3 moveDirection;
@@ -106,8 +107,17 @@ public class PlayerController : MonoBehaviour
     void Move ()
     {
         // Get input values
-        float horizontal = Input.GetAxisRaw ("Horizontal");
-        float vertical = Input.GetAxisRaw ("Vertical");
+        float horizontal = 0.0f, vertical = 0.0f;
+        switch (playerNum) {
+        case PlayerNum.ONE:
+            horizontal = Input.GetAxisRaw ("Horizontal");
+            vertical = Input.GetAxisRaw ("Vertical");
+            break;
+        case PlayerNum.TWO:
+            horizontal = Input.GetAxisRaw ("Horizontal2");
+            vertical = Input.GetAxisRaw ("Vertical2");
+            break;
+        }
 
         // Determine move direction from target values
         float targetSpeed = 0.0f;
@@ -138,12 +148,19 @@ public class PlayerController : MonoBehaviour
      */
     void TryHoe ()
     {
-        bool isFire1 = Input.GetButtonDown ("Weapon1");
+        bool isFire1 = false;
+        switch (playerNum) {
+        case PlayerNum.ONE:
+            isFire1 = Input.GetButtonDown ("Weapon1");
+            break;
+        case PlayerNum.TWO:
+            isFire1 = Input.GetButtonDown ("Weapon1_2");
+            break;
+        }
         if (isFire1) {
             if (actionTile != null) {
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
                 tile.Hoe ();
-             
                 AudioSource.PlayClipAtPoint (digSound, transform.position);
             } else {
                 AudioSource.PlayClipAtPoint (digSoundFail, transform.position);
@@ -158,7 +175,15 @@ public class PlayerController : MonoBehaviour
      */
     void TryPlanting ()
     {
-        bool isFire2 = Input.GetButtonDown ("Item");
+        bool isFire2 = false;
+        switch (playerNum) {
+        case PlayerNum.ONE:
+            isFire2 = Input.GetButtonDown ("Item");
+            break;
+        case PlayerNum.TWO:
+            isFire2 = Input.GetButtonDown ("Item2");
+            break;
+        }
         if (isFire2) {
             if (actionTile != null) {
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
@@ -180,7 +205,15 @@ public class PlayerController : MonoBehaviour
     */
     void TryPicking ()
     {
-        bool isFire2 = Input.GetButtonDown ("Action");
+        bool isFire2 = false;
+        switch (playerNum) {
+        case PlayerNum.ONE:
+            isFire2 = Input.GetButtonDown ("Action");
+            break;
+        case PlayerNum.TWO:
+            isFire2 = Input.GetButtonDown ("Action2");
+            break;
+        }
         if (isFire2) {
             if (actionTile != null) {
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
@@ -199,7 +232,15 @@ public class PlayerController : MonoBehaviour
      */
     void TryWatering ()
     {
-        bool isFire3 = Input.GetButtonDown ("Weapon2");
+        bool isFire3 = false;
+        switch (playerNum) {
+        case PlayerNum.ONE:
+            isFire3 = Input.GetButtonDown ("Weapon2");
+            break;
+        case PlayerNum.TWO:
+            isFire3 = Input.GetButtonDown ("Weapon2_2");
+            break;
+        }
         if (isFire3) {
             if (actionTile != null) {
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
@@ -233,9 +274,18 @@ public class PlayerController : MonoBehaviour
             WorldTime worldtime = (WorldTime)GameObject.FindGameObjectWithTag ("WorldTime").GetComponent<WorldTime> ();
             worldtime.GoToNextDay ();
         }
-        if (Input.GetKeyDown ("i")) {
+        bool isAtShop = false;
+        switch (playerNum) {
+        case PlayerNum.ONE:
+            isAtShop = Input.GetKeyDown ("i");
+            break;
+        case PlayerNum.TWO:
+            isAtShop = Input.GetKeyDown ("o");
+            break;
+        }
+        if (isAtShop) {
             Shop shop = (Shop)GameObject.FindGameObjectWithTag ("Shop").GetComponent<Shop> ();
-            shop.StartBuying ();
+            shop.StartBuying(playerNum);
         }
     }
  

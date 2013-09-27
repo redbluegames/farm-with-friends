@@ -9,9 +9,13 @@ public class Shop : MonoBehaviour
     ItemDatabase itemDB;
     string[] itemDisplayText;
     ShopState state;
-    readonly int SHOP_HEIGHT = (3 * Screen.height / 4);
-    readonly int SHOP_WIDTH = (3 * Screen.width / 4);
-    readonly int WIDTH_PADDING = Screen.width / 8;
+    PlayerNum playerNum;
+
+    // GUI properties
+    int SHOP_HEIGHT = (int)(Screen.height * 0.75);
+    int SHOP_WIDTH = (int)(Screen.width * 0.75);
+    int LEFT_START = 0;
+    int WIDTH_PADDING = Screen.width / 8;
     readonly int HEIGHT_PADDING = Screen.height / 8;
     readonly int BTN_HEIGHT = 40;
     readonly int BTN_WIDTH = 120;
@@ -42,13 +46,22 @@ public class Shop : MonoBehaviour
         if (state == ShopState.NONE) {
             return;
         }
+        if (GameObject.FindGameObjectsWithTag ("Player").Length == 2) {
+            if (playerNum == PlayerNum.TWO)
+                LEFT_START = Screen.width / 2;
+            else
+                LEFT_START = 0;
+            SHOP_WIDTH = (int)(Screen.width * (0.75 / 2));
+            WIDTH_PADDING = Screen.width / 16;
+        }
+
         GUI.skin.button.wordWrap = true;
-        GUI.BeginGroup (new Rect (WIDTH_PADDING, HEIGHT_PADDING, SHOP_WIDTH, SHOP_HEIGHT));
+        GUI.BeginGroup (new Rect (LEFT_START + WIDTH_PADDING, HEIGHT_PADDING, SHOP_WIDTH, SHOP_HEIGHT));
         int gridSelection = UNSELECTED;
         if (state == ShopState.BUYING) {
             GUI.Box (new Rect (0, 0, SHOP_WIDTH, SHOP_HEIGHT), "BUYING");
             itemDisplayText = RetrieveItemTexts (shopInventory);
-            gridSelection = GUI.SelectionGrid (new Rect (0, 10, SHOP_WIDTH, SHOP_HEIGHT - 10 -BTN_HEIGHT),
+            gridSelection = GUI.SelectionGrid (new Rect (0, 10, SHOP_WIDTH, SHOP_HEIGHT - 10 - BTN_HEIGHT),
              gridSelection, itemDisplayText, 8);
             if (gridSelection != UNSELECTED) {
                 if (CanBuy (gridSelection, 1)) {
@@ -59,20 +72,20 @@ public class Shop : MonoBehaviour
             }
             if (GUI.Button (new Rect (SHOP_WIDTH - BTN_WIDTH * 2, SHOP_HEIGHT - BTN_HEIGHT, BTN_WIDTH, BTN_HEIGHT),
               new GUIContent ("Sell"))) {
-                StartSelling ();
+                StartSelling (playerNum);
             }
         }
         if (state == ShopState.SELLING) {
             itemDisplayText = RetrieveItemTexts (playerInventory);
             GUI.Box (new Rect (0, 0, SHOP_WIDTH, SHOP_HEIGHT), "SELLING");
-            gridSelection = GUI.SelectionGrid (new Rect (0, 10, SHOP_WIDTH, SHOP_HEIGHT - 10 -BTN_HEIGHT),
+            gridSelection = GUI.SelectionGrid (new Rect (0, 10, SHOP_WIDTH, SHOP_HEIGHT - 10 - BTN_HEIGHT),
              gridSelection, itemDisplayText, 8);
             if (gridSelection != UNSELECTED) {
                 SellItem (gridSelection, 1);
             }
             if (GUI.Button (new Rect (SHOP_WIDTH - BTN_WIDTH * 2, SHOP_HEIGHT - BTN_HEIGHT, BTN_WIDTH, BTN_HEIGHT),
               new GUIContent ("Buy"))) {
-                StartBuying ();
+                StartBuying (playerNum);
             }
         }
         if (GUI.Button (new Rect (SHOP_WIDTH - BTN_WIDTH, SHOP_HEIGHT - BTN_HEIGHT, BTN_WIDTH, BTN_HEIGHT),
@@ -88,7 +101,7 @@ public class Shop : MonoBehaviour
      */
     private void SellItem (int grid, int count)
     {
-        Item item = itemDB.GetItemByName(itemDisplayText[grid].Split('\n')[0]);
+        Item item = itemDB.GetItemByName (itemDisplayText [grid].Split ('\n') [0]);
         playerInventory.RemoveItem (item.id, count);
         playerInventory.AddMoney (item.sellPrice * count);
     }
@@ -98,7 +111,7 @@ public class Shop : MonoBehaviour
      */
     private bool CanBuy (int grid, int count)
     {
-        Item item = itemDB.GetItemByName(itemDisplayText[grid].Split('\n')[0]);
+        Item item = itemDB.GetItemByName (itemDisplayText [grid].Split ('\n') [0]);
         int totalCost = item.price * count;
         return playerInventory.HasMoney (totalCost);
     }
@@ -110,9 +123,9 @@ public class Shop : MonoBehaviour
      */
     private bool BuyItem (int grid, int count)
     {
-        Item item = itemDB.GetItemByName(itemDisplayText[grid].Split('\n')[0]);
+        Item item = itemDB.GetItemByName (itemDisplayText [grid].Split ('\n') [0]);
         int totalCost = item.price * count;
-        if (playerInventory.HasMoney(totalCost)) {
+        if (playerInventory.HasMoney (totalCost)) {
             playerInventory.AddItem (item.id, count);
             shopInventory.RemoveItem (item.id, count);
             playerInventory.RemoveMoney (totalCost);
@@ -133,7 +146,7 @@ public class Shop : MonoBehaviour
         foreach (int itemID in inventory.GetItems().Keys) {
             item = itemDB.GetItem (itemID);
             itemTexts [index] = item.itemName + "\n";
-            if (state == ShopState.BUYING){
+            if (state == ShopState.BUYING) {
                 itemTexts [index] += String.Format ("Price: {0}\n\n", item.price);
             } else if (state == ShopState.SELLING) {
                 itemTexts [index] += String.Format ("Price: {0}\n\n", item.sellPrice);
@@ -144,15 +157,31 @@ public class Shop : MonoBehaviour
         return itemTexts;
     }
 
-    public void StartBuying ()
+    public void StartBuying (PlayerNum player)
     {
-        playerInventory = (Inventory)GameObject.FindGameObjectWithTag ("Player").GetComponent<Inventory> ();
+        playerNum = player;
+        switch (player) {
+        case PlayerNum.ONE:
+            playerInventory = (Inventory)GameObject.Find ("Player1").GetComponent<Inventory> ();
+            break;
+        case PlayerNum.TWO:
+            playerInventory = (Inventory)GameObject.Find ("Player2").GetComponent<Inventory> ();
+            break;
+        }
         state = ShopState.BUYING;
     }
 
-    public void StartSelling ()
+    public void StartSelling (PlayerNum player)
     {
-        playerInventory = (Inventory)GameObject.FindGameObjectWithTag ("Player").GetComponent<Inventory> ();
+        playerNum = player;
+        switch (playerNum) {
+        case PlayerNum.ONE:
+            playerInventory = (Inventory)GameObject.Find ("Player1").GetComponent<Inventory> ();
+            break;
+        case PlayerNum.TWO:
+            playerInventory = (Inventory)GameObject.Find ("Player2").GetComponent<Inventory> ();
+            break;
+        }
         state = ShopState.SELLING;
     }
 
