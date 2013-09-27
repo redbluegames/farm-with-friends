@@ -33,9 +33,9 @@ public class Shop : MonoBehaviour
     {
         shopInventory = GetComponent<Inventory> ();
         itemDB = (ItemDatabase)GameObject.Find ("ItemDatabase").GetComponent<ItemDatabase> ();
-        shopInventory.AddItem (ItemDatabase.RADISH_SEEDS, INFINITE);
-        shopInventory.AddItem (ItemDatabase.ONION_SEEDS, INFINITE);
-        shopInventory.AddItem (ItemDatabase.POTATO_SEEDS, INFINITE);
+        shopInventory.AddItem (ItemIDs.RADISH_SEEDS, INFINITE);
+        shopInventory.AddItem (ItemIDs.ONION_SEEDS, INFINITE);
+        shopInventory.AddItem (ItemIDs.POTATO_SEEDS, INFINITE);
     }
 
     /*

@@ -46,8 +46,8 @@ public class HUD : MonoBehaviour
         // Draw player 1's
         inventory = (Inventory)GameObject.Find ("Player1").GetComponent<Inventory> ();
         string inventoryMsg = "Shellings: " + inventory.money + "\n";
-        inventoryMsg += "Radishes: " + inventory.GetItemCount (ItemDatabase.RADISH) + "\n";
-        inventoryMsg += "Radish Seeds: " + inventory.GetItemCount (ItemDatabase.RADISH_SEEDS);
+        inventoryMsg += "Radishes: " + inventory.GetItemCount (ItemIDs.RADISH) + "\n";
+        inventoryMsg += "Radish Seeds: " + inventory.GetItemCount (ItemIDs.RADISH_SEEDS);
         GUI.Label (new Rect (10, Screen.height - 115, 120, 100), inventoryMsg);
 
         // Draw player 1's equipped item
@@ -77,8 +77,8 @@ public class HUD : MonoBehaviour
         // Now draw player 2's
         if (inventory2 != null) {
             inventoryMsg = "Shellings: " + inventory2.money + "\n";
-            inventoryMsg += "Radishes: " + inventory2.GetItemCount (ItemDatabase.RADISH) + "\n";
-            inventoryMsg += "Radish Seeds: " + inventory2.GetItemCount (ItemDatabase.RADISH_SEEDS);
+            inventoryMsg += "Radishes: " + inventory2.GetItemCount (ItemIDs.RADISH) + "\n";
+            inventoryMsg += "Radish Seeds: " + inventory2.GetItemCount (ItemIDs.RADISH_SEEDS);
             GUI.Label (new Rect (10 + (Screen.width / 2), Screen.height - 115, 120, 100), inventoryMsg);
         }
         equippedItem = player2.GetComponent<PlayerController> ().GetEquippedItem ();
