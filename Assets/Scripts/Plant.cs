@@ -10,7 +10,6 @@ public class Plant : MonoBehaviour
 {
     int nightsOld;
     int nightsSinceGrowth;
-    bool neverWatered;
     PlantStates plantState;
     const int MIN_LIFE = 0;
     int curLife;
@@ -37,9 +36,6 @@ public class Plant : MonoBehaviour
     // Use this for initialization, catch unset public vars.
     void Start ()
     {
-        nightsOld = 0;
-        nightsSinceGrowth = 0;
-        curLife = maxLife;
         if (nightsPerGrowth == 0) {
             Debug.LogError ("nightsPerGrowth is 0 which is invalid. Setting to 1.");
             nightsPerGrowth = 1;
@@ -48,8 +44,13 @@ public class Plant : MonoBehaviour
             Debug.LogError ("maxLife is 0 which is invalid. Setting to 1.");
             maxLife = 1;
         }
-        neverWatered = true;
-        RenderAsDry ();
+        nightsOld = 0;
+        nightsSinceGrowth = 0;
+        // Set HP to one less than full so watering can make a dif on first day.
+        curLife = maxLife - 1;
+        if (curLife == MIN_LIFE) {
+            RenderAsDry ();
+        }
     }
 
     /**
@@ -58,7 +59,6 @@ public class Plant : MonoBehaviour
   */
     public void Water ()
     {
-        neverWatered = false;
         curLife = maxLife;
         SpawnWaterFX ();
         RenderAsWatered ();
@@ -89,15 +89,11 @@ public class Plant : MonoBehaviour
     }
 
     /**
-  * Put the plant in it's next stage and reset the days since last growth.
-  */
+     * Put the plant in it's next stage and reset the days since last growth.
+     */
     private void Grow ()
-    {    
-        // Plants that have never been watered can't grow
-        if (neverWatered) {
-            Debug.Log (String.Format ("COULD NOT GROW ({0}): Never watered.", name));
-            return;
-        }
+    {
+        // If plant can continue to grow, grow.
         if ((int)plantState < Enum.GetValues (typeof(PlantStates)).Length - 1) {
             Debug.Log (String.Format ("GROWING ({0})): DaysSinceGrowth ({1}) GrowthSpeed ({2}) new PlantState ({3})", 
              name, nightsSinceGrowth, nightsPerGrowth, (int)plantState + 1));
@@ -107,8 +103,8 @@ public class Plant : MonoBehaviour
     }
  
     /**
-  * Set the plant to withered state if not already.
-  */
+     * Set the plant to withered state if not already.
+     */
     private void Wither ()
     {
         if (!isWithered ()) {
@@ -119,7 +115,7 @@ public class Plant : MonoBehaviour
     }
 
     /**
-  * Return if the plant is withered.
+     * Return if the plant is withered.
   */
     public bool isWithered ()
     {
@@ -148,6 +144,7 @@ public class Plant : MonoBehaviour
             RenderAsRipe ();
         } else if (plantState == PlantStates.Withered) {
             renderer.material = witheredMat;
+            RenderAsDead ();
         }
     }
 
@@ -156,8 +153,7 @@ public class Plant : MonoBehaviour
      */
     void RenderAsRipe ()
     {
-        TextMesh textMesh = (TextMesh) GetComponentInChildren<TextMesh> ();
-        textMesh.text = "PICK-ME";
+        SetPlantText ("pick\nme");
         light.enabled = false;
     }
 
@@ -167,8 +163,18 @@ public class Plant : MonoBehaviour
     void RenderAsWatered ()
     {
         if (!isRipe ()) {
-            TextMesh textMesh = (TextMesh) GetComponentInChildren<TextMesh> ();
-            textMesh.text = this.name.Split('(')[0];
+            SetPlantText (this.name.Split ('(') [0]);
+            light.enabled = false;
+        }
+    }
+ 
+    /*
+     * Remove the water effect and change the text to 'dead'.
+     */
+    void RenderAsDead ()
+    {
+        if (!isRipe ()) {
+            SetPlantText ("dead");
             light.enabled = false;
         }
     }
@@ -178,9 +184,17 @@ public class Plant : MonoBehaviour
      */
     void RenderAsDry ()
     {
-        TextMesh textMesh = (TextMesh) GetComponentInChildren<TextMesh> ();
-        textMesh.text = "WATER-ME";
+        SetPlantText ("water\nme");
         light.enabled = true;
+    }
+    
+    /*
+     * Set the plant textmesh to a given value.
+     */
+    void SetPlantText (string text)
+    {
+        TextMesh textMesh = (TextMesh)GetComponentInChildren<TextMesh> ();
+        textMesh.text = text;
     }
 
     /*
