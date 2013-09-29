@@ -89,7 +89,7 @@ public class Shop : MonoBehaviour
             DisplayInventoryData (shopInventory);
             if (selectedItem != null) {
                 DisplayItemDescription ();
-                if (GUI.Button (new Rect (shopWidth-BTN_W-(2*PADDING), innerBoxH/2 + LABEL_H, BTN_W, BTN_H),
+                if (GUI.Button (new Rect (shopWidth - BTN_W - (2 * PADDING), innerBoxH / 2 + LABEL_H, BTN_W, BTN_H),
                         "Purchase")) {
                     if (CanBuy (selectedItem, 1)) {
                         BuyItem (selectedItem, 1);
@@ -103,17 +103,17 @@ public class Shop : MonoBehaviour
             DisplayInventoryData (playerInventory);
             if (selectedItem != null) {
                 DisplayItemDescription ();
-                if (GUI.Button (new Rect (shopWidth-BTN_W-(2*PADDING), innerBoxH/2 + LABEL_H, BTN_W, BTN_H),
+                if (GUI.Button (new Rect (shopWidth - BTN_W - (2 * PADDING), innerBoxH / 2 + LABEL_H, BTN_W, BTN_H),
                         "Sell Item")) {
-                   SellItem(selectedItem, 1);
+                    SellItem (selectedItem, 1);
                 }
-                if (GUI.Button (new Rect (shopWidth-(2*BTN_W)-(2*PADDING), innerBoxH/2 + LABEL_H, BTN_W, BTN_H),
+                if (GUI.Button (new Rect (shopWidth - (2 * BTN_W) - (2 * PADDING), innerBoxH / 2 + LABEL_H, BTN_W, BTN_H),
                         "Sell ALL ITEMS")) {
-                   SellItem(selectedItem, playerInventory.GetItemCount(itemDB.GetItemByName(selectedItem).id));
+                    SellItem (selectedItem, playerInventory.GetItemCount (itemDB.GetItemByName (selectedItem).id));
                 }
             }
         }
-        DisplayBuySellButton();
+        DisplayBuySellButton ();
         if (GUI.Button (new Rect (shopWidth - BTN_W, shopHeight - BTN_H, BTN_W, BTN_H),
           new GUIContent ("Stop Shopping"))) {
             StopShopping ();
@@ -124,7 +124,8 @@ public class Shop : MonoBehaviour
     /*
      * Depending on the state of the shop, display a Sell or Buy button.
      */
-    private void DisplayBuySellButton() {
+    private void DisplayBuySellButton ()
+    {
         if (state == ShopState.SELLING) {
             if (GUI.Button (new Rect (shopWidth - BTN_W * 3, shopHeight - BTN_H, BTN_W, BTN_H),
               new GUIContent ("Buy (LB)"))) {
@@ -142,26 +143,27 @@ public class Shop : MonoBehaviour
      * Determine what the inventory of the shop or player is and display it.
      * This will also set some things like which of the items is selected.
      */
-    private void DisplayInventoryData (Inventory inventory) {
+    private void DisplayInventoryData (Inventory inventory)
+    {
         if (itemNames == null)
             itemNames = RetrieveItemNames (inventory);
         if (itemNames == null)
             return;
         if (itemDescriptions == null)
             itemDescriptions = RetrieveItemDescriptions (inventory);
-        scrollPos = GUI.BeginScrollView (new Rect (PADDING*2, LABEL_H, leftSideW, innerBoxH), scrollPos,
+        scrollPos = GUI.BeginScrollView (new Rect (PADDING * 2, LABEL_H, leftSideW, innerBoxH), scrollPos,
             new Rect (SCROLL_W, 0, SCROLL_W, itemNames.Length * LABEL_H), false, false);
 
         for (int i = 0; i < itemNames.Length; ++i) {
-            GUI.SetNextControlName(itemNames[i]);
-            if (GUI.Button (new Rect (PADDING, i * LABEL_H, leftSideW-4, LABEL_H), itemNames[i])) {
-                selectedItem = itemNames[i];
-                rightHandLabel = itemDescriptions[i];
+            GUI.SetNextControlName (itemNames [i]);
+            if (GUI.Button (new Rect (PADDING, i * LABEL_H, leftSideW - 4, LABEL_H), itemNames [i])) {
+                selectedItem = itemNames [i];
+                rightHandLabel = itemDescriptions [i];
             }
         }
         //focusId = ManageFocus (focusId, itemNames.Length);
         //GUI.FocusControl (focusId.ToString());
-        GUI.EndScrollView();
+        GUI.EndScrollView ();
     }
 
     /*
@@ -170,27 +172,27 @@ public class Shop : MonoBehaviour
      */
     private void DisplayItemDescription ()
     {
-        GUI.Box (new Rect (leftSideW + (3*PADDING), LABEL_H, rightSideW, innerBoxH/2), rightHandLabel);
+        GUI.Box (new Rect (leftSideW + (3 * PADDING), LABEL_H, rightSideW, innerBoxH / 2), rightHandLabel);
     }
 
     private int ManageFocus (int ID, int length)
     {
-        GUI.FocusControl(ID.ToString());
+        GUI.FocusControl (ID.ToString ());
         if (focusChanged && Time.timeSinceLevelLoad > 2.0f) {
-            focusChanged=false;
+            focusChanged = false;
         }
-        if ((Input.GetAxis("Horizontal") > 0 && ID < length && !focusChanged) ||
-            (Input.GetAxis("Vertical") > 0 && ID < length && !focusChanged)) {
-            focusChanged=true;
+        if ((Input.GetAxis ("Horizontal") > 0 && ID < length && !focusChanged) ||
+            (Input.GetAxis ("Vertical") > 0 && ID < length && !focusChanged)) {
+            focusChanged = true;
             ID++;
-        } else if ((Input.GetAxis("Horizontal") > 0 && ID < 0 && !focusChanged)) {
+        } else if ((Input.GetAxis ("Horizontal") > 0 && ID < 0 && !focusChanged)) {
             ID = 0;
         }
-        if ((Input.GetAxis("Horizontal") < 0 && ID > 0 && !focusChanged) ||
-            (Input.GetAxis("Vertical") < 0 && ID > 0 && !focusChanged)) {
-            focusChanged=true;
+        if ((Input.GetAxis ("Horizontal") < 0 && ID > 0 && !focusChanged) ||
+            (Input.GetAxis ("Vertical") < 0 && ID > 0 && !focusChanged)) {
+            focusChanged = true;
             ID--;
-        } else if ((Input.GetAxis("Horizontal") < 0 && ID < 0 && !focusChanged)) {
+        } else if ((Input.GetAxis ("Horizontal") < 0 && ID < 0 && !focusChanged)) {
             ID = 0;
         }
         return ID;

@@ -49,7 +49,7 @@ public class Plant : MonoBehaviour
             maxLife = 1;
         }
         neverWatered = true;
-        FlagAsDry ();
+        RenderAsDry ();
     }
 
     /**
@@ -60,16 +60,8 @@ public class Plant : MonoBehaviour
     {
         neverWatered = false;
         curLife = maxLife;
-        SpawnWaterFX();
-        light.enabled = false;
-    }
-
-    /**
-  * Remove the water effect and mark the plant as unwatered.
-  */
-    public void FlagAsDry ()
-    {
-        light.enabled = true;
+        SpawnWaterFX ();
+        RenderAsWatered ();
     }
 
     /**
@@ -79,11 +71,11 @@ public class Plant : MonoBehaviour
     public void NightlyUpdate ()
     {
         // Tick down plant health and warn user if health low
-        curLife--;           
+        curLife--;
         if (curLife < MIN_LIFE) {
             Wither ();
         } else if (curLife == MIN_LIFE) {
-            FlagAsDry ();
+            RenderAsDry ();
         }
      
         nightsSinceGrowth++;
@@ -122,6 +114,7 @@ public class Plant : MonoBehaviour
         if (!isWithered ()) {
             Debug.Log (String.Format ("WITHERING ({0}): CurLife reached {1}.", name, curLife));
             plantState = PlantStates.Withered;
+            RenderAsWatered ();
         }
     }
 
@@ -144,7 +137,7 @@ public class Plant : MonoBehaviour
     /**
   * Update the plant state to the appropriate material.
   */
-    private void RenderPlantState ()
+    void RenderPlantState ()
     {
         if (plantState == PlantStates.Seed) {
             renderer.material = seedMat;
@@ -152,15 +145,48 @@ public class Plant : MonoBehaviour
             renderer.material = sproutMat;
         } else if (plantState == PlantStates.Adult) {
             renderer.material = adultMat;
+            RenderAsRipe ();
         } else if (plantState == PlantStates.Withered) {
             renderer.material = witheredMat;
         }
     }
 
     /*
+     * Change the text to indicate need to pick and turn off water effect.
+     */
+    void RenderAsRipe ()
+    {
+        TextMesh textMesh = (TextMesh) GetComponentInChildren<TextMesh> ();
+        textMesh.text = "PICK-ME";
+        light.enabled = false;
+    }
+
+    /*
+     * Remove the water effect and change the text to normal.
+     */
+    void RenderAsWatered ()
+    {
+        if (!isRipe ()) {
+            TextMesh textMesh = (TextMesh) GetComponentInChildren<TextMesh> ();
+            textMesh.text = this.name.Split('(')[0];
+            light.enabled = false;
+        }
+    }
+
+    /**
+     * Add the water effect and change the text to indicate need to water.
+     */
+    void RenderAsDry ()
+    {
+        TextMesh textMesh = (TextMesh) GetComponentInChildren<TextMesh> ();
+        textMesh.text = "WATER-ME";
+        light.enabled = true;
+    }
+
+    /*
      * Spawns water fx with default orientation.
      */
-    private void SpawnWaterFX ()
+    void SpawnWaterFX ()
     {
         GameObject fx = (GameObject)Instantiate (waterFXPrefab, transform.position,
                 Quaternion.LookRotation (Vector3.up, Vector3.back));

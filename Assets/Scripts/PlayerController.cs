@@ -250,6 +250,8 @@ public class PlayerController : MonoBehaviour
                 if (plant != null) {
                     AudioSource.PlayClipAtPoint (waterSound, transform.position);
                     plant.Water ();
+                } else {
+                    AudioSource.PlayClipAtPoint (waterSound, transform.position);
                 }
             }
         }
