@@ -15,7 +15,7 @@ public class Inventory : MonoBehaviour
     {
         itemCounts = new Dictionary<int, int> ();
         itemDB = (ItemDatabase)GameObject.Find ("ItemDatabase").GetComponent<ItemDatabase> ();
-        itemCounts.Add (ItemIDs.RADISH_SEEDS, 9);
+        itemCounts.Add (ItemIDs.RADISH_SEEDS, 90);
     }
 
     void Start()

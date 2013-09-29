@@ -232,6 +232,8 @@ public class Shop : MonoBehaviour
     private bool CanBuy (string itemName, int count)
     {
         Item item = itemDB.GetItemByName (itemName);
+        if (playerInventory.GetItemCount (item.id) + count > item.maxCount)
+            return false;
         int totalCost = item.price * count;
         return playerInventory.HasMoney (totalCost);
     }
