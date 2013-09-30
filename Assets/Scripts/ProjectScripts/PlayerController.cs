@@ -9,13 +9,14 @@ public class PlayerController : MonoBehaviour
     public AudioClip digSound;
     public AudioClip digSoundFail;
     public AudioClip backpackSound;
-    public int playerIndex;
     private GameObject reticule;
     private GameObject actionTile;
     private Vector3 moveDirection;
     private float gravity = -20.0f;
     private float verticalSpeed = 0.0f;
     private CollisionFlags collisionFlags;
+    int playerIndex;
+    InputDevices.InputDevice playerDevice;
 
     void Awake ()
     {
@@ -109,8 +110,8 @@ public class PlayerController : MonoBehaviour
     {
         // Get input values
         float horizontal = 0.0f, vertical = 0.0f;
-        horizontal = RBInput.GetAxisRawForPlayer (InputStrings.HORIZONTAL, playerIndex);
-        vertical = RBInput.GetAxisRawForPlayer (InputStrings.VERTICAL, playerIndex);
+        horizontal = RBInput.GetAxisRawForPlayer (InputStrings.HORIZONTAL, playerIndex, playerDevice);
+        vertical = RBInput.GetAxisRawForPlayer (InputStrings.VERTICAL, playerIndex, playerDevice);
 
         // Determine move direction from target values
         float targetSpeed = 0.0f;
@@ -141,7 +142,7 @@ public class PlayerController : MonoBehaviour
      */
     void TryHoe ()
     {
-        bool isUsingWeapon = RBInput.GetButtonDownForPlayer (InputStrings.WEAPON1, playerIndex);
+        bool isUsingWeapon = RBInput.GetButtonDownForPlayer (InputStrings.WEAPON1, playerIndex, playerDevice);
         if (isUsingWeapon) {
             if (actionTile != null) {
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
@@ -159,7 +160,7 @@ public class PlayerController : MonoBehaviour
      */
     void TryPlanting ()
     {
-        bool isUsingItem = RBInput.GetButtonDownForPlayer (InputStrings.ITEM, playerIndex);
+        bool isUsingItem = RBInput.GetButtonDownForPlayer (InputStrings.ITEM, playerIndex, playerDevice);
         if (isUsingItem) {
             if (actionTile != null) {
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
@@ -182,7 +183,7 @@ public class PlayerController : MonoBehaviour
     */
     void TryPicking ()
     {
-        bool isAction = RBInput.GetButtonDownForPlayer (InputStrings.ACTION, playerIndex);
+        bool isAction = RBInput.GetButtonDownForPlayer (InputStrings.ACTION, playerIndex, playerDevice);
         if (isAction) {
             //.TODO This violates MVC, fix it
             if (actionTile != null) {
@@ -203,7 +204,7 @@ public class PlayerController : MonoBehaviour
      */
     void TryWatering ()
     {
-        bool isWatering = RBInput.GetButtonDownForPlayer (InputStrings.WEAPON2, playerIndex);
+        bool isWatering = RBInput.GetButtonDownForPlayer (InputStrings.WEAPON2, playerIndex, playerDevice);
         if (isWatering) {
             if (actionTile != null) {
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
@@ -220,10 +221,20 @@ public class PlayerController : MonoBehaviour
 
     void TryCycleItems ()
     {
-        // ToDo: This is the only way I could think to get button down for XBOX users
-        // and scroll wheel for PC. Should rework control scheme.
-        if (RBInput.GetButtonDownForPlayer (InputStrings.SWAPITEM_PC, playerIndex) ||
-            RBInput.GetAxisForPlayer (InputStrings.SWAPITEM_XBOX, playerIndex) > 0) {
+        bool isCycleItems = false;
+        if (playerDevice == InputDevices.KEYBOARD) {
+            if (RBInput.GetButtonDownForPlayer (InputStrings.SWAPITEM, playerIndex, playerDevice)) {
+                isCycleItems = true;
+            }
+        } else if (playerDevice == InputDevices.XBOX) {
+            if (RBInput.GetAxisForPlayer (InputStrings.SWAPITEM, playerIndex, playerDevice) > 0) {
+                isCycleItems = true;
+            }
+        } else {
+            Debug.LogError ("Unhandled input device detected in PlayerController");
+            return;
+        }
+        if (isCycleItems) {
             CycleItems ();
         }
     }
@@ -279,5 +290,11 @@ public class PlayerController : MonoBehaviour
     public void SnapToPoint (Transform point)
     {
         transform.position = point.transform.position;
+    }
+
+    public void BindPlayer (int index, InputDevices.InputDevice device)
+    {
+        playerIndex = index;
+        playerDevice = device;
     }
 }

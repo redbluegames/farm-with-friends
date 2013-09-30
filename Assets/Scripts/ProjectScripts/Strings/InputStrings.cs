@@ -10,8 +10,7 @@ public static class InputStrings
     public static string WEAPON2 = "Weapon2";
     public static string ITEM = "Item";
     public static string SPRINT = "Sprint";
-    public static string SWAPITEM_PC = "SwapItemPC";
-    public static string SWAPITEM_XBOX = "SwapItemXBox";
+    public static string SWAPITEM = "SwapItem";
     public static string PAUSE = "Pause";
     public static string DEBUG_INVENTORYP1 = "i";
     public static string DEBUG_INVENTORYP2 = "o";

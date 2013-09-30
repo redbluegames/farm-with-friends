@@ -3,25 +3,26 @@ using System.Collections;
 
 public class RBInput {
 
-    const string PREFIX = "_P";
+    const string PLAYER_PREFIX = "_P";
+    const string DEVICE_PREFIX = "_";
 
-    public static bool GetButtonDownForPlayer(string buttonName, int playerIndex)
+    public static bool GetButtonDownForPlayer(string buttonName, int playerIndex, InputDevices.InputDevice device)
     {
-        return Input.GetButtonDown (ConcatPlayerIndex (buttonName, playerIndex));
+        return Input.GetButtonDown (ConcatPlayerIndex (buttonName, playerIndex, device));
     }
 
-    public static float GetAxisRawForPlayer (string axisName, int playerIndex)
+    public static float GetAxisRawForPlayer (string axisName, int playerIndex, InputDevices.InputDevice device)
     {
-        return Input.GetAxisRaw (ConcatPlayerIndex(axisName, playerIndex));
+        return Input.GetAxisRaw (ConcatPlayerIndex(axisName, playerIndex, device));
     }
 
-    public static float GetAxisForPlayer (string axisName, int playerIndex)
+    public static float GetAxisForPlayer (string axisName, int playerIndex, InputDevices.InputDevice device)
     {
-        return Input.GetAxis (ConcatPlayerIndex (axisName, playerIndex));
+        return Input.GetAxis (ConcatPlayerIndex (axisName, playerIndex, device));
     }
 
-    static string ConcatPlayerIndex (string buttonName, int playerIndex)
+    static string ConcatPlayerIndex (string buttonName, int playerIndex, InputDevices.InputDevice device)
     {
-        return buttonName + PREFIX + playerIndex.ToString ();
+        return buttonName + DEVICE_PREFIX + device.DeviceName + PLAYER_PREFIX + playerIndex.ToString ();
     }
 }

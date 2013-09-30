@@ -3,30 +3,26 @@ using System.Collections;
 
 public class HUD : MonoBehaviour
 {
-    GameObject player;
-    GameObject player2;
-    Inventory inventory;
-    Inventory inventory2;
+    GameObject player0;
+    GameObject player1;
+    Inventory inventory0;
+    Inventory inventory1;
     string moneyMsg;
     string radishMsg;
     string radishSeedMsg;
+    GameManager gameManager;
     WorldTime gametime;
-    int numPlayers;
 
-    void Start ()
+    void Awake ()
     {
         GameObject obj = GameObject.FindGameObjectWithTag ("GameManager");
         gametime = (WorldTime)obj.GetComponent<WorldTime> ();
-
-        player = GameObject.Find ("Player0");
-        inventory = (Inventory)player.GetComponent<Inventory> ();
-        if (GameObject.FindGameObjectsWithTag ("Player").Length == 2) {
-            AddSecondPlayerHUD ();
-        }
+        gameManager = (GameManager)obj.GetComponent<GameManager> ();
     }
  
     void OnGUI ()
     {
+        InstantiatePlayerHUDS ();
         DrawInventory ();
         DrawPlayerHUD ();
     }
@@ -42,17 +38,14 @@ public class HUD : MonoBehaviour
 
     private void DrawInventory ()
     {
-        // Draw player 1's inventory
-        // TODO Let's not have a Find and a GetComponent onGUI
-        inventory = (Inventory)GameObject.Find ("Player0").GetComponent<Inventory> ();
-        string inventoryMsg = "Shellings: " + inventory.money + "\n";
-        inventoryMsg += "Radishes: " + inventory.GetItemCount (ItemIDs.RADISH) + "\n";
-        inventoryMsg += "Radish Seeds: " + inventory.GetItemCount (ItemIDs.RADISH_SEEDS);
+        string inventoryMsg = "Shellings: " + inventory0.money + "\n";
+        inventoryMsg += "Radishes: " + inventory0.GetItemCount (ItemIDs.RADISH) + "\n";
+        inventoryMsg += "Radish Seeds: " + inventory0.GetItemCount (ItemIDs.RADISH_SEEDS);
         GUI.Label (new Rect (10, Screen.height - 115, 120, 100), inventoryMsg);
 
         // Draw player 1's equipped item
         // TODO Can GetComponent be avoided? Isn't this expensive?
-        Item equippedItem = player.GetComponent<PlayerController> ().GetEquippedItem ();
+        Item equippedItem = player0.GetComponent<PlayerController> ().GetEquippedItem ();
         string itemName = "";
         if (equippedItem == null) {
             itemName = "No Item Equipped";
@@ -64,22 +57,22 @@ public class HUD : MonoBehaviour
         float itemLabelYOffset = 80;
 
         float itemXPos;
-        if (player2 == null) {
+        if (player1 == null) {
             itemXPos = Screen.width;
         } else {
             itemXPos = Screen.width / 2;
         }
         GUI.Label (new Rect (itemXPos - itemLabelWidth, itemLabelYOffset, itemLabelWidth, itemLabelHeight), itemName);
 
-        if (player2 != null) {
+        if (player1 != null) {
             // Now draw player 2's
-            if (inventory2 != null) {
-                inventoryMsg = "Shellings: " + inventory2.money + "\n";
-                inventoryMsg += "Radishes: " + inventory2.GetItemCount (ItemIDs.RADISH) + "\n";
-                inventoryMsg += "Radish Seeds: " + inventory2.GetItemCount (ItemIDs.RADISH_SEEDS);
+            if (inventory1 != null) {
+                inventoryMsg = "Shellings: " + inventory1.money + "\n";
+                inventoryMsg += "Radishes: " + inventory1.GetItemCount (ItemIDs.RADISH) + "\n";
+                inventoryMsg += "Radish Seeds: " + inventory1.GetItemCount (ItemIDs.RADISH_SEEDS);
                 GUI.Label (new Rect (10 + (Screen.width / 2), Screen.height - 115, 120, 100), inventoryMsg);
             }
-            equippedItem = player2.GetComponent<PlayerController> ().GetEquippedItem ();
+            equippedItem = player1.GetComponent<PlayerController> ().GetEquippedItem ();
             if (equippedItem == null) {
                 itemName = "No Item Equipped";
             } else {
@@ -88,6 +81,20 @@ public class HUD : MonoBehaviour
             GUI.Label (new Rect (Screen.width - itemLabelWidth, itemLabelYOffset, itemLabelWidth, itemLabelHeight), itemName);
         } else {
             DisplayHowToEnterText ();
+        }
+    }
+
+    void InstantiatePlayerHUDS ()
+    {
+        if (player0 == null) {
+            player0 = GameObject.Find ("Player0");
+            inventory0 = (Inventory)player0.GetComponent<Inventory> ();
+        }
+        if (gameManager.NumPlayers > 1) {
+            if (player1 == null) {
+                player1 = GameObject.Find ("Player1");
+                inventory1 = (Inventory)player1.GetComponent<Inventory> ();
+            }
         }
     }
 
@@ -100,15 +107,5 @@ public class HUD : MonoBehaviour
         int width = Screen.width / 3;
         GUI.Label (new Rect (Screen.width - width, Screen.height - 20, width, 20), 
             "Player 2 Press ENTER to join.");
-    }
-
-    /*
-     * Set the necessary variables to trigger drawing of a second HUD.
-     */
-    public void AddSecondPlayerHUD ()
-    {
-        player2 = GameObject.Find ("Player2");
-        inventory2 = (Inventory)player2.GetComponent<Inventory> ();
-        numPlayers = 2;
     }
 }
