@@ -20,11 +20,8 @@ public class ItemDatabaseManager : EditorWindow {
     {
         if(GUILayout.Button ("Import Items to DB"))
         {
-            ItemDatabase itemDatabase = (ItemDatabase) GameObject.Find("ItemDatabase").GetComponent<ItemDatabase>();
             ImportItems ();
         }
-
-
     }
 
     // TODO: Unhardcode these IDs by putting them in a file

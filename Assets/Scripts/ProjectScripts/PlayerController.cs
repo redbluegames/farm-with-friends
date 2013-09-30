@@ -17,20 +17,26 @@ public class PlayerController : MonoBehaviour
     private CollisionFlags collisionFlags;
     int playerIndex;
     InputDevices.InputDevice playerDevice;
+    bool isPlayerBound;
 
     void Awake ()
     {
+        isPlayerBound = false;
         moveDirection = transform.TransformDirection (Vector3.forward);
     }
 
     void Start ()
     {
-        TryCycleItems ();
         SpawnReticule ();
     }
  
     void Update ()
     {
+        if(!isPlayerBound)
+        {
+            return;
+        }
+
         ApplyGravity ();
 
         Move ();
@@ -231,7 +237,8 @@ public class PlayerController : MonoBehaviour
                 isCycleItems = true;
             }
         } else {
-            Debug.LogError ("Unhandled input device detected in PlayerController");
+            Debug.LogError (string.Format ("Unhandled input device detected in PlayerController: ({0})",
+                playerDevice.DeviceName));
             return;
         }
         if (isCycleItems) {
@@ -294,7 +301,12 @@ public class PlayerController : MonoBehaviour
 
     public void BindPlayer (int index, InputDevices.InputDevice device)
     {
+        isPlayerBound = true;
+
         playerIndex = index;
         playerDevice = device;
+
+        // Equip something by default
+        CycleItems();
     }
 }

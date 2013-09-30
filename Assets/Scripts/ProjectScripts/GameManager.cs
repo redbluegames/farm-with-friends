@@ -6,10 +6,10 @@ public class GameManager : MonoBehaviour
     GameObject[] players;
     GameObject[] cameras;
     GameObject hud;
-    public int NumPlayers{ get; private set;}
+
+    public int NumPlayers{ get; private set; }
 
     int maxPlayers;
-
     bool isPCBound;
     bool isXBoxBound;
 
@@ -20,15 +20,14 @@ public class GameManager : MonoBehaviour
         maxPlayers = 2;
         players = new GameObject[maxPlayers];
         cameras = new GameObject[maxPlayers];
-        for( int i = 0; i < maxPlayers; i++)
-        {
-            players[i] = GameObject.Find ("Player" + i.ToString());
-            cameras[i] = GameObject.Find ("PlayerCamera" + i.ToString());
-            players[i].SetActive(false);
-            cameras[i].SetActive(false);
+        for (int i = 0; i < maxPlayers; i++) {
+            players [i] = GameObject.Find ("Player" + i.ToString ());
+            cameras [i] = GameObject.Find ("PlayerCamera" + i.ToString ());
+            players [i].SetActive (false);
+            cameras [i].SetActive (false);
         }
-        hud = GameObject.Find("HUD");
-        hud.SetActive(false);
+        hud = GameObject.Find ("HUD");
+        hud.SetActive (false);
     }
 
     // Update is called once per frame
@@ -66,10 +65,12 @@ public class GameManager : MonoBehaviour
     void BindNextPlayer (InputDevices.InputDevice device)
     {
         int playerIndex = NumPlayers;
-        players [playerIndex].SetActive(true);
-        cameras[playerIndex].SetActive(true);
-        players [playerIndex].GetComponent<PlayerController> ().BindPlayer (playerIndex, device);
         NumPlayers++;
-        hud.SetActive(true);
+        players [playerIndex].SetActive (true);
+        cameras [playerIndex].SetActive (true);
+        cameras [playerIndex].GetComponent<IsometricCameraController> ().SplitScreenView ();
+        players [playerIndex].GetComponent<PlayerController> ().BindPlayer (playerIndex, device);
+
+        hud.SetActive (true);
     }
 }

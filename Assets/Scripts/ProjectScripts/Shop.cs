@@ -10,7 +10,7 @@ public class Shop : MonoBehaviour
     string[] itemNames;
     string[] itemDescriptions;
     ShopState state;
-    int playerNum;
+    int playerIndex;
 
     // GUI properties
     int shopHeight = (int)(Screen.height * 0.75);
@@ -127,12 +127,12 @@ public class Shop : MonoBehaviour
         if (state == ShopState.SELLING) {
             if (GUI.Button (new Rect (shopWidth - BTN_W * 3, shopHeight - BTN_H, BTN_W, BTN_H),
               new GUIContent ("Buy (LB)"))) {
-                StartBuying (playerNum);
+                StartBuying (playerIndex);
             }
         } else {
             if (GUI.Button (new Rect (shopWidth - BTN_W * 2, shopHeight - BTN_H, BTN_W, BTN_H),
               new GUIContent ("Sell (RB)"))) {
-                StartSelling (playerNum);
+                StartSelling (playerIndex);
             }
         }
     }
