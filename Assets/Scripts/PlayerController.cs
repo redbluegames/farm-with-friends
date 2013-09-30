@@ -115,8 +115,8 @@ public class PlayerController : MonoBehaviour
             vertical = Input.GetAxisRaw ("Vertical");
             break;
         case PlayerNum.TWO:
-            horizontal = Input.GetAxisRaw ("Horizontal2");
-            vertical = Input.GetAxisRaw ("Vertical2");
+            horizontal = Input.GetAxisRaw ("Horizontal_2");
+            vertical = Input.GetAxisRaw ("Vertical_2");
             break;
         }
 
@@ -182,7 +182,7 @@ public class PlayerController : MonoBehaviour
             isFire2 = Input.GetButtonDown ("Item");
             break;
         case PlayerNum.TWO:
-            isFire2 = Input.GetButtonDown ("Item2");
+            isFire2 = Input.GetButtonDown ("Item_2");
             break;
         }
         if (isFire2) {
@@ -212,7 +212,7 @@ public class PlayerController : MonoBehaviour
             isFire2 = Input.GetButtonDown ("Action");
             break;
         case PlayerNum.TWO:
-            isFire2 = Input.GetButtonDown ("Action2");
+            isFire2 = Input.GetButtonDown ("Action_2");
             break;
         }
         if (isFire2) {
