@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip digSound;
     public AudioClip digSoundFail;
     public AudioClip backpackSound;
-    public PlayerNum playerNum;
+    public int playerIndex;
     private GameObject reticule;
     private GameObject actionTile;
     private Vector3 moveDirection;
@@ -109,16 +109,8 @@ public class PlayerController : MonoBehaviour
     {
         // Get input values
         float horizontal = 0.0f, vertical = 0.0f;
-        switch (playerNum) {
-        case PlayerNum.ONE:
-            horizontal = Input.GetAxisRaw ("Horizontal");
-            vertical = Input.GetAxisRaw ("Vertical");
-            break;
-        case PlayerNum.TWO:
-            horizontal = Input.GetAxisRaw ("Horizontal_2");
-            vertical = Input.GetAxisRaw ("Vertical_2");
-            break;
-        }
+        horizontal = RBInput.GetAxisRawForPlayer (InputStrings.HORIZONTAL, playerIndex);
+        vertical = RBInput.GetAxisRawForPlayer (InputStrings.VERTICAL, playerIndex);
 
         // Determine move direction from target values
         float targetSpeed = 0.0f;
@@ -149,16 +141,8 @@ public class PlayerController : MonoBehaviour
      */
     void TryHoe ()
     {
-        bool isFire1 = false;
-        switch (playerNum) {
-        case PlayerNum.ONE:
-            isFire1 = Input.GetButtonDown ("Weapon1");
-            break;
-        case PlayerNum.TWO:
-            isFire1 = Input.GetButtonDown ("Weapon1_2");
-            break;
-        }
-        if (isFire1) {
+        bool isUsingWeapon = RBInput.GetButtonDownForPlayer (InputStrings.WEAPON1, playerIndex);
+        if (isUsingWeapon) {
             if (actionTile != null) {
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
                 tile.Hoe ();
@@ -166,7 +150,6 @@ public class PlayerController : MonoBehaviour
             } else {
                 AudioSource.PlayClipAtPoint (digSoundFail, transform.position);
             }
-
         }
     }
  
@@ -176,18 +159,11 @@ public class PlayerController : MonoBehaviour
      */
     void TryPlanting ()
     {
-        bool isFire2 = false;
-        switch (playerNum) {
-        case PlayerNum.ONE:
-            isFire2 = Input.GetButtonDown ("Item");
-            break;
-        case PlayerNum.TWO:
-            isFire2 = Input.GetButtonDown ("Item_2");
-            break;
-        }
-        if (isFire2) {
+        bool isUsingItem = RBInput.GetButtonDownForPlayer (InputStrings.ITEM, playerIndex);
+        if (isUsingItem) {
             if (actionTile != null) {
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
+                //TODO This violates MVC, fix it
                 if (tile.isSoil ()) {
                     Inventory inventory = (Inventory)GetComponent<Inventory> ();
                     if (inventory.GetEquippedItem () != null) {
@@ -206,16 +182,9 @@ public class PlayerController : MonoBehaviour
     */
     void TryPicking ()
     {
-        bool isFire2 = false;
-        switch (playerNum) {
-        case PlayerNum.ONE:
-            isFire2 = Input.GetButtonDown ("Action");
-            break;
-        case PlayerNum.TWO:
-            isFire2 = Input.GetButtonDown ("Action_2");
-            break;
-        }
-        if (isFire2) {
+        bool isAction = RBInput.GetButtonDownForPlayer (InputStrings.ACTION, playerIndex);
+        if (isAction) {
+            //.TODO This violates MVC, fix it
             if (actionTile != null) {
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
                 Plant plant = tile.getPlant ();
@@ -234,16 +203,8 @@ public class PlayerController : MonoBehaviour
      */
     void TryWatering ()
     {
-        bool isFire3 = false;
-        switch (playerNum) {
-        case PlayerNum.ONE:
-            isFire3 = Input.GetButtonDown ("Weapon2");
-            break;
-        case PlayerNum.TWO:
-            isFire3 = Input.GetButtonDown ("Weapon2_2");
-            break;
-        }
-        if (isFire3) {
+        bool isWatering = RBInput.GetButtonDownForPlayer (InputStrings.WEAPON2, playerIndex);
+        if (isWatering) {
             if (actionTile != null) {
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
                 Plant plant = tile.getPlant ();
@@ -261,12 +222,13 @@ public class PlayerController : MonoBehaviour
     {
         // ToDo: This is the only way I could think to get button down for XBOX users
         // and scroll wheel for PC. Should rework control scheme.
-        if (Input.GetButtonDown ("SwapItemXBOX") || Input.GetAxis ("SwapItemPC") > 0) {
+        if (RBInput.GetButtonDownForPlayer (InputStrings.SWAPITEM_PC, playerIndex) ||
+            RBInput.GetAxisForPlayer (InputStrings.SWAPITEM_XBOX, playerIndex) > 0) {
             CycleItems ();
         }
     }
 
-    void CycleItems()
+    void CycleItems ()
     {
         Inventory inventory = (Inventory)GetComponent<Inventory> ();
         inventory.EquipNextItem ();
@@ -274,18 +236,11 @@ public class PlayerController : MonoBehaviour
 
     void TryDebugs ()
     {
-        bool isAtShop = false;
-        switch (playerNum) {
-        case PlayerNum.ONE:
-            isAtShop = Input.GetKeyDown ("i");
-            break;
-        case PlayerNum.TWO:
-            isAtShop = Input.GetKeyDown ("o");
-            break;
-        }
+        bool isAtShop = Input.GetKeyDown (InputStrings.DEBUG_INVENTORYP1) ||
+            Input.GetKeyDown (InputStrings.DEBUG_INVENTORYP2);
         if (isAtShop) {
             Shop shop = (Shop)GameObject.FindGameObjectWithTag ("Shop").GetComponent<Shop> ();
-            shop.StartBuying(playerNum);
+            shop.StartBuying (playerIndex);
         }
     }
  
@@ -312,7 +267,7 @@ public class PlayerController : MonoBehaviour
         return actionTile;
     }
 
-    public Item GetEquippedItem()
+    public Item GetEquippedItem ()
     {
         Inventory inventory = (Inventory)GetComponent<Inventory> ();
         if (inventory.GetEquippedItem () == null)
@@ -321,7 +276,7 @@ public class PlayerController : MonoBehaviour
         return inventory.GetEquippedItem ();
     }
 
-    public void SnapToPoint(Transform point)
+    public void SnapToPoint (Transform point)
     {
         transform.position = point.transform.position;
     }

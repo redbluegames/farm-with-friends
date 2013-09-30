@@ -15,10 +15,10 @@ public class HUD : MonoBehaviour
 
     void Start ()
     {
-        GameObject obj = GameObject.FindGameObjectWithTag ("WorldTime");
+        GameObject obj = GameObject.FindGameObjectWithTag ("GameManager");
         gametime = (WorldTime)obj.GetComponent<WorldTime> ();
 
-        player = GameObject.Find ("Player1");
+        player = GameObject.Find ("Player0");
         inventory = (Inventory)player.GetComponent<Inventory> ();
         if (GameObject.FindGameObjectsWithTag ("Player").Length == 2) {
             AddSecondPlayerHUD ();
@@ -44,7 +44,7 @@ public class HUD : MonoBehaviour
     {
         // Draw player 1's inventory
         // TODO Let's not have a Find and a GetComponent onGUI
-        inventory = (Inventory)GameObject.Find ("Player1").GetComponent<Inventory> ();
+        inventory = (Inventory)GameObject.Find ("Player0").GetComponent<Inventory> ();
         string inventoryMsg = "Shellings: " + inventory.money + "\n";
         inventoryMsg += "Radishes: " + inventory.GetItemCount (ItemIDs.RADISH) + "\n";
         inventoryMsg += "Radish Seeds: " + inventory.GetItemCount (ItemIDs.RADISH_SEEDS);

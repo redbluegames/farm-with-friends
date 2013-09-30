@@ -10,7 +10,7 @@ public class Shop : MonoBehaviour
     string[] itemNames;
     string[] itemDescriptions;
     ShopState state;
-    PlayerNum playerNum;
+    int playerNum;
 
     // GUI properties
     int shopHeight = (int)(Screen.height * 0.75);
@@ -67,12 +67,10 @@ public class Shop : MonoBehaviour
         }
 
         GUI.skin.button.wordWrap = true;
-        // Set up window dimensions
-        if (GameObject.FindGameObjectsWithTag ("Player").Length == 2) {
-            if (playerNum == PlayerNum.TWO)
-                leftStart = Screen.width / 2;
-            else
-                leftStart = 0;
+        // Set up window dimensions for multiple players
+        int numPlayers = GameObject.FindGameObjectsWithTag ("Player").Length;
+        if (numPlayers > 1) {
+            leftStart = Screen.width / numPlayers;
             shopWidth = (int)(Screen.width * (0.75 / 2));
             widthMargins = Screen.width / 16;
         }
@@ -296,35 +294,17 @@ public class Shop : MonoBehaviour
         return itemTexts;
     }
 
-    public void StartBuying (PlayerNum player)
+    public void StartBuying (int playerIndex)
     {
         ResetItemData ();
-
-        playerNum = player;
-        switch (player) {
-        case PlayerNum.ONE:
-            playerInventory = (Inventory)GameObject.Find ("Player1").GetComponent<Inventory> ();
-            break;
-        case PlayerNum.TWO:
-            playerInventory = (Inventory)GameObject.Find ("Player2").GetComponent<Inventory> ();
-            break;
-        }
+        SetActivePlayer (playerIndex);
         state = ShopState.BUYING;
     }
 
-    public void StartSelling (PlayerNum player)
+    public void StartSelling (int playerIndex)
     {
         ResetItemData ();
-
-        playerNum = player;
-        switch (playerNum) {
-        case PlayerNum.ONE:
-            playerInventory = (Inventory)GameObject.Find ("Player1").GetComponent<Inventory> ();
-            break;
-        case PlayerNum.TWO:
-            playerInventory = (Inventory)GameObject.Find ("Player2").GetComponent<Inventory> ();
-            break;
-        }
+        SetActivePlayer (playerIndex);
         state = ShopState.SELLING;
     }
 
@@ -335,4 +315,8 @@ public class Shop : MonoBehaviour
         state = ShopState.NONE;
     }
 
+    void SetActivePlayer (int playerIndex)
+    {
+        playerInventory = (Inventory)GameObject.Find ("Player" + playerIndex.ToString ()).GetComponent<Inventory> ();
+    }
 }

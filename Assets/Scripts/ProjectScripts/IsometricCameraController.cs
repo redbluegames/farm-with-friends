@@ -5,7 +5,6 @@ public class IsometricCameraController : MonoBehaviour
 {
     public GameObject target;
     private Vector3 offset;
-    public PlayerNum playerNum;
  
     void Start ()
     {

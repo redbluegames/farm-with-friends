@@ -7,7 +7,7 @@ public class Trigger_Sleep : MonoBehaviour {
     {
         if(other.tag == "Player")
         {
-            WorldTime worldtime = (WorldTime)GameObject.FindGameObjectWithTag ("WorldTime").GetComponent<WorldTime> ();
+            WorldTime worldtime = (WorldTime)GameObject.FindGameObjectWithTag ("GameManager").GetComponent<WorldTime> ();
             worldtime.GoToNextDay ();
         }
     }
