@@ -3,14 +3,20 @@ using System.Collections;
 
 public class GroundTile : MonoBehaviour
 {
+    // Materials and FX
     public Material dirtMaterial;
     public Material grassMaterial;
     public Material soilMaterial;
     public GameObject dirtFXPrefab;
+
+    // The plant currently planted on this ground tile
     GameObject curPlant;
+
+    // Size of each game tile. In a robust grid system, this would be a global constant
     static public float SIZE_XZ = 1.0f;
     static public float SIZE_Y = 0.1f;
- 
+
+    // All possible states for a ground tile to be
     public enum GroundState
     {
         Dirt,
@@ -18,12 +24,13 @@ public class GroundTile : MonoBehaviour
         Soil,
         Planted
     }
- 
-    private GroundState state = GroundState.Dirt;
+
+    // The current state of the ground tile
+    private GroundState curState = GroundState.Dirt;
  
     void Start ()
     {
-        SetState (state);
+        SetState (curState);
     }
  
     public void SetState (GroundState newState)
@@ -35,7 +42,7 @@ public class GroundTile : MonoBehaviour
         } else if (newState == GroundState.Soil) {
             renderer.material = soilMaterial;
         }
-        state = newState;
+        curState = newState;
     }
  
     /*
@@ -43,7 +50,7 @@ public class GroundTile : MonoBehaviour
  */
     public void Hoe ()
     {
-        switch (state) {
+        switch (curState) {
         case GroundState.Dirt :
             SetState (GroundState.Soil);
             break;
@@ -104,7 +111,7 @@ public class GroundTile : MonoBehaviour
  */
     public bool isSoil ()
     {
-        return state == GroundState.Soil;
+        return curState == GroundState.Soil;
     }
  
     /*
