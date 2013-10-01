@@ -18,8 +18,7 @@ public class Plant : MonoBehaviour
     public int nightsPerGrowth;
     public int maxLife;
 
-    // Mats and FX
-    public GameObject waterFXPrefab;
+    // Materials
     public Material seedMat;
     public Material sproutMat;
     public Material adultMat;
@@ -60,7 +59,6 @@ public class Plant : MonoBehaviour
     public void Water ()
     {
         curLife = maxLife;
-        SpawnWaterFX ();
         RenderAsWatered ();
     }
 
@@ -195,15 +193,5 @@ public class Plant : MonoBehaviour
     {
         TextMesh textMesh = (TextMesh)GetComponentInChildren<TextMesh> ();
         textMesh.text = text;
-    }
-
-    /*
-     * Spawns water fx with default orientation.
-     */
-    void SpawnWaterFX ()
-    {
-        GameObject fx = (GameObject)Instantiate (waterFXPrefab, transform.position,
-                Quaternion.LookRotation (Vector3.up, Vector3.back));
-        Destroy (fx, 2.0f);
     }
 }

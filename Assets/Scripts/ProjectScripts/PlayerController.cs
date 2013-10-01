@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     public float movespeed;
     public GameObject reticulePrefab;
+    public GameObject waterFXPrefab;
     public AudioClip waterSound;
     public AudioClip digSound;
     public AudioClip digSoundFail;
@@ -216,13 +217,22 @@ public class PlayerController : MonoBehaviour
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
                 Plant plant = tile.getPlant ();
                 if (plant != null) {
-                    AudioSource.PlayClipAtPoint (waterSound, transform.position);
                     plant.Water ();
-                } else {
-                    AudioSource.PlayClipAtPoint (waterSound, transform.position);
                 }
+                SpawnWaterFX ();
             }
         }
+    }
+
+    /*
+     * Spawns water fx with default orientation.
+     */
+    void SpawnWaterFX ()
+    {
+        AudioSource.PlayClipAtPoint (waterSound, transform.position);
+        GameObject fx = (GameObject)Instantiate (waterFXPrefab, reticule.transform.position,
+                Quaternion.LookRotation (Vector3.up, Vector3.back));
+        Destroy (fx, 2.0f);
     }
 
     /*
