@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     private float verticalSpeed = 0.0f;
     private CollisionFlags collisionFlags;
     int playerIndex;
-    InputDevices.InputDevice playerDevice;
+    InputDevice playerDevice;
     bool isPlayerBound;
 
     void Awake ()
@@ -225,37 +225,32 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /*
+     * Reads input and handles action for cycling through the players items in his inventory
+     */
     void TryCycleItems ()
     {
-        bool isCycleItems = false;
-        if (playerDevice == InputDevices.KEYBOARD) {
-            if (RBInput.GetButtonDownForPlayer (InputStrings.SWAPITEM, playerIndex, playerDevice)) {
-                isCycleItems = true;
-            }
-        } else if (playerDevice == InputDevices.XBOX) {
-            if (RBInput.GetAxisForPlayer (InputStrings.SWAPITEM, playerIndex, playerDevice) > 0) {
-                isCycleItems = true;
-            }
-        } else {
-            Debug.LogError (string.Format ("Unhandled input device detected in PlayerController: ({0})",
-                playerDevice.DeviceName));
-            return;
-        }
+        bool isCycleItems = RBInput.GetButtonDownForPlayer (InputStrings.SWAPITEM, playerIndex, playerDevice);
         if (isCycleItems) {
             CycleItems ();
         }
     }
 
+    /*
+     * Cycles to the next item in the player's inventory
+     */
     void CycleItems ()
     {
         Inventory inventory = (Inventory)GetComponent<Inventory> ();
         inventory.EquipNextItem ();
     }
 
+    /*
+     * Reads input and handles action for all debug functions
+     */
     void TryDebugs ()
     {
-        bool isAtShop = Input.GetKeyDown (InputStrings.DEBUG_INVENTORYP1) ||
-            Input.GetKeyDown (InputStrings.DEBUG_INVENTORYP2);
+        bool isAtShop = Input.GetKeyDown (InputStrings.DEBUG_INVENTORY[playerIndex]);
         if (isAtShop) {
             Shop shop = (Shop)GameObject.FindGameObjectWithTag ("Shop").GetComponent<Shop> ();
             shop.StartBuying (playerIndex);
@@ -299,7 +294,7 @@ public class PlayerController : MonoBehaviour
         transform.position = point.transform.position;
     }
 
-    public void BindPlayer (int index, InputDevices.InputDevice device)
+    public void BindPlayer (int index, InputDevice device)
     {
         isPlayerBound = true;
 

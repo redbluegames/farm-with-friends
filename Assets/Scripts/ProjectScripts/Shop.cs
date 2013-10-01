@@ -10,7 +10,7 @@ public class Shop : MonoBehaviour
     string[] itemNames;
     string[] itemDescriptions;
     ShopState state;
-    int playerIndex;
+    int activePlayerIndex;
 
     // GUI properties
     int shopHeight = (int)(Screen.height * 0.75);
@@ -70,8 +70,9 @@ public class Shop : MonoBehaviour
         // Set up window dimensions for multiple players
         int numPlayers = GameObject.FindGameObjectsWithTag ("Player").Length;
         if (numPlayers > 1) {
-            leftStart = Screen.width / numPlayers;
-            shopWidth = (int)(Screen.width * (0.75 / 2));
+            leftStart = (int) (Screen.width * ((float) activePlayerIndex / numPlayers));
+            Debug.Log(string.Format("Left Start: ({0})", leftStart.ToString()));
+            shopWidth = (int)(Screen.width * (0.75 / numPlayers));
             widthMargins = Screen.width / 16;
         }
         shopWidthWithoutPadding = shopWidth - (4 * PADDING);
@@ -127,12 +128,12 @@ public class Shop : MonoBehaviour
         if (state == ShopState.SELLING) {
             if (GUI.Button (new Rect (shopWidth - BTN_W * 3, shopHeight - BTN_H, BTN_W, BTN_H),
               new GUIContent ("Buy (LB)"))) {
-                StartBuying (playerIndex);
+                StartBuying (activePlayerIndex);
             }
         } else {
             if (GUI.Button (new Rect (shopWidth - BTN_W * 2, shopHeight - BTN_H, BTN_W, BTN_H),
               new GUIContent ("Sell (RB)"))) {
-                StartSelling (playerIndex);
+                StartSelling (activePlayerIndex);
             }
         }
     }
@@ -317,6 +318,7 @@ public class Shop : MonoBehaviour
 
     void SetActivePlayer (int playerIndex)
     {
-        playerInventory = (Inventory)GameObject.Find ("Player" + playerIndex.ToString ()).GetComponent<Inventory> ();
+        activePlayerIndex = playerIndex;
+        playerInventory = (Inventory)GameObject.Find ("Player" + activePlayerIndex.ToString ()).GetComponent<Inventory> ();
     }
 }

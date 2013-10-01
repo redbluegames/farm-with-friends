@@ -33,36 +33,29 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-        int nextPlayerIndex = NumPlayers;
-        //InputDevices.InputDevice nextDevice = InputDevices.KEYBOARD;
-        /*foreach (InputDevices.InputDevice device in InputDevices))
-         *{
-         *  if( RBInput.GetButtonDownForPlayer (InputStrings.PAUSE, device, nextPlayerIndex))
-         * {
-         *  BindNextPlayer( device, nextPlayerIndex);
-         * }
-         **
-         */
-        InputDevices.InputDevice device = InputDevices.KEYBOARD;
-        if (!isPCBound && RBInput.GetButtonDownForPlayer (InputStrings.PAUSE, nextPlayerIndex, device)) {
-            BindNextPlayer (device);
-            isPCBound = true;
+        if(NumPlayers != maxPlayers)
+        {
+            PollForNewPlayer();
         }
-        device = InputDevices.XBOX;
-        if (!isXBoxBound && RBInput.GetButtonDownForPlayer (InputStrings.PAUSE, nextPlayerIndex, device)) {
-            BindNextPlayer (device);
-            isXBoxBound = true;
-        }
-        //if (RBInput.GetButtonDownForPlayer (InputStrings.PAUSE, 1)) {
-        // Unity can't Find these objects again here if they are inactive.
-        // This is okay too because a GetObject in an Update is too expensive.
-//            player1.SetActive (true);
-        //player1Camera.SetActive (true);
-        //GameObject.Find ("HUD").GetComponent<HUD> ().AddSecondPlayerHUD ();
-        //}
     }
 
-    void BindNextPlayer (InputDevices.InputDevice device)
+    /*
+     * Checks all input sources for a player pressing "Start" and binds them when they join.
+     */
+    void PollForNewPlayer()
+    {
+        int nextPlayerIndex = NumPlayers;
+        foreach (InputDevice device in InputDevices.GetAllInputDevices()) {
+            if (RBInput.GetButtonDownForPlayer (InputStrings.PAUSE, nextPlayerIndex, device)) {
+                BindNextPlayer (device);
+            }
+        }
+    }
+
+    /*
+     * Binds the next player object to an input device and player index.
+     */
+    void BindNextPlayer (InputDevice device)
     {
         int playerIndex = NumPlayers;
         NumPlayers++;

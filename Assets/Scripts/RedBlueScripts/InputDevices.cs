@@ -1,32 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class InputDevices
+public static class InputDevices
 {
-    public static InputDevice KEYBOARD = new InputDevice ("PC");
-    public static InputDevice XBOX = new InputDevice ("XBox");
-
+    //TODO We need a data structure that can be accessed by name, iterated on, and retricted to
+    // only certain keys.
     public enum ControllerTypes
     {
-        Keyboard,
+        Keyboard = 0,
         XBox
     }
 
-    public InputDevice[] inputDevices = {new InputDevice("PC"), new InputDevice("XBox")};
+    static InputDevice[] inputDevices = {new InputDevice ("PC"), new InputDevice ("XBox")};
 
-    public class InputDevice
+    static public InputDevice[] GetAllInputDevices()
     {
-        string deviceName;
-
-        public string DeviceName {
-            get {
-                return deviceName;
-            }
-        }
-
-        public InputDevice (string name)
-        {
-            deviceName = name;
-        }
+        return inputDevices;
     }
 }

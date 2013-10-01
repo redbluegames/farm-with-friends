@@ -12,6 +12,5 @@ public static class InputStrings
     public static string SPRINT = "Sprint";
     public static string SWAPITEM = "SwapItem";
     public static string PAUSE = "Pause";
-    public static string DEBUG_INVENTORYP1 = "i";
-    public static string DEBUG_INVENTORYP2 = "o";
+    public static string[] DEBUG_INVENTORY = {"i", "o"};
 }
