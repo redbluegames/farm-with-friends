@@ -61,7 +61,13 @@ public class GameManager : MonoBehaviour
         NumPlayers++;
         players [playerIndex].SetActive (true);
         cameras [playerIndex].SetActive (true);
-        cameras [playerIndex].GetComponent<IsometricCameraController> ().SplitScreenView ();
+
+        // Split the viewports
+        foreach(GameObject cameraObj in cameras)
+        {
+            cameraObj.GetComponent<IsometricCameraController> ().SplitScreenView (NumPlayers);
+        }
+
         players [playerIndex].GetComponent<PlayerController> ().BindPlayer (playerIndex, device);
 
         hud.SetActive (true);
