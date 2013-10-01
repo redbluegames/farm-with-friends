@@ -23,7 +23,6 @@ public class Shop : MonoBehaviour
     readonly int BTN_H = Screen.height / 16;
     readonly int BTN_W = Screen.width / 8;
     readonly int SCROLL_W = 20;
-    int focusId;
     bool focusChanged;
     Vector2 scrollPos;
     string rightHandLabel;
@@ -32,6 +31,12 @@ public class Shop : MonoBehaviour
     int leftSideW;
     int rightSideW;
     int innerBoxH;
+
+    // GUI Focus properties
+    float lastAxis;
+    bool upPressed;
+    bool downPressed;
+    int focusId;
 
     // Magic Numbers
     const int UNSELECTED = -1;
@@ -55,6 +60,29 @@ public class Shop : MonoBehaviour
         scrollPos = Vector2.zero;
         ResetItemData ();
         focusChanged = true;
+    }
+
+    void Update ()
+    {
+        InputDevice[] devices = InputDevices.GetAllInputDevices ();
+
+        float axis = RBInput.GetAxisRawForPlayer (InputStrings.VERTICAL, activePlayerIndex,
+            devices[(int)InputDevices.ControllerTypes.XBox]);
+        bool axisChanged = (Mathf.Sign (axis) != Mathf.Sign (lastAxis)) || lastAxis == 0;
+        if (axis > 0 && axisChanged) {
+            Debug.Log ("axis > 0");
+            upPressed = true;
+            downPressed = false;
+        } else if (axis < 0 && axisChanged) {
+            Debug.Log ("axis < 0");
+            upPressed = false;
+            downPressed = true;
+        } else {
+            Debug.Log ("axis = 0");
+            upPressed = false;
+            downPressed = false;
+        }
+        lastAxis = axis;
     }
 
     /*
@@ -154,14 +182,16 @@ public class Shop : MonoBehaviour
             new Rect (SCROLL_W, 0, SCROLL_W, itemNames.Length * LABEL_H), false, false);
 
         for (int i = 0; i < itemNames.Length; ++i) {
-            GUI.SetNextControlName (itemNames [i]);
+            GUI.SetNextControlName (i.ToString ());
             if (GUI.Button (new Rect (PADDING, i * LABEL_H, leftSideW - 4, LABEL_H), itemNames [i])) {
                 selectedItem = itemNames [i];
                 rightHandLabel = itemDescriptions [i];
             }
         }
-        //focusId = ManageFocus (focusId, itemNames.Length);
-        //GUI.FocusControl (focusId.ToString());
+        focusId = ManageFocus (focusId, itemNames.Length);
+        selectedItem = itemNames [focusId];
+        rightHandLabel = itemDescriptions [focusId];
+        GUI.FocusControl (focusId.ToString ());
         GUI.EndScrollView ();
     }
 
@@ -176,23 +206,14 @@ public class Shop : MonoBehaviour
 
     private int ManageFocus (int ID, int length)
     {
-        GUI.FocusControl (ID.ToString ());
-        if (focusChanged && Time.timeSinceLevelLoad > 2.0f) {
-            focusChanged = false;
-        }
-        if ((Input.GetAxis ("Horizontal") > 0 && ID < length && !focusChanged) ||
-            (Input.GetAxis ("Vertical") > 0 && ID < length && !focusChanged)) {
-            focusChanged = true;
-            ID++;
-        } else if ((Input.GetAxis ("Horizontal") > 0 && ID < 0 && !focusChanged)) {
-            ID = 0;
-        }
-        if ((Input.GetAxis ("Horizontal") < 0 && ID > 0 && !focusChanged) ||
-            (Input.GetAxis ("Vertical") < 0 && ID > 0 && !focusChanged)) {
-            focusChanged = true;
+        if (upPressed && ID > 0) {
             ID--;
-        } else if ((Input.GetAxis ("Horizontal") < 0 && ID < 0 && !focusChanged)) {
-            ID = 0;
+            upPressed = false;
+            downPressed = false;
+        } else if (downPressed && ID < length - 1) {
+            ID++;
+            upPressed = false;
+            downPressed = false;
         }
         return ID;
     }
@@ -203,6 +224,7 @@ public class Shop : MonoBehaviour
      */
     private void ResetItemData ()
     {
+        focusId = 0;
         selectedItem = null;
         itemNames = null;
         itemDescriptions = null;
@@ -340,7 +362,7 @@ public class Shop : MonoBehaviour
             .GetComponent<PlayerController> ();
         playerController.SetShoppingState ();
         GameObject playerObj = FindInactivePlayer ();
-        if (playerObj != null){
+        if (playerObj != null) {
             playerController = (PlayerController)playerObj.GetComponent<PlayerController> ();
             playerController.SetNormalState ();
         }
