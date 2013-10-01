@@ -13,6 +13,7 @@ public class Plant : MonoBehaviour
     PlantStates plantState;
     const int MIN_LIFE = 0;
     int curLife;
+    bool canBeWatered;
 
     // Public Attributes
     public int nightsPerGrowth;
@@ -27,12 +28,11 @@ public class Plant : MonoBehaviour
     public enum PlantStates
     {
         Seed = 0,
-        Sprout = 1,
-        Adult = 2,
-        Withered = 3
+        Sprout,
+        Adult,
+        Withered
     }
 
-    // Use this for initialization, catch unset public vars.
     void Start ()
     {
         if (nightsPerGrowth == 0) {
@@ -45,153 +45,135 @@ public class Plant : MonoBehaviour
         }
         nightsOld = 0;
         nightsSinceGrowth = 0;
-        // Set HP to one less than full so watering can make a dif on first day.
+        // Set HP to one less than full so watering can make a difference on first day.
         curLife = maxLife - 1;
         if (curLife == MIN_LIFE) {
-            RenderAsDry ();
+            SetDry (true);
         }
+        SetPlantState (PlantStates.Seed);
+
+        // Initialize the text
+        TextMesh textMesh = (TextMesh)GetComponentInChildren<TextMesh> ();
+        textMesh.text = (this.name.Substring (0, 1));
+        textMesh.characterSize = 0.7f;
     }
 
-    /**
-  * If the plant is already watered, set it as watered and
-  * make it visually obvious.
-  */
-    public void Water ()
-    {
-        curLife = maxLife;
-        RenderAsWatered ();
-    }
-
-    /**
-  * Perform our nightly aging of the plant. All logic for withering,
-  * growing, and aging the plant should go here.
-  */
+    /*
+     * Perform our nightly aging of the plant. All logic for withering,
+     * growing, and aging the plant should go here.
+     */
     public void NightlyUpdate ()
     {
-        // Tick down plant health and warn user if health low
-        curLife--;
-        if (curLife < MIN_LIFE) {
-            Wither ();
-        } else if (curLife == MIN_LIFE) {
-            RenderAsDry ();
-        }
-     
-        nightsSinceGrowth++;
-        // If it was watered recently enough and it's old enough for the stage, grow.
-        if (nightsSinceGrowth >= nightsPerGrowth && !isWithered ()) {
-            Grow ();
-        }
-     
         nightsOld++;
-        RenderPlantState ();
+        nightsSinceGrowth++;
+        curLife--;
+
+        if (plantState != PlantStates.Withered) {
+            // Check for wither
+            if (curLife < MIN_LIFE) {
+                SetPlantState (PlantStates.Withered);
+                return;
+            }
+            // Check if the plant needs water.
+            bool isDry = canBeWatered && curLife == MIN_LIFE;
+            SetDry (isDry);
+
+            // Try to grow
+            if (nightsSinceGrowth >= nightsPerGrowth) {
+                Grow ();
+            }
+        }
     }
 
-    /**
+    /*
      * Put the plant in it's next stage and reset the days since last growth.
      */
     private void Grow ()
     {
-        // If plant can continue to grow, grow.
-        if ((int)plantState < Enum.GetValues (typeof(PlantStates)).Length - 1) {
-            Debug.Log (String.Format ("GROWING ({0})): DaysSinceGrowth ({1}) GrowthSpeed ({2}) new PlantState ({3})", 
-             name, nightsSinceGrowth, nightsPerGrowth, (int)plantState + 1));
-            nightsSinceGrowth = 0;
-            plantState++;
+        // Withered and Adult plants can't grow
+        PlantStates nextState;
+        if (plantState == PlantStates.Adult || plantState == PlantStates.Withered) {
+            return;
+        } else if (plantState == PlantStates.Seed) {
+            nextState = PlantStates.Sprout;
+        } else if (plantState == PlantStates.Sprout) {
+            nextState = PlantStates.Adult;
+        } else {
+            Debug.LogError ("Plant is trying to grow from an unknown state!");
+            return;
         }
-    }
- 
-    /**
-     * Set the plant to withered state if not already.
-     */
-    private void Wither ()
-    {
-        if (!isWithered ()) {
-            Debug.Log (String.Format ("WITHERING ({0}): CurLife reached {1}.", name, curLife));
-            plantState = PlantStates.Withered;
-            RenderAsWatered ();
-        }
+
+        // Grow the plant to the next state
+        nightsSinceGrowth = 0;
+        SetPlantState (nextState);
     }
 
-    /**
+    /*
+     * Set the Plant's state to the specified state and render it.
+     */
+    private void SetPlantState (PlantStates newState)
+    {
+        plantState = newState;
+        if (newState == PlantStates.Withered || newState == PlantStates.Adult) {
+            SetDry (false);
+            canBeWatered = false;
+        }
+        else {
+            canBeWatered = true;
+        }
+        RenderPlantState ();
+    }
+
+    /*
+     * Update the plant state to the appropriate material.
+     */
+    void RenderPlantState ()
+    {
+        Material stateMaterial = seedMat;
+        if (plantState == PlantStates.Seed) {
+            stateMaterial = seedMat;
+        } else if (plantState == PlantStates.Sprout) {
+            stateMaterial = sproutMat;
+        } else if (plantState == PlantStates.Adult) {
+            stateMaterial = adultMat;
+        } else if (plantState == PlantStates.Withered) {
+            stateMaterial = witheredMat;
+        }
+        renderer.material = stateMaterial;
+    }
+
+    /*
+     * Turn on or off the elements that show a plant needs water
+     */
+    private void SetDry (bool dry)
+    {
+        light.enabled = dry;
+    }
+
+    /*
+     * If the plant is already watered, set it as watered and
+     * make it visually obvious.
+     */
+    public void Water ()
+    {
+        SetDry (false);
+        curLife = maxLife;
+    }
+
+    /*
      * Return if the plant is withered.
-  */
+     */
     public bool isWithered ()
     {
         return plantState == PlantStates.Withered;
     }
- 
-    /**
-  * Return if the plant is ready to be picked.
-  */
+
+    /*
+     * Return if the plant is ready to be picked.
+     */
     public bool isRipe ()
     {
         return plantState == PlantStates.Adult;
     }
- 
-    /**
-  * Update the plant state to the appropriate material.
-  */
-    void RenderPlantState ()
-    {
-        if (plantState == PlantStates.Seed) {
-            renderer.material = seedMat;
-        } else if (plantState == PlantStates.Sprout) {
-            renderer.material = sproutMat;
-        } else if (plantState == PlantStates.Adult) {
-            renderer.material = adultMat;
-            RenderAsRipe ();
-        } else if (plantState == PlantStates.Withered) {
-            renderer.material = witheredMat;
-            RenderAsDead ();
-        }
-    }
 
-    /*
-     * Change the text to indicate need to pick and turn off water effect.
-     */
-    void RenderAsRipe ()
-    {
-        SetPlantText ("pick\nme");
-        light.enabled = false;
-    }
-
-    /*
-     * Remove the water effect and change the text to normal.
-     */
-    void RenderAsWatered ()
-    {
-        if (!isRipe ()) {
-            SetPlantText (this.name.Split ('(') [0]);
-            light.enabled = false;
-        }
-    }
- 
-    /*
-     * Remove the water effect and change the text to 'dead'.
-     */
-    void RenderAsDead ()
-    {
-        if (!isRipe ()) {
-            SetPlantText ("dead");
-            light.enabled = false;
-        }
-    }
-
-    /**
-     * Add the water effect and change the text to indicate need to water.
-     */
-    void RenderAsDry ()
-    {
-        SetPlantText ("water\nme");
-        light.enabled = true;
-    }
-    
-    /*
-     * Set the plant textmesh to a given value.
-     */
-    void SetPlantText (string text)
-    {
-        TextMesh textMesh = (TextMesh)GetComponentInChildren<TextMesh> ();
-        textMesh.text = text;
-    }
 }
