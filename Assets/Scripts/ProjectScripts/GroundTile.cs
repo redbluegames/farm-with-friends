@@ -7,8 +7,9 @@ public class GroundTile : MonoBehaviour
     public Material grassMaterial;
     public Material soilMaterial;
     public GameObject dirtFXPrefab;
-    private GameObject curPlant;
-    static public float SIZE = 1.0f;
+    GameObject curPlant;
+    static public float SIZE_XZ = 1.0f;
+    static public float SIZE_Y = 0.1f;
  
     public enum GroundState
     {
@@ -111,7 +112,13 @@ public class GroundTile : MonoBehaviour
  */
     private void SpawnPlant (GameObject plantPrefab)
     {
-        curPlant = (GameObject)Instantiate (plantPrefab, transform.position, Quaternion.LookRotation (Vector3.up, Vector3.back));
+        curPlant = (GameObject)Instantiate (plantPrefab, transform.position,
+            transform.rotation);
+
+        // Offset the plant up so that it sits on top of the ground, not embedded in it.
+        float halfPlantHeight = curPlant.transform.lossyScale.y / 2;
+        float heightOffset = (SIZE_Y / 2 ) + halfPlantHeight;
+        curPlant.transform.position = transform.position + new Vector3( 0, heightOffset, 0);
     }
  
     /*
@@ -119,7 +126,8 @@ public class GroundTile : MonoBehaviour
  */
     private void SpawnDirtFX ()
     {
-        GameObject fx = (GameObject)Instantiate (dirtFXPrefab, transform.position, Quaternion.LookRotation (Vector3.up, Vector3.back));
+        GameObject fx = (GameObject)Instantiate (dirtFXPrefab, transform.position,
+            Quaternion.LookRotation (Vector3.up, Vector3.back));
         Destroy (fx, 2.0f);
     }
 }
