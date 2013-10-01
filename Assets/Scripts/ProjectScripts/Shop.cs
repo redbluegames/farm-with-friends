@@ -339,8 +339,11 @@ public class Shop : MonoBehaviour
         PlayerController playerController = (PlayerController)FindActivePlayer ()
             .GetComponent<PlayerController> ();
         playerController.SetShoppingState ();
-        playerController = (PlayerController)FindInactivePlayer ().GetComponent<PlayerController> ();
-        playerController.SetNormalState ();
+        GameObject playerObj = FindInactivePlayer ();
+        if (playerObj != null){
+            playerController = (PlayerController)playerObj.GetComponent<PlayerController> ();
+            playerController.SetNormalState ();
+        }
         ResetItemData ();
         state = ShopState.BUYING;
     }
