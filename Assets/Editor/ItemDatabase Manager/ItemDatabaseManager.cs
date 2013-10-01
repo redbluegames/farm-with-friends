@@ -5,7 +5,7 @@ using System.IO;
 
 public class ItemDatabaseManager : EditorWindow {
 
-    string scriptPath = Directory.GetCurrentDirectory() + "/Assets/Scripts/";
+    string scriptPath = Directory.GetCurrentDirectory() + "/Assets/Scripts/ProjectScripts/";
     string className = "ItemIDs";
     string fileExtension = ".cs";
 

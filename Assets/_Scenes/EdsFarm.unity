@@ -74,24 +74,6 @@ NavMeshSettings:
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
   m_NavMesh: {fileID: 0}
---- !u!114 &2515474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
-  m_Name: Potato
-  m_EditorClassIdentifier: 
-  id: 4
-  itemName: Potato
-  description: 
-  maxCount: 100
-  price: 100
-  sellPrice: 80
-  plantPrefab: {fileID: 0}
 --- !u!1 &11429170
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,60 +143,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 2044188373}
   m_GameObject: {fileID: 11429170}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &82562580
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100000, guid: c6fe30e2caedd7444825aa31e0b56d5a, type: 2}
-  m_PrefabInternal: {fileID: 1246969166}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 82562582}
-  - 114: {fileID: 82562581}
-  - 114: {fileID: 82562583}
-  m_Layer: 0
-  m_Name: Shop
-  m_TagString: Shop
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &82562581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400000, guid: c6fe30e2caedd7444825aa31e0b56d5a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1246969166}
-  m_GameObject: {fileID: 82562580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77bb2ef7027d4aa43b7045455b438c1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &82562582
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400000, guid: c6fe30e2caedd7444825aa31e0b56d5a, type: 2}
-  m_PrefabInternal: {fileID: 1246969166}
-  m_GameObject: {fileID: 82562580}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &82562583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400002, guid: c6fe30e2caedd7444825aa31e0b56d5a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1246969166}
-  m_GameObject: {fileID: 82562580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08409c6b30abe7248acbe2e8ee2d900d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  money: 0
-  equippedItemKey: -1
 --- !u!1001 &110373363
 Prefab:
   m_ObjectHideFlags: 0
@@ -255,26 +183,6 @@ Prefab:
   m_RootGameObject: {fileID: 1049136084}
   m_IsPrefabParent: 0
   m_IsExploded: 1
---- !u!114 &222642567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
-  m_Name: Radish Seeds
-  m_EditorClassIdentifier: 
-  id: 1
-  itemName: Radish Seeds
-  description: 'Time to grow: Short.
-
-    Water needed: Daily'
-  maxCount: 100
-  price: 5
-  sellPrice: 2
-  plantPrefab: {fileID: 100002, guid: e0237023f1451914e881728e4c0318ac, type: 2}
 --- !u!1 &226130068
 GameObject:
   m_ObjectHideFlags: 8
@@ -426,56 +334,6 @@ Transform:
   m_LocalScale: {x: 8, y: 3.31596088, z: 1}
   m_Children: []
   m_Father: {fileID: 1772203991}
---- !u!1 &291072048
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100000, guid: 75118c8f23e6b054e9fca9f4b1157161, type: 2}
-  m_PrefabInternal: {fileID: 389250963}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 291072049}
-  - 114: {fileID: 291072050}
-  m_Layer: 0
-  m_Name: ItemDatabase
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &291072049
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400000, guid: 75118c8f23e6b054e9fca9f4b1157161, type: 2}
-  m_PrefabInternal: {fileID: 389250963}
-  m_GameObject: {fileID: 291072048}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .512726665, y: .642306328, z: 3.24828148}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &291072050
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400000, guid: 75118c8f23e6b054e9fca9f4b1157161,
-    type: 2}
-  m_PrefabInternal: {fileID: 389250963}
-  m_GameObject: {fileID: 291072048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60d91fec2ef377240bde8784ac58b7a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items:
-  - {fileID: 1044419791}
-  - {fileID: 222642567}
-  - {fileID: 1022439208}
-  - {fileID: 1637807481}
-  - {fileID: 2515474}
-  - {fileID: 757306573}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1001 &347684069
 Prefab:
   m_ObjectHideFlags: 0
@@ -673,50 +531,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
---- !u!1001 &389250963
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 400000, guid: 75118c8f23e6b054e9fca9f4b1157161, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: .512726665
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 75118c8f23e6b054e9fca9f4b1157161, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: .642306328
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 75118c8f23e6b054e9fca9f4b1157161, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 3.24828148
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 75118c8f23e6b054e9fca9f4b1157161, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 75118c8f23e6b054e9fca9f4b1157161, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 75118c8f23e6b054e9fca9f4b1157161, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 75118c8f23e6b054e9fca9f4b1157161, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 75118c8f23e6b054e9fca9f4b1157161, type: 2}
-      propertyPath: m_Name
-      value: ItemDatabaseOLD
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 75118c8f23e6b054e9fca9f4b1157161, type: 2}
-  m_RootGameObject: {fileID: 291072048}
-  m_IsPrefabParent: 0
-  m_IsExploded: 1
 --- !u!1 &419153733
 GameObject:
   m_ObjectHideFlags: 0
@@ -1155,7 +969,7 @@ Prefab:
   m_RootGameObject: {fileID: 1122896399}
   m_IsPrefabParent: 0
   m_IsExploded: 1
---- !u!114 &757306573
+--- !u!114 &743275582
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -1175,6 +989,24 @@ MonoBehaviour:
   price: 5
   sellPrice: 2
   plantPrefab: {fileID: 100002, guid: 3661df00131ba5e46b8a891623754d82, type: 2}
+--- !u!114 &750563747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
+  m_Name: Radish
+  m_EditorClassIdentifier: 
+  id: 0
+  itemName: Radish
+  description: 
+  maxCount: 100
+  price: 30
+  sellPrice: 20
+  plantPrefab: {fileID: 0}
 --- !u!1 &787394097
 GameObject:
   m_ObjectHideFlags: 0
@@ -1322,74 +1154,6 @@ GUITexture:
   m_RightBorder: 0
   m_TopBorder: 0
   m_BottomBorder: 0
---- !u!1001 &951250459
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 400000, guid: b5792f03e9d2b864092e4fd0acb080cc, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: b5792f03e9d2b864092e4fd0acb080cc, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: b5792f03e9d2b864092e4fd0acb080cc, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: b5792f03e9d2b864092e4fd0acb080cc, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: b5792f03e9d2b864092e4fd0acb080cc, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: b5792f03e9d2b864092e4fd0acb080cc, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: b5792f03e9d2b864092e4fd0acb080cc, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: b5792f03e9d2b864092e4fd0acb080cc, type: 2}
-      propertyPath: timeGUI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: b5792f03e9d2b864092e4fd0acb080cc, type: 2}
-      propertyPath: hourGUI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: b5792f03e9d2b864092e4fd0acb080cc, type: 2}
-      propertyPath: minuteGUI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: b5792f03e9d2b864092e4fd0acb080cc, type: 2}
-      propertyPath: dayGUI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: b5792f03e9d2b864092e4fd0acb080cc, type: 2}
-      propertyPath: sun
-      value: 
-      objectReference: {fileID: 1049136086}
-    - target: {fileID: 11400000, guid: b5792f03e9d2b864092e4fd0acb080cc, type: 2}
-      propertyPath: startPointP1
-      value: 
-      objectReference: {fileID: 1004582106}
-    - target: {fileID: 11400000, guid: b5792f03e9d2b864092e4fd0acb080cc, type: 2}
-      propertyPath: startPointP2
-      value: 
-      objectReference: {fileID: 1717697633}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: b5792f03e9d2b864092e4fd0acb080cc, type: 2}
-  m_RootGameObject: {fileID: 1834395383}
-  m_IsPrefabParent: 0
-  m_IsExploded: 1
 --- !u!1001 &995315549
 Prefab:
   m_ObjectHideFlags: 0
@@ -1510,7 +1274,7 @@ Transform:
   m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children: []
   m_Father: {fileID: 1772203991}
---- !u!114 &1022439208
+--- !u!114 &1014532748
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -1523,24 +1287,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2
   itemName: Onion
-  description: 
-  maxCount: 100
-  price: 30
-  sellPrice: 20
-  plantPrefab: {fileID: 0}
---- !u!114 &1044419791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
-  m_Name: Radish
-  m_EditorClassIdentifier: 
-  id: 0
-  itemName: Radish
   description: 
   maxCount: 100
   price: 30
@@ -1622,6 +1368,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7851b3ae24d86446687283030ed84199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1050710208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
+  m_Name: Onion Seeds
+  m_EditorClassIdentifier: 
+  id: 3
+  itemName: Onion Seeds
+  description: 'Time to grow: Long.
+
+    Water needed: Drought Only'
+  maxCount: 100
+  price: 5
+  sellPrice: 2
+  plantPrefab: {fileID: 100002, guid: e0876456fef1eac428533b80c2a22632, type: 2}
 --- !u!1 &1076954162
 GameObject:
   m_ObjectHideFlags: 0
@@ -1784,6 +1550,55 @@ MonoBehaviour:
   roosterSound: {fileID: 8300000, guid: 1666218a76eb54534b626b9eda489758, type: 3}
   startPointP1: {fileID: 1004582106}
   startPointP2: {fileID: 1717697633}
+--- !u!1 &1143987942
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1143987943}
+  - 114: {fileID: 1143987944}
+  m_Layer: 0
+  m_Name: ItemDatabase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1143987943
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1143987942}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &1143987944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1143987942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d91fec2ef377240bde8784ac58b7a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - {fileID: 750563747}
+  - {fileID: 2064891313}
+  - {fileID: 1014532748}
+  - {fileID: 1050710208}
+  - {fileID: 1449141003}
+  - {fileID: 743275582}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1193578688
 GameObject:
   m_ObjectHideFlags: 0
@@ -1950,54 +1765,6 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 4}
   m_Children: []
   m_Father: {fileID: 1772203991}
---- !u!1001 &1246969166
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 400000, guid: c6fe30e2caedd7444825aa31e0b56d5a, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: c6fe30e2caedd7444825aa31e0b56d5a, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: c6fe30e2caedd7444825aa31e0b56d5a, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: c6fe30e2caedd7444825aa31e0b56d5a, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: c6fe30e2caedd7444825aa31e0b56d5a, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: c6fe30e2caedd7444825aa31e0b56d5a, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: c6fe30e2caedd7444825aa31e0b56d5a, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: c6fe30e2caedd7444825aa31e0b56d5a, type: 2}
-      propertyPath: playerInventory
-      value: 
-      objectReference: {fileID: 372136859}
-    - target: {fileID: 11400000, guid: c6fe30e2caedd7444825aa31e0b56d5a, type: 2}
-      propertyPath: itemDB
-      value: 
-      objectReference: {fileID: 291072050}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: c6fe30e2caedd7444825aa31e0b56d5a, type: 2}
-  m_RootGameObject: {fileID: 82562580}
-  m_IsPrefabParent: 0
-  m_IsExploded: 1
 --- !u!1001 &1262027952
 Prefab:
   m_ObjectHideFlags: 0
@@ -2068,6 +1835,24 @@ Transform:
   - {fileID: 525070974}
   - {fileID: 1193578694}
   m_Father: {fileID: 0}
+--- !u!114 &1449141003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
+  m_Name: Potato
+  m_EditorClassIdentifier: 
+  id: 4
+  itemName: Potato
+  description: 
+  maxCount: 100
+  price: 100
+  sellPrice: 80
+  plantPrefab: {fileID: 0}
 --- !u!1 &1452256795
 GameObject:
   m_ObjectHideFlags: 0
@@ -2413,26 +2198,6 @@ Transform:
   m_Children:
   - {fileID: 507168531}
   m_Father: {fileID: 419153735}
---- !u!114 &1637807481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
-  m_Name: Onion Seeds
-  m_EditorClassIdentifier: 
-  id: 3
-  itemName: Onion Seeds
-  description: 'Time to grow: Long.
-
-    Water needed: Drought Only'
-  maxCount: 100
-  price: 5
-  sellPrice: 2
-  plantPrefab: {fileID: 100002, guid: e0876456fef1eac428533b80c2a22632, type: 2}
 --- !u!1001 &1656057697
 Prefab:
   m_ObjectHideFlags: 0
@@ -2721,49 +2486,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 787394098}
---- !u!1 &1834395383
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100000, guid: b5792f03e9d2b864092e4fd0acb080cc, type: 2}
-  m_PrefabInternal: {fileID: 951250459}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1834395384}
-  - 114: {fileID: 1834395385}
-  m_Layer: 0
-  m_Name: WorldTime
-  m_TagString: WorldTime
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1834395384
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400000, guid: b5792f03e9d2b864092e4fd0acb080cc, type: 2}
-  m_PrefabInternal: {fileID: 951250459}
-  m_GameObject: {fileID: 1834395383}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!114 &1834395385
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400000, guid: b5792f03e9d2b864092e4fd0acb080cc,
-    type: 2}
-  m_PrefabInternal: {fileID: 951250459}
-  m_GameObject: {fileID: 1834395383}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4786558f29991485984ef980c42ead26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sun: {fileID: 1049136086}
-  roosterSound: {fileID: 8300000, guid: 1666218a76eb54534b626b9eda489758, type: 3}
-  startPointP1: {fileID: 1004582106}
-  startPointP2: {fileID: 1717697633}
 --- !u!1001 &1845564087
 Prefab:
   m_ObjectHideFlags: 0
@@ -3036,3 +2758,23 @@ Prefab:
   m_RootGameObject: {fileID: 1772203990}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!114 &2064891313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
+  m_Name: Radish Seeds
+  m_EditorClassIdentifier: 
+  id: 1
+  itemName: Radish Seeds
+  description: 'Time to grow: Short.
+
+    Water needed: Daily'
+  maxCount: 100
+  price: 5
+  sellPrice: 2
+  plantPrefab: {fileID: 100002, guid: e0237023f1451914e881728e4c0318ac, type: 2}
