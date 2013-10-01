@@ -15,12 +15,19 @@ public class PlayerController : MonoBehaviour
     private float gravity = -20.0f;
     private float verticalSpeed = 0.0f;
     private CollisionFlags collisionFlags;
-    int playerIndex;
+    public int PlayerIndex{ get; private set; }
     InputDevice playerDevice;
     bool isPlayerBound;
+    PlayerState playerState;
+
+    enum PlayerState {
+        Shopping,
+        Normal
+    }
 
     void Awake ()
     {
+        SetState (PlayerState.Normal);
         isPlayerBound = false;
         moveDirection = transform.TransformDirection (Vector3.forward);
     }
@@ -39,14 +46,15 @@ public class PlayerController : MonoBehaviour
 
         ApplyGravity ();
 
-        Move ();
-     
-        TryHoe ();
-        TryPlanting ();
-        TryPicking ();
-        TryWatering ();
-        TryCycleItems ();
-        TryDebugs ();
+        if (playerState == PlayerState.Normal) {
+            Move ();
+            TryHoe ();
+            TryPlanting ();
+            TryPicking ();
+            TryWatering ();
+            TryCycleItems ();
+            TryDebugs ();
+        }
     }
  
     private void LateUpdate ()
@@ -116,8 +124,8 @@ public class PlayerController : MonoBehaviour
     {
         // Get input values
         float horizontal = 0.0f, vertical = 0.0f;
-        horizontal = RBInput.GetAxisRawForPlayer (InputStrings.HORIZONTAL, playerIndex, playerDevice);
-        vertical = RBInput.GetAxisRawForPlayer (InputStrings.VERTICAL, playerIndex, playerDevice);
+        horizontal = RBInput.GetAxisRawForPlayer (InputStrings.HORIZONTAL, PlayerIndex, playerDevice);
+        vertical = RBInput.GetAxisRawForPlayer (InputStrings.VERTICAL, PlayerIndex, playerDevice);
 
         // Determine move direction from target values
         float targetSpeed = 0.0f;
@@ -148,7 +156,7 @@ public class PlayerController : MonoBehaviour
      */
     void TryHoe ()
     {
-        bool isUsingWeapon = RBInput.GetButtonDownForPlayer (InputStrings.WEAPON1, playerIndex, playerDevice);
+        bool isUsingWeapon = RBInput.GetButtonDownForPlayer (InputStrings.WEAPON1, PlayerIndex, playerDevice);
         if (isUsingWeapon) {
             if (actionTile != null) {
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
@@ -166,7 +174,7 @@ public class PlayerController : MonoBehaviour
      */
     void TryPlanting ()
     {
-        bool isUsingItem = RBInput.GetButtonDownForPlayer (InputStrings.ITEM, playerIndex, playerDevice);
+        bool isUsingItem = RBInput.GetButtonDownForPlayer (InputStrings.ITEM, PlayerIndex, playerDevice);
         if (isUsingItem) {
             if (actionTile != null) {
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
@@ -189,7 +197,7 @@ public class PlayerController : MonoBehaviour
     */
     void TryPicking ()
     {
-        bool isAction = RBInput.GetButtonDownForPlayer (InputStrings.ACTION, playerIndex, playerDevice);
+        bool isAction = RBInput.GetButtonDownForPlayer (InputStrings.ACTION, PlayerIndex, playerDevice);
         if (isAction) {
             //.TODO This violates MVC, fix it
             if (actionTile != null) {
@@ -210,7 +218,7 @@ public class PlayerController : MonoBehaviour
      */
     void TryWatering ()
     {
-        bool isWatering = RBInput.GetButtonDownForPlayer (InputStrings.WEAPON2, playerIndex, playerDevice);
+        bool isWatering = RBInput.GetButtonDownForPlayer (InputStrings.WEAPON2, PlayerIndex, playerDevice);
         if (isWatering) {
             if (actionTile != null) {
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
@@ -230,7 +238,7 @@ public class PlayerController : MonoBehaviour
      */
     void TryCycleItems ()
     {
-        bool isCycleItems = RBInput.GetButtonDownForPlayer (InputStrings.SWAPITEM, playerIndex, playerDevice);
+        bool isCycleItems = RBInput.GetButtonDownForPlayer (InputStrings.SWAPITEM, PlayerIndex, playerDevice);
         if (isCycleItems) {
             CycleItems ();
         }
@@ -250,10 +258,10 @@ public class PlayerController : MonoBehaviour
      */
     void TryDebugs ()
     {
-        bool isAtShop = Input.GetKeyDown (InputStrings.DEBUG_INVENTORY[playerIndex]);
+        bool isAtShop = Input.GetKeyDown (InputStrings.DEBUG_INVENTORY[PlayerIndex]);
         if (isAtShop) {
             Shop shop = (Shop)GameObject.FindGameObjectWithTag ("Shop").GetComponent<Shop> ();
-            shop.StartBuying (playerIndex);
+            shop.StartBuying (PlayerIndex);
         }
     }
  
@@ -280,6 +288,21 @@ public class PlayerController : MonoBehaviour
         return actionTile;
     }
 
+    void SetState (PlayerState state)
+    {
+        playerState = state;
+    }
+
+    public void SetNormalState ()
+    {
+        SetState (PlayerState.Normal);
+    }
+
+    public void SetShoppingState ()
+    {
+        SetState (PlayerState.Shopping);
+    }
+
     public Item GetEquippedItem ()
     {
         Inventory inventory = (Inventory)GetComponent<Inventory> ();
@@ -298,7 +321,7 @@ public class PlayerController : MonoBehaviour
     {
         isPlayerBound = true;
 
-        playerIndex = index;
+        PlayerIndex = index;
         playerDevice = device;
 
         // Equip something by default

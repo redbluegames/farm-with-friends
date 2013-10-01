@@ -70,8 +70,8 @@ public class Shop : MonoBehaviour
         // Set up window dimensions for multiple players
         int numPlayers = GameObject.FindGameObjectsWithTag ("Player").Length;
         if (numPlayers > 1) {
-            leftStart = (int) (Screen.width * ((float) activePlayerIndex / numPlayers));
-            Debug.Log(string.Format("Left Start: ({0})", leftStart.ToString()));
+            leftStart = (int)(Screen.width * ((float)activePlayerIndex / numPlayers));
+            Debug.Log (string.Format ("Left Start: ({0})", leftStart.ToString ()));
             shopWidth = (int)(Screen.width * (0.75 / numPlayers));
             widthMargins = Screen.width / 16;
         }
@@ -115,7 +115,7 @@ public class Shop : MonoBehaviour
         DisplayBuySellButton ();
         if (GUI.Button (new Rect (shopWidth - BTN_W, shopHeight - BTN_H, BTN_W, BTN_H),
           new GUIContent ("Stop Shopping"))) {
-            StopShopping ();
+            StopShopping (activePlayerIndex);
         }
         GUI.EndGroup ();
     }
@@ -180,6 +180,7 @@ public class Shop : MonoBehaviour
         if (focusChanged && Time.timeSinceLevelLoad > 2.0f) {
             focusChanged = false;
         }
+        if (RBInput.GetButtonDownForPlayer (InputStrings.VERTICAL))
         if ((Input.GetAxis ("Horizontal") > 0 && ID < length && !focusChanged) ||
             (Input.GetAxis ("Vertical") > 0 && ID < length && !focusChanged)) {
             focusChanged = true;
@@ -295,30 +296,78 @@ public class Shop : MonoBehaviour
         return itemTexts;
     }
 
-    public void StartBuying (int playerIndex)
-    {
-        ResetItemData ();
-        SetActivePlayer (playerIndex);
-        state = ShopState.BUYING;
-    }
-
-    public void StartSelling (int playerIndex)
-    {
-        ResetItemData ();
-        SetActivePlayer (playerIndex);
-        state = ShopState.SELLING;
-    }
-
-    public void StopShopping ()
-    {
-        ResetItemData ();
-        selectedItem = String.Empty;
-        state = ShopState.NONE;
-    }
-
+    /*
+     * Make the shop aware of which player is currently using it.
+     */
     void SetActivePlayer (int playerIndex)
     {
         activePlayerIndex = playerIndex;
-        playerInventory = (Inventory)GameObject.Find ("Player" + activePlayerIndex.ToString ()).GetComponent<Inventory> ();
+        playerInventory = (Inventory)FindActivePlayer ().GetComponent<Inventory> ();
     }
+
+    /*
+     * Return the GameObject of the player that is currently shopping.
+     */
+    GameObject FindActivePlayer ()
+    {
+        return GameObject.Find ("Player" + activePlayerIndex.ToString ());
+    }
+
+    /*
+     * Return the GameObject of the player that is not currently shopping.
+     */
+    GameObject FindInactivePlayer ()
+    {
+        GameObject[] objs = GameObject.FindGameObjectsWithTag ("Player");
+        foreach (GameObject obj in objs) {
+            //If we add more than 2 players, this code would need to change.
+            if (obj.GetComponent<PlayerController> ().PlayerIndex != activePlayerIndex) {
+                return obj;
+            }
+        }
+        return null;
+    }
+
+    /*
+     * Set the active shopper to the provided player and put the shop in BUYING state.
+     * If a player is already shopping, they will be returned to a normal state and
+     * the newly provided player will be given control.
+     */
+    public void StartBuying (int playerIndex)
+    {
+        // Swap player states
+        SetActivePlayer (playerIndex);
+        PlayerController playerController = (PlayerController)FindActivePlayer ()
+            .GetComponent<PlayerController> ();
+        playerController.SetShoppingState ();
+        playerController = (PlayerController)FindInactivePlayer ().GetComponent<PlayerController> ();
+        playerController.SetNormalState ();
+        ResetItemData ();
+        state = ShopState.BUYING;
+    }
+
+    /*
+     * Begin selling. This is designed only for when a player is already shopping.
+     */
+    public void StartSelling (int playerIndex)
+    {
+        SetActivePlayer (playerIndex);
+        ResetItemData ();
+        state = ShopState.SELLING;
+    }
+
+    /*
+     * Stop a provided player's shopping session.
+     */
+    public void StopShopping (int playerIndex)
+    {
+        if (playerIndex == activePlayerIndex) {
+            PlayerController playerController = (PlayerController)FindActivePlayer ().GetComponent<PlayerController> ();
+            playerController.SetNormalState ();
+            ResetItemData ();
+            selectedItem = String.Empty;
+            state = ShopState.NONE;
+        }
+    }
+
 }
