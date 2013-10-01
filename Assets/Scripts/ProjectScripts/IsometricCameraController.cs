@@ -5,11 +5,15 @@ public class IsometricCameraController : MonoBehaviour
 {
     public GameObject target;
     public int viewPortIndex;
-    private Vector3 offset;
+    Vector3 offset;
  
     void Start ()
     {
-        offset = transform.position;
+        // Get the offset which this camera will use when following its target
+        const int XOFFSET = 0;
+        const int YOFFSET = 11;
+        const int ZOFFSET = -7;
+        offset = new Vector3(XOFFSET, YOFFSET, ZOFFSET);
     }
 
     void LateUpdate ()
