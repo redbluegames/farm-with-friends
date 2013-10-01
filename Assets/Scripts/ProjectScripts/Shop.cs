@@ -180,7 +180,6 @@ public class Shop : MonoBehaviour
         if (focusChanged && Time.timeSinceLevelLoad > 2.0f) {
             focusChanged = false;
         }
-        if (RBInput.GetButtonDownForPlayer (InputStrings.VERTICAL))
         if ((Input.GetAxis ("Horizontal") > 0 && ID < length && !focusChanged) ||
             (Input.GetAxis ("Vertical") > 0 && ID < length && !focusChanged)) {
             focusChanged = true;
