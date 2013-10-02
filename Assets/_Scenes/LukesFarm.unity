@@ -1470,6 +1470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cashRegister: {fileID: 8300000, guid: 2269527d113524b42a6d15ec53a91245, type: 3}
+  errorSound: {fileID: 0}
 --- !u!1001 &668249928
 Prefab:
   m_ObjectHideFlags: 0
@@ -2983,6 +2984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1838b7128b69d54d9a4afd49c78fbdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemGrownID: 2
   nightsPerGrowth: 2
   maxLife: 20
   seedMat: {fileID: 2100000, guid: 9d36863ace7a64be3b1f61f4db9061e1, type: 2}
@@ -3543,6 +3545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1838b7128b69d54d9a4afd49c78fbdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemGrownID: 4
   nightsPerGrowth: 3
   maxLife: 1
   seedMat: {fileID: 2100000, guid: 9d36863ace7a64be3b1f61f4db9061e1, type: 2}
@@ -4093,6 +4096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1838b7128b69d54d9a4afd49c78fbdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemGrownID: 0
   nightsPerGrowth: 1
   maxLife: 1
   seedMat: {fileID: 2100000, guid: 9d36863ace7a64be3b1f61f4db9061e1, type: 2}
