@@ -39,6 +39,7 @@ public class Shop : MonoBehaviour
 
     // Sounds
     public AudioClip cashRegister;
+    public AudioClip errorSound;
 
     // Magic Numbers
     const int UNSELECTED = -1;
@@ -108,7 +109,7 @@ public class Shop : MonoBehaviour
                     if (CanBuy (selectedItem, 1)) {
                         BuyItem (selectedItem, 1);
                     } else {
-                        Debug.Log ("User tried to buy something they couldn't. This is where we'd handle that.");
+                        AudioSource.PlayClipAtPoint (errorSound, transform.position);
                     }
                 }
             }
