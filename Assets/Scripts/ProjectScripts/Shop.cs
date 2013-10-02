@@ -21,10 +21,8 @@ public class Shop : MonoBehaviour
     readonly int VERT_MARGINS = Screen.height / 8;
     readonly int PADDING = 5;
     readonly int BTN_H = Screen.height / 16;
-    readonly int BTN_W = Screen.width / 8;
+    int btnWidth = Screen.width / 4;
     readonly int SCROLL_W = 20;
-    int focusId;
-    bool focusChanged;
     Vector2 scrollPos;
     string rightHandLabel;
     string selectedItem;
@@ -32,6 +30,12 @@ public class Shop : MonoBehaviour
     int leftSideW;
     int rightSideW;
     int innerBoxH;
+
+    // GUI Focus properties
+    float lastVertAxis;
+    bool upPressed, downPressed;
+    bool actionPressed, swapPressed, swapAltPressed, weaponPressed, exitPressed;
+    int focusId;
 
     // Magic Numbers
     const int UNSELECTED = -1;
@@ -54,7 +58,14 @@ public class Shop : MonoBehaviour
         shopInventory.AddItem (ItemIDs.POTATO_SEEDS, INFINITE);
         scrollPos = Vector2.zero;
         ResetItemData ();
-        focusChanged = true;
+    }
+
+    void Update ()
+    {
+        if (state != ShopState.NONE) {
+            DetectControllerButtons ();
+            DetectVertAxis ();
+        }
     }
 
     /*
@@ -71,7 +82,6 @@ public class Shop : MonoBehaviour
         int numPlayers = GameObject.FindGameObjectsWithTag ("Player").Length;
         if (numPlayers > 1) {
             leftStart = (int)(Screen.width * ((float)activePlayerIndex / numPlayers));
-            Debug.Log (string.Format ("Left Start: ({0})", leftStart.ToString ()));
             shopWidth = (int)(Screen.width * (0.75 / numPlayers));
             widthMargins = Screen.width / 16;
         }
@@ -79,17 +89,19 @@ public class Shop : MonoBehaviour
         leftSideW = (shopWidthWithoutPadding / 3) + SCROLL_W;
         rightSideW = (shopWidthWithoutPadding - leftSideW);
         innerBoxH = shopHeight - BTN_H - LABEL_H;
+        btnWidth = shopWidth / 3;
 
         // Set up our main Shop window
         GUI.BeginGroup (new Rect (leftStart + widthMargins, VERT_MARGINS, shopWidth, shopHeight));
-        GUI.Box (new Rect (0, 0, shopWidth, shopHeight), "TRAVELLING MERCHANT");
         if (state == ShopState.BUYING) {
+            GUI.Box (new Rect (0, 0, shopWidth, shopHeight), "BUYING GOODS");
             // Lazy load our item info
             DisplayInventoryData (shopInventory);
             if (selectedItem != null) {
                 DisplayItemDescription ();
-                if (GUI.Button (new Rect (shopWidth - BTN_W - (2 * PADDING), innerBoxH / 2 + LABEL_H, BTN_W, BTN_H),
-                        "Purchase")) {
+                if (GUI.Button (new Rect (shopWidth - btnWidth - (2 * PADDING), innerBoxH / 2 + LABEL_H, btnWidth, BTN_H),
+                        "Purchase (A/space)") || actionPressed) {
+                    actionPressed = false;
                     if (CanBuy (selectedItem, 1)) {
                         BuyItem (selectedItem, 1);
                     } else {
@@ -99,22 +111,27 @@ public class Shop : MonoBehaviour
             }
         }
         if (state == ShopState.SELLING) {
+            GUI.Box (new Rect (0, 0, shopWidth, shopHeight), "SELLING GOODS");
             DisplayInventoryData (playerInventory);
             if (selectedItem != null) {
                 DisplayItemDescription ();
-                if (GUI.Button (new Rect (shopWidth - BTN_W - (2 * PADDING), innerBoxH / 2 + LABEL_H, BTN_W, BTN_H),
-                        "Sell Item")) {
+                if (GUI.Button (new Rect (shopWidth - btnWidth - (2 * PADDING), innerBoxH / 2 + LABEL_H, btnWidth, BTN_H),
+                        "Sell Item (A/space)") || actionPressed) {
+                    actionPressed = false;
                     SellItem (selectedItem, 1);
                 }
-                if (GUI.Button (new Rect (shopWidth - (2 * BTN_W) - (2 * PADDING), innerBoxH / 2 + LABEL_H, BTN_W, BTN_H),
-                        "Sell ALL ITEMS")) {
+                if (GUI.Button (new Rect (shopWidth - (2 * btnWidth) - (2 * PADDING), innerBoxH / 2 + LABEL_H, btnWidth, BTN_H),
+                        "Sell ALL ITEMS (X/click)") || weaponPressed) {
+                    weaponPressed = false;
                     SellItem (selectedItem, playerInventory.GetItemCount (itemDB.GetItemByName (selectedItem).id));
                 }
             }
         }
         DisplayBuySellButton ();
-        if (GUI.Button (new Rect (shopWidth - BTN_W, shopHeight - BTN_H, BTN_W, BTN_H),
-          new GUIContent ("Stop Shopping"))) {
+
+        if (GUI.Button (new Rect (shopWidth - btnWidth, shopHeight - BTN_H, btnWidth, BTN_H),
+          new GUIContent ("Stop Shopping (B/e)")) || exitPressed) {
+            exitPressed = false;
             StopShopping (activePlayerIndex);
         }
         GUI.EndGroup ();
@@ -126,14 +143,18 @@ public class Shop : MonoBehaviour
     private void DisplayBuySellButton ()
     {
         if (state == ShopState.SELLING) {
-            if (GUI.Button (new Rect (shopWidth - BTN_W * 3, shopHeight - BTN_H, BTN_W, BTN_H),
-              new GUIContent ("Buy (LB)"))) {
+            if (GUI.Button (new Rect (shopWidth - btnWidth * 3, shopHeight - BTN_H, btnWidth, BTN_H),
+              new GUIContent ("Buy (LB/z)")) || swapPressed) {
                 StartBuying (activePlayerIndex);
+                swapPressed = false;
+                swapAltPressed = false;
             }
         } else {
-            if (GUI.Button (new Rect (shopWidth - BTN_W * 2, shopHeight - BTN_H, BTN_W, BTN_H),
-              new GUIContent ("Sell (RB)"))) {
+            if (GUI.Button (new Rect (shopWidth - btnWidth * 2, shopHeight - BTN_H, btnWidth, BTN_H),
+              new GUIContent ("Sell (RB/c)")) || swapAltPressed) {
                 StartSelling (activePlayerIndex);
+                swapAltPressed = false;
+                swapPressed = false;
             }
         }
     }
@@ -146,7 +167,7 @@ public class Shop : MonoBehaviour
     {
         if (itemNames == null)
             itemNames = RetrieveItemNames (inventory);
-        if (itemNames == null)
+        if (itemNames == null || itemNames.Length == 0)
             return;
         if (itemDescriptions == null)
             itemDescriptions = RetrieveItemDescriptions (inventory);
@@ -154,14 +175,16 @@ public class Shop : MonoBehaviour
             new Rect (SCROLL_W, 0, SCROLL_W, itemNames.Length * LABEL_H), false, false);
 
         for (int i = 0; i < itemNames.Length; ++i) {
-            GUI.SetNextControlName (itemNames [i]);
+            GUI.SetNextControlName (i.ToString ());
             if (GUI.Button (new Rect (PADDING, i * LABEL_H, leftSideW - 4, LABEL_H), itemNames [i])) {
                 selectedItem = itemNames [i];
                 rightHandLabel = itemDescriptions [i];
             }
         }
-        //focusId = ManageFocus (focusId, itemNames.Length);
-        //GUI.FocusControl (focusId.ToString());
+        focusId = ManageFocus (focusId, itemNames.Length);
+        selectedItem = itemNames [focusId];
+        rightHandLabel = itemDescriptions [focusId];
+        GUI.FocusControl (focusId.ToString ());
         GUI.EndScrollView ();
     }
 
@@ -169,30 +192,87 @@ public class Shop : MonoBehaviour
      * Display the box on the right hand side of the shop with info on the
      * selected item.
      */
-    private void DisplayItemDescription ()
+    void DisplayItemDescription ()
     {
         GUI.Box (new Rect (leftSideW + (3 * PADDING), LABEL_H, rightSideW, innerBoxH / 2), rightHandLabel);
     }
 
-    private int ManageFocus (int ID, int length)
+    /*
+     * Determine which buttons are being pressed and set our global booleans
+     * for later consumption by the UI.
+     */
+    void DetectControllerButtons ()
     {
-        GUI.FocusControl (ID.ToString ());
-        if (focusChanged && Time.timeSinceLevelLoad > 2.0f) {
-            focusChanged = false;
+        GameObject playerObj = FindActivePlayer ();
+        InputDevice device = playerObj.GetComponent<PlayerController> ().playerDevice;
+        // Bumper buttons
+        if (RBInput.GetButtonDownForPlayer (InputStrings.SWAPITEM, activePlayerIndex, device)) {
+            swapPressed = true;
+            swapAltPressed = false;
+        } else if (RBInput.GetButtonDownForPlayer (InputStrings.SWAPITEM_ALT, activePlayerIndex, device)) {
+            swapPressed = false;
+            swapAltPressed = true;
+        } else {
+            swapPressed = false;
+            swapAltPressed = false;
         }
-        if ((Input.GetAxis ("Horizontal") > 0 && ID < length && !focusChanged) ||
-            (Input.GetAxis ("Vertical") > 0 && ID < length && !focusChanged)) {
-            focusChanged = true;
-            ID++;
-        } else if ((Input.GetAxis ("Horizontal") > 0 && ID < 0 && !focusChanged)) {
-            ID = 0;
+        // Action button (A)
+        if (RBInput.GetButtonDownForPlayer (InputStrings.ACTION, activePlayerIndex, device)) {
+            actionPressed = true;
+        } else {
+            actionPressed = false;
         }
-        if ((Input.GetAxis ("Horizontal") < 0 && ID > 0 && !focusChanged) ||
-            (Input.GetAxis ("Vertical") < 0 && ID > 0 && !focusChanged)) {
-            focusChanged = true;
+        // Weapon buttons (X)
+        if (RBInput.GetButtonDownForPlayer (InputStrings.WEAPON1, activePlayerIndex, device)) {
+            weaponPressed = true;
+        } else {
+            weaponPressed = false;
+        }
+        // Exit button (B)
+        if (RBInput.GetButtonDownForPlayer (InputStrings.ITEM, activePlayerIndex, device)) {
+            exitPressed = true;
+        } else {
+            exitPressed = false;
+        }
+    }
+
+    /*
+     * Run through the vertical axis input to see if it has changed. If it has,
+     * set the corresponding bools to let the GUI know later.
+     */
+    void DetectVertAxis ()
+    {
+        GameObject playerObj = FindActivePlayer ();
+        InputDevice device = playerObj.GetComponent<PlayerController> ().playerDevice;
+        float axis = RBInput.GetAxisRawForPlayer (InputStrings.VERTICAL, activePlayerIndex, device);
+        bool axisChanged = (Mathf.Sign (axis) != Mathf.Sign (lastVertAxis)) || lastVertAxis == 0;
+        if (axis > 0 && axisChanged) {
+            upPressed = true;
+            downPressed = false;
+        } else if (axis < 0 && axisChanged) {
+            upPressed = false;
+            downPressed = true;
+        } else {
+            upPressed = false;
+            downPressed = false;
+        }
+        lastVertAxis = axis;
+    }
+
+    /*
+     * Return the focus ID of the inventory button that should be selected
+     * depending on the player's most recently changed axis input.
+     */
+    int ManageFocus (int ID, int length)
+    {
+        if (upPressed && ID > 0) {
             ID--;
-        } else if ((Input.GetAxis ("Horizontal") < 0 && ID < 0 && !focusChanged)) {
-            ID = 0;
+            upPressed = false;
+            downPressed = false;
+        } else if (downPressed && ID < length - 1) {
+            ID++;
+            upPressed = false;
+            downPressed = false;
         }
         return ID;
     }
@@ -203,6 +283,7 @@ public class Shop : MonoBehaviour
      */
     private void ResetItemData ()
     {
+        focusId = 0;
         selectedItem = null;
         itemNames = null;
         itemDescriptions = null;
@@ -340,7 +421,7 @@ public class Shop : MonoBehaviour
             .GetComponent<PlayerController> ();
         playerController.SetShoppingState ();
         GameObject playerObj = FindInactivePlayer ();
-        if (playerObj != null){
+        if (playerObj != null) {
             playerController = (PlayerController)playerObj.GetComponent<PlayerController> ();
             playerController.SetNormalState ();
         }
@@ -369,6 +450,7 @@ public class Shop : MonoBehaviour
             ResetItemData ();
             selectedItem = String.Empty;
             state = ShopState.NONE;
+            activePlayerIndex = -1;
         }
     }
 

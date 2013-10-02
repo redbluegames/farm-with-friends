@@ -38,11 +38,7 @@ public class HUD : MonoBehaviour
 
     private void DrawInventory ()
     {
-        string inventoryMsg = "Shellings: " + inventory0.money + "\n";
-        inventoryMsg += "Radishes: " + inventory0.GetItemCount (ItemIDs.RADISH) + "\n";
-        inventoryMsg += "Radish Seeds: " + inventory0.GetItemCount (ItemIDs.RADISH_SEEDS);
-        GUI.Label (new Rect (10, Screen.height - 115, 120, 100), inventoryMsg);
-
+        DisplayInventoryItems (inventory0, 0);
         // Draw player 1's equipped item
         // TODO Can GetComponent be avoided? Isn't this expensive?
         Item equippedItem = player0.GetComponent<PlayerController> ().GetEquippedItem ();
@@ -67,10 +63,7 @@ public class HUD : MonoBehaviour
         if (player1 != null) {
             // Now draw player 2's
             if (inventory1 != null) {
-                inventoryMsg = "Shellings: " + inventory1.money + "\n";
-                inventoryMsg += "Radishes: " + inventory1.GetItemCount (ItemIDs.RADISH) + "\n";
-                inventoryMsg += "Radish Seeds: " + inventory1.GetItemCount (ItemIDs.RADISH_SEEDS);
-                GUI.Label (new Rect (10 + (Screen.width / 2), Screen.height - 115, 120, 100), inventoryMsg);
+                DisplayInventoryItems (inventory1, 1);
             }
             equippedItem = player1.GetComponent<PlayerController> ().GetEquippedItem ();
             if (equippedItem == null) {
@@ -96,6 +89,22 @@ public class HUD : MonoBehaviour
                 inventory1 = (Inventory)player1.GetComponent<Inventory> ();
             }
         }
+    }
+
+    /*
+     * Show the inventory of the provided player and at the desired screen
+     * position, depending on the number of players.
+     */
+    void DisplayInventoryItems (Inventory inventory, int viewPort) {
+        string inventoryMsg = "Shellings: " + inventory.money + "\n\n";
+        inventoryMsg += "Radishes: " + inventory.GetItemCount (ItemIDs.RADISH) + "\n";
+        inventoryMsg += "Onions: " + inventory.GetItemCount (ItemIDs.ONION) + "\n";
+        inventoryMsg += "Potatoes: " + inventory.GetItemCount (ItemIDs.POTATO) + "\n";
+        inventoryMsg += "Radish Seeds: " + inventory.GetItemCount (ItemIDs.RADISH_SEEDS) + "\n";
+        inventoryMsg += "Onion Seeds: " + inventory.GetItemCount (ItemIDs.ONION_SEEDS) + "\n";
+        inventoryMsg += "Potatoe Seeds: " + inventory.GetItemCount (ItemIDs.POTATO_SEEDS);
+        GUI.Label (new Rect (10 + ((Screen.width / gameManager.NumPlayers) * viewPort),
+            Screen.height - 145, 150, 135), inventoryMsg);
     }
 
     /*
