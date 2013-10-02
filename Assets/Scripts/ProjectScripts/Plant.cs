@@ -17,6 +17,7 @@ public class Plant : MonoBehaviour
     GameObject waterDrop;
 
     // Public Attributes
+    public int itemGrownID;
     public int nightsPerGrowth;
     public int maxLife;
 

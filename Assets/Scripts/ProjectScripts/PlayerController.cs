@@ -206,8 +206,8 @@ public class PlayerController : MonoBehaviour
                 Plant plant = tile.getPlant ();
                 if (plant != null && plant.isRipe ()) {
                     Inventory inventory = (Inventory)GetComponent<Inventory> ();
-                    tile.Pick ();
-                    inventory.AddItem (ItemIDs.RADISH, 1);
+                    int pickedItemID = tile.Pick ();
+                    inventory.AddItem (pickedItemID, 1);
                     AudioSource.PlayClipAtPoint (backpackSound, transform.position);
                 }
             }
