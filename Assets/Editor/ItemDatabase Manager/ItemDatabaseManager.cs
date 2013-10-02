@@ -70,6 +70,7 @@ public class ItemDatabaseManager : EditorWindow {
         radish.maxCount = 100;
         radish.price = 30;
         radish.sellPrice = 20;
+        radish.isEquippable = false;
         radish.id = radishID;
         itemDatabase.AddItem(radish);
 
@@ -80,6 +81,7 @@ public class ItemDatabaseManager : EditorWindow {
         radishSeeds.maxCount = 100;
         radishSeeds.price = 5;
         radishSeeds.sellPrice = 2;
+        radishSeeds.isEquippable = true;
         radishSeeds.id = radishSeedsID;
         radishSeeds.plantPrefab = (GameObject) Resources.Load("Radish");
         itemDatabase.AddItem(radishSeeds);
@@ -90,6 +92,7 @@ public class ItemDatabaseManager : EditorWindow {
         onion.maxCount = 100;
         onion.price = 30;
         onion.sellPrice = 20;
+        onion.isEquippable = false;
         onion.id = onionID;
         itemDatabase.AddItem(onion);
 
@@ -100,6 +103,7 @@ public class ItemDatabaseManager : EditorWindow {
         onionSeeds.maxCount = 100;
         onionSeeds.price = 5;
         onionSeeds.sellPrice = 2;
+        onionSeeds.isEquippable = true;
         onionSeeds.id = onionSeedsID;
         onionSeeds.plantPrefab = (GameObject) Resources.Load("Onion");
         itemDatabase.AddItem(onionSeeds);
@@ -110,6 +114,7 @@ public class ItemDatabaseManager : EditorWindow {
         potato.maxCount = 100;
         potato.price = 100;
         potato.sellPrice = 80;
+        potato.isEquippable = false;
         potato.id = pototoID;
         itemDatabase.AddItem(potato);
 
@@ -120,6 +125,7 @@ public class ItemDatabaseManager : EditorWindow {
         potatoSeeds.maxCount = 100;
         potatoSeeds.price = 5;
         potatoSeeds.sellPrice = 2;
+        potatoSeeds.isEquippable = true;
         potatoSeeds.id = potatoSeedsID;
         potatoSeeds.plantPrefab = (GameObject) Resources.Load("Potato");
         itemDatabase.AddItem(potatoSeeds);
