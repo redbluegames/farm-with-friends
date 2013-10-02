@@ -35,6 +35,16 @@ public class Plant : MonoBehaviour
         Withered
     }
 
+    void Awake()
+    {
+        Transform lastChild = transform;
+        foreach ( Transform child in transform )
+        {
+            lastChild = child;
+        }
+        waterDrop = lastChild.gameObject;
+    }
+
     void Start ()
     {
         if (nightsPerGrowth == 0) {
@@ -47,13 +57,6 @@ public class Plant : MonoBehaviour
         }
         nightsOld = 0;
         nightsSinceGrowth = 0;
-
-        Transform lastChild = transform;
-        foreach ( Transform child in transform )
-        {
-            lastChild = child;
-        }
-        waterDrop = lastChild.gameObject;
 
         // Set HP to one less than full so watering can make a difference on first day.
         curLife = maxLife - 1;
