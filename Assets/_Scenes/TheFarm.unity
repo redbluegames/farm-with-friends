@@ -113,12 +113,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items:
-  - {fileID: 1066436542}
-  - {fileID: 1847541902}
-  - {fileID: 1177476443}
-  - {fileID: 1329957325}
-  - {fileID: 951925879}
-  - {fileID: 1207827596}
+  - {fileID: 727619663}
+  - {fileID: 1193133860}
+  - {fileID: 583266187}
+  - {fileID: 1428813726}
+  - {fileID: 200075360}
+  - {fileID: 1166284768}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -422,6 +422,25 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &200075360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
+  m_Name: Potato
+  m_EditorClassIdentifier: 
+  id: 4
+  itemName: Potato
+  description: 
+  maxCount: 100
+  price: 100
+  sellPrice: 80
+  isEquippable: 0
+  plantPrefab: {fileID: 0}
 --- !u!1 &226130068
 GameObject:
   m_ObjectHideFlags: 8
@@ -1301,6 +1320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cashRegister: {fileID: 8300000, guid: 2269527d113524b42a6d15ec53a91245, type: 3}
+  errorSound: {fileID: 0}
 --- !u!114 &444459088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1607,6 +1627,25 @@ MeshFilter:
   m_PrefabInternal: {fileID: 80677292}
   m_GameObject: {fileID: 561101688}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &583266187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
+  m_Name: Onion
+  m_EditorClassIdentifier: 
+  id: 2
+  itemName: Onion
+  description: 
+  maxCount: 100
+  price: 30
+  sellPrice: 20
+  isEquippable: 0
+  plantPrefab: {fileID: 0}
 --- !u!1 &589145149
 GameObject:
   m_ObjectHideFlags: 0
@@ -1793,6 +1832,25 @@ Prefab:
   m_RootGameObject: {fileID: 801869753}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!114 &727619663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
+  m_Name: Radish
+  m_EditorClassIdentifier: 
+  id: 0
+  itemName: Radish
+  description: 
+  maxCount: 100
+  price: 30
+  sellPrice: 20
+  isEquippable: 0
+  plantPrefab: {fileID: 0}
 --- !u!1 &766676921
 GameObject:
   m_ObjectHideFlags: 0
@@ -2309,24 +2367,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 2059270237}
   m_GameObject: {fileID: 914954780}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &951925879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
-  m_Name: Potato
-  m_EditorClassIdentifier: 
-  id: 4
-  itemName: Potato
-  description: 
-  maxCount: 100
-  price: 100
-  sellPrice: 80
-  plantPrefab: {fileID: 0}
 --- !u!1 &963934349
 GameObject:
   m_ObjectHideFlags: 0
@@ -2483,24 +2523,6 @@ MonoBehaviour:
   roosterSound: {fileID: 8300000, guid: 1666218a76eb54534b626b9eda489758, type: 3}
   startPointP1: {fileID: 243534039}
   startPointP2: {fileID: 1393646660}
---- !u!114 &1066436542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
-  m_Name: Radish
-  m_EditorClassIdentifier: 
-  id: 0
-  itemName: Radish
-  description: 
-  maxCount: 100
-  price: 30
-  sellPrice: 20
-  plantPrefab: {fileID: 0}
 --- !u!1 &1099606876
 GameObject:
   m_ObjectHideFlags: 0
@@ -2653,25 +2675,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 80677292}
   m_GameObject: {fileID: 1159950230}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1177476443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
-  m_Name: Onion
-  m_EditorClassIdentifier: 
-  id: 2
-  itemName: Onion
-  description: 
-  maxCount: 100
-  price: 30
-  sellPrice: 20
-  plantPrefab: {fileID: 0}
---- !u!114 &1207827596
+--- !u!114 &1166284768
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -2690,7 +2694,29 @@ MonoBehaviour:
   maxCount: 100
   price: 5
   sellPrice: 2
+  isEquippable: 1
   plantPrefab: {fileID: 100002, guid: 3661df00131ba5e46b8a891623754d82, type: 2}
+--- !u!114 &1193133860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
+  m_Name: Radish Seeds
+  m_EditorClassIdentifier: 
+  id: 1
+  itemName: Radish Seeds
+  description: 'Time to grow: Short.
+
+    Water needed: Daily'
+  maxCount: 100
+  price: 5
+  sellPrice: 2
+  isEquippable: 1
+  plantPrefab: {fileID: 100002, guid: e0237023f1451914e881728e4c0318ac, type: 2}
 --- !u!1 &1222708098
 GameObject:
   m_ObjectHideFlags: 0
@@ -2979,26 +3005,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 80677292}
   m_GameObject: {fileID: 1311101180}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1329957325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
-  m_Name: Onion Seeds
-  m_EditorClassIdentifier: 
-  id: 3
-  itemName: Onion Seeds
-  description: 'Time to grow: Long.
-
-    Water needed: Drought Only'
-  maxCount: 100
-  price: 5
-  sellPrice: 2
-  plantPrefab: {fileID: 100002, guid: e0876456fef1eac428533b80c2a22632, type: 2}
 --- !u!1 &1393646659
 GameObject:
   m_ObjectHideFlags: 0
@@ -3124,6 +3130,27 @@ Transform:
   m_LocalScale: {x: 8, y: 3.31596088, z: 1}
   m_Children: []
   m_Father: {fileID: 550811616}
+--- !u!114 &1428813726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
+  m_Name: Onion Seeds
+  m_EditorClassIdentifier: 
+  id: 3
+  itemName: Onion Seeds
+  description: 'Time to grow: Long.
+
+    Water needed: Drought Only'
+  maxCount: 100
+  price: 5
+  sellPrice: 2
+  isEquippable: 1
+  plantPrefab: {fileID: 100002, guid: e0876456fef1eac428533b80c2a22632, type: 2}
 --- !u!1 &1498349618
 GameObject:
   m_ObjectHideFlags: 0
@@ -3723,26 +3750,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 341609020}
   m_GameObject: {fileID: 1812577530}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1847541902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
-  m_Name: Radish Seeds
-  m_EditorClassIdentifier: 
-  id: 1
-  itemName: Radish Seeds
-  description: 'Time to grow: Short.
-
-    Water needed: Daily'
-  maxCount: 100
-  price: 5
-  sellPrice: 2
-  plantPrefab: {fileID: 100002, guid: e0237023f1451914e881728e4c0318ac, type: 2}
 --- !u!1001 &1867938250
 Prefab:
   m_ObjectHideFlags: 0
