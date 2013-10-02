@@ -72,10 +72,12 @@ public class GroundTile : MonoBehaviour
   * Pick the plant by setting the statuses appropriately
   * and destroying the object.
   */
-    public void Pick ()
+    public int Pick ()
     {
         SetState (GroundState.Soil);
+        int grownItemId = curPlant.GetComponent<Plant>().itemGrownID;
         DestroyPlant ();
+        return grownItemId;
     }
  
     /*

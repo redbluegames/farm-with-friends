@@ -338,7 +338,7 @@ GameObject:
   - 114: {fileID: 116637886}
   m_Layer: 0
   m_Name: Market
-  m_TagString: Untagged
+  m_TagString: Shop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -350,8 +350,8 @@ Transform:
   m_PrefabInternal: {fileID: 2056706346}
   m_GameObject: {fileID: 116637884}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.82093239, y: 1.074543, z: 9.04802513}
-  m_LocalScale: {x: 4.76639748, y: 2.23769665, z: 4.07870102}
+  m_LocalPosition: {x: -5.95743942, y: 1.074543, z: 9.04802513}
+  m_LocalScale: {x: 1.42446411, y: 2.47112465, z: 4.07293463}
   m_Children: []
   m_Father: {fileID: 1100101553}
 --- !u!114 &116637886
