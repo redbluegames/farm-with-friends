@@ -49,6 +49,15 @@ public class WorldTime : MonoBehaviour
     }
 
     /*
+     * Start all the days over again and reset the players
+     */
+    public void Reset()
+    {
+        day = 0;
+        GoToNextDay();
+    }
+
+    /*
   * Snaps the enviornment and timers to the next day
  */
     public void GoToNextDay ()
@@ -60,7 +69,7 @@ public class WorldTime : MonoBehaviour
         foreach(GameObject player in players)
         {
             Transform startPoint;
-            if(player.name == "Player1")
+            if(player.name == "Player0")
             {
                 startPoint = startPointP1;
             }
@@ -77,6 +86,7 @@ public class WorldTime : MonoBehaviour
         SetGameTimeToHour (DAWN);
     }
 
+    // Send updates to all plants
     private void AdvancePlants ()
     {
         GameObject[] plantObjs = GameObject.FindGameObjectsWithTag ("Plant");

@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     {
         NumPlayers = 0;
         maxPlayers = 2;
+
+        // Deactive players, cameras, and the hud, but store references to activate them later.
         players = new GameObject[maxPlayers];
         cameras = new GameObject[maxPlayers];
         for (int i = 0; i < maxPlayers; i++) {
@@ -33,21 +35,32 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-        if(NumPlayers != maxPlayers)
-        {
-            PollForNewPlayer();
+        if (NumPlayers != maxPlayers) {
+            PollForNewPlayer ();
         }
     }
 
     /*
      * Checks all input sources for a player pressing "Start" and binds them when they join.
      */
-    void PollForNewPlayer()
+    void PollForNewPlayer ()
     {
         int nextPlayerIndex = NumPlayers;
         foreach (InputDevice device in InputDevices.GetAllInputDevices()) {
             if (RBInput.GetButtonDownForPlayer (InputStrings.PAUSE, nextPlayerIndex, device)) {
                 BindNextPlayer (device);
+
+                // Deactivate the splash screen once a player is bound. This is NOT ideal, but
+                // neither is putting a splash screen into every scene. It should be it's own scene.
+                WorldTime worldTime = (WorldTime) GetComponent<WorldTime>();
+                Transform startPoint = worldTime.startPointP2;
+                if (NumPlayers == 1) {
+                    HideSplashScreen();
+                    worldTime.Reset();
+                }
+                else {
+                    players [nextPlayerIndex].GetComponent<PlayerController>().SnapToPoint(startPoint);
+                }
             }
         }
     }
@@ -59,17 +72,28 @@ public class GameManager : MonoBehaviour
     {
         int playerIndex = NumPlayers;
         NumPlayers++;
+
         players [playerIndex].SetActive (true);
         cameras [playerIndex].SetActive (true);
 
         // Split the viewports
-        foreach(GameObject cameraObj in cameras)
-        {
+        foreach (GameObject cameraObj in cameras) {
             cameraObj.GetComponent<IsometricCameraController> ().SplitScreenView (NumPlayers);
         }
 
         players [playerIndex].GetComponent<PlayerController> ().BindPlayer (playerIndex, device);
 
         hud.SetActive (true);
+    }
+
+    /*
+     * Hide the splash screen game object, if there is one.
+     */
+    void HideSplashScreen ()
+    {
+        GameObject splashScene = GameObject.Find ("SplashScreen");
+        if (splashScene != null) {
+            splashScene.SetActive (false);
+        }
     }
 }
