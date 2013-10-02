@@ -16,8 +16,8 @@ public class PlayerController : MonoBehaviour
     private float gravity = -20.0f;
     private float verticalSpeed = 0.0f;
     private CollisionFlags collisionFlags;
-    public int PlayerIndex{ get; private set; }
-    InputDevice playerDevice;
+    public int PlayerIndex { get; private set; }
+    public InputDevice playerDevice { get; private set; }
     bool isPlayerBound;
     PlayerState playerState;
 
