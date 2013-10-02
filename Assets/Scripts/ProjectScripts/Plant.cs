@@ -8,13 +8,13 @@ using System;
  */
 public class Plant : MonoBehaviour
 {
+    const int MIN_LIFE = 0;
     int nightsOld;
     int nightsSinceGrowth;
-    PlantStates plantState;
-    const int MIN_LIFE = 0;
     int curLife;
-    GameObject waterDrop;
     bool canBeWatered;
+    PlantStates plantState;
+    GameObject waterDrop;
 
     // Public Attributes
     public int nightsPerGrowth;
@@ -156,7 +156,6 @@ public class Plant : MonoBehaviour
      */
     private void SetDry (bool dry)
     {
-        light.enabled = false;
         waterDrop.SetActive(dry);
     }
 

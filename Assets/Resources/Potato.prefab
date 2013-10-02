@@ -29,7 +29,6 @@ GameObject:
   - 65: {fileID: 6500000}
   - 23: {fileID: 2300002}
   - 114: {fileID: 11400000}
-  - 108: {fileID: 10800000}
   m_Layer: 0
   m_Name: Potato
   m_TagString: Plant
@@ -245,41 +244,6 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4284776619
---- !u!108 &10800000
-Light:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100002}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Type: 2
-  m_Color: {r: 1, g: .850912809, b: .227941155, a: 1}
-  m_Intensity: 1
-  m_Range: 2
-  m_SpotAngle: 30
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 0
-    m_Resolution: -1
-    m_Strength: 1
-    m_Bias: .0500000007
-    m_Softness: 4
-    m_SoftnessFade: 1
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 1
-  m_ActuallyLightmapped: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_Lightmapping: 1
-  m_ShadowSamples: 1
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
-  m_IndirectIntensity: 1
-  m_AreaSize: {x: 1, y: 1}
 --- !u!111 &11100000
 Animation:
   m_ObjectHideFlags: 1
