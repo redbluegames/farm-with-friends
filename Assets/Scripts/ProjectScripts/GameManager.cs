@@ -1,21 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
     GameObject[] players;
     GameObject[] cameras;
     GameObject hud;
+    Cheats cheats;
+
+    public bool IsCheatingEnabled{ get; private set; }
 
     public int NumPlayers{ get; private set; }
 
     int maxPlayers;
-    bool isPCBound;
-    bool isXBoxBound;
+    Dictionary<InputDevice, bool> boundDevices = new Dictionary<InputDevice, bool> ();
 
     // On start, turn off non P1 players.
     void Start ()
     {
+        GameObject cheatObj = GameObject.FindGameObjectWithTag ("Cheats");
+        if (cheatObj != null) {
+            IsCheatingEnabled = true;
+            cheats = cheatObj.GetComponent<Cheats> ();
+        } else {
+            IsCheatingEnabled = false;
+        }
+
         NumPlayers = 0;
         maxPlayers = 2;
 
@@ -47,19 +58,20 @@ public class GameManager : MonoBehaviour
     {
         int nextPlayerIndex = NumPlayers;
         foreach (InputDevice device in InputDevices.GetAllInputDevices()) {
-            if (RBInput.GetButtonDownForPlayer (InputStrings.PAUSE, nextPlayerIndex, device)) {
-                BindNextPlayer (device);
+            if (!boundDevices.ContainsKey (device) || (IsCheatingEnabled && cheats.BIND_MANY_TO_ONE_DEVICE)) {
+                if (RBInput.GetButtonDownForPlayer (InputStrings.PAUSE, nextPlayerIndex, device)) {
+                    BindNextPlayer (device);
 
-                // Deactivate the splash screen once a player is bound. This is NOT ideal, but
-                // neither is putting a splash screen into every scene. It should be it's own scene.
-                WorldTime worldTime = (WorldTime) GetComponent<WorldTime>();
-                Transform startPoint = worldTime.startPointP2;
-                if (NumPlayers == 1) {
-                    HideSplashScreen();
-                    worldTime.Reset();
-                }
-                else {
-                    players [nextPlayerIndex].GetComponent<PlayerController>().SnapToPoint(startPoint);
+                    // Deactivate the splash screen once a player is bound. This is NOT ideal, but
+                    // neither is putting a splash screen into every scene. It should be it's own scene.
+                    WorldTime worldTime = (WorldTime)GetComponent<WorldTime> ();
+                    Transform startPoint = worldTime.startPointP2;
+                    if (NumPlayers == 1) {
+                        HideSplashScreen ();
+                        worldTime.Reset ();
+                    } else {
+                        players [nextPlayerIndex].GetComponent<PlayerController> ().SnapToPoint (startPoint);
+                    }
                 }
             }
         }
@@ -73,6 +85,12 @@ public class GameManager : MonoBehaviour
         int playerIndex = NumPlayers;
         NumPlayers++;
 
+        // Adds the device to the list of bound devices so that it can't be bound again.
+        if (!boundDevices.ContainsKey(device)) {
+            boundDevices.Add (device, true);
+        }
+
+        // Activate players and their cameras
         players [playerIndex].SetActive (true);
         cameras [playerIndex].SetActive (true);
 
@@ -81,6 +99,7 @@ public class GameManager : MonoBehaviour
             cameraObj.GetComponent<IsometricCameraController> ().SplitScreenView (NumPlayers);
         }
 
+        // Bind the player to the device
         players [playerIndex].GetComponent<PlayerController> ().BindPlayer (playerIndex, device);
 
         hud.SetActive (true);
