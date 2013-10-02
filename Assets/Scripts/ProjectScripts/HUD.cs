@@ -100,7 +100,7 @@ public class HUD : MonoBehaviour
      * position, depending on the number of players.
      */
     void DisplayInventoryItems (Inventory inventory, int viewPort) {
-        string inventoryMsg = "Shellings: " + inventory.money + "\n\n";
+        string inventoryMsg = "Gold: " + inventory.money + "\n\n";
         inventoryMsg += "Radishes: " + inventory.GetItemCount (ItemIDs.RADISH) + "\n";
         inventoryMsg += "Onions: " + inventory.GetItemCount (ItemIDs.ONION) + "\n";
         inventoryMsg += "Potatoes: " + inventory.GetItemCount (ItemIDs.POTATO) + "\n";

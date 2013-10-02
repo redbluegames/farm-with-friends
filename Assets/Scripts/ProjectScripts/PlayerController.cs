@@ -85,8 +85,15 @@ public class PlayerController : MonoBehaviour
         reticule.transform.position = target.transform.position;
         reticule.transform.rotation = target.transform.rotation;
      
-        // Might need to change YOffset based on what is selected.
-        const float targetYOffset = 0.25f;
+        // Get YOffset based on what is highlighted
+        float reticuleHeight = reticule.transform.lossyScale.y;
+        float plantOffset = 0.0f;
+        Plant plantOnTile = target.GetComponent<GroundTile>().getPlant();
+        if(plantOnTile != null)
+        {
+            plantOffset = plantOnTile.transform.lossyScale.y;
+        }
+        float targetYOffset = ((GroundTile.SIZE_Y + reticuleHeight) / 2) + plantOffset;
         reticule.transform.position = target.transform.position + Vector3.up * targetYOffset;
     }
  
