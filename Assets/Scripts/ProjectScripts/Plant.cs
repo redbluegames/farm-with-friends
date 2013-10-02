@@ -13,6 +13,7 @@ public class Plant : MonoBehaviour
     PlantStates plantState;
     const int MIN_LIFE = 0;
     int curLife;
+    GameObject waterDrop;
     bool canBeWatered;
 
     // Public Attributes
@@ -45,6 +46,14 @@ public class Plant : MonoBehaviour
         }
         nightsOld = 0;
         nightsSinceGrowth = 0;
+
+        Transform lastChild = transform;
+        foreach ( Transform child in transform )
+        {
+            lastChild = child;
+        }
+        waterDrop = lastChild.gameObject;
+
         // Set HP to one less than full so watering can make a difference on first day.
         curLife = maxLife - 1;
         if (curLife == MIN_LIFE) {
@@ -147,7 +156,8 @@ public class Plant : MonoBehaviour
      */
     private void SetDry (bool dry)
     {
-        light.enabled = dry;
+        light.enabled = false;
+        waterDrop.SetActive(dry);
     }
 
     /*
