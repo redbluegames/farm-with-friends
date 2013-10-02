@@ -37,6 +37,9 @@ public class Shop : MonoBehaviour
     bool actionPressed, swapPressed, swapAltPressed, weaponPressed, exitPressed;
     int focusId;
 
+    // Sounds
+    public AudioClip cashRegister;
+
     // Magic Numbers
     const int UNSELECTED = -1;
     const int INFINITE = int.MaxValue;
@@ -299,6 +302,7 @@ public class Shop : MonoBehaviour
         if (playerInventory.HasItem (item.id)) {
             playerInventory.RemoveItem (item.id, count);
             playerInventory.AddMoney (item.sellPrice * count);
+            AudioSource.PlayClipAtPoint (cashRegister, transform.position);
         }
         // When the item is no longer in inventory, reset the display.
         if (!playerInventory.HasItem (item.id)) {
@@ -331,6 +335,7 @@ public class Shop : MonoBehaviour
             playerInventory.AddItem (item.id, count);
             shopInventory.RemoveItem (item.id, count);
             playerInventory.RemoveMoney (totalCost);
+            AudioSource.PlayClipAtPoint (cashRegister, transform.position);
             return true;
         }
         return false;
