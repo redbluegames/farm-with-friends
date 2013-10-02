@@ -144,34 +144,55 @@ public class Inventory : MonoBehaviour
     /*
      * Iterates through the dictionary of items, storing the key of an
      * "Equipped" item
+     * TODO: This should probably instead iterate through an array of equippable item ids, sorted
+     * in the order which items should cycle in and perhaps their Store sorting order.
      */
     public void EquipNextItem ()
     {
-        // If there are no items in the inventory, equip a null item
-        if(itemCounts.Count == 0)
+
+        // Increment the item index, which marks our place in the Dictionary
+        int equippableItemCount = 0;
+        foreach (KeyValuePair<int, int> item in itemCounts) {
+            // Only count equippable items
+            if ( itemDB.GetItem (item.Key).isEquippable)
+            {
+                equippableItemCount++;
+            }
+         }
+
+        // If there are no equippable items in the inventory, equip a null item
+        if(equippableItemCount == 0)
         {
             equippedItemIndex = -1;
             equippedItemKey = -1;
             return;
         }
 
-        // Increment the item index, which marks our place in the Dictionary
+        // Increment the equipped item index
         equippedItemIndex ++;
-        if (equippedItemIndex >= itemCounts.Count) {
+        if (equippedItemIndex >= equippableItemCount) {
             equippedItemIndex = 0;
         }
 
-        // Search the dictionary for the next item
+        // Search the dictionary for the next equippable item
         int i = 0;
         foreach (KeyValuePair<int, int> item in itemCounts) {
-            if (i == equippedItemIndex) {
-                equippedItemKey = item.Key;
-                break;
+            // Only count equippable items
+            if ( itemDB.GetItem (item.Key).isEquippable)
+            {
+                if (i == equippedItemIndex) {
+                    equippedItemKey = item.Key;
+                    break;
+                }
+                i++;
             }
-            i++;
          }
+
     }
 
+    /*
+     * Return the equipped item
+     */
     public Item GetEquippedItem ()
     {
         if (equippedItemIndex == -1) {
