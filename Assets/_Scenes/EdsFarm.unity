@@ -1582,7 +1582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08409c6b30abe7248acbe2e8ee2d900d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  money: 0
+  money: 50
   equippedItemKey: -1
 --- !u!1 &386729854
 GameObject:
@@ -3309,7 +3309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08409c6b30abe7248acbe2e8ee2d900d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  money: 0
+  money: 50
   equippedItemKey: -1
 --- !u!114 &1076954164
 MonoBehaviour:

@@ -126,7 +126,7 @@ public class Shop : MonoBehaviour
                     SellItem (selectedItem, 1);
                 }
                 if (GUI.Button (new Rect (shopWidth - (2 * btnWidth) - (2 * PADDING), innerBoxH / 2 + LABEL_H, btnWidth, BTN_H),
-                        "Sell ALL ITEMS (Y/right-click)") || weaponPressed) {
+                        "Sell ALL ITEMS (Y/k)") || weaponPressed) {
                     weaponPressed = false;
                     SellItem (selectedItem, playerInventory.GetItemCount (itemDB.GetItemByName (selectedItem).id));
                 }
@@ -135,7 +135,7 @@ public class Shop : MonoBehaviour
         DisplayBuySellButton ();
 
         if (GUI.Button (new Rect (shopWidth - btnWidth, shopHeight - BTN_H, btnWidth, BTN_H),
-          new GUIContent ("Stop Shopping (B/e)")) || exitPressed) {
+          new GUIContent ("Stop Shopping (B/Ld)")) || exitPressed) {
             exitPressed = false;
             StopShopping (activePlayerIndex);
         }
@@ -149,13 +149,13 @@ public class Shop : MonoBehaviour
     {
         if (state == ShopState.SELLING) {
             if (GUI.Button (new Rect (shopWidth - btnWidth * 3, shopHeight - BTN_H, btnWidth, BTN_H),
-              new GUIContent ("Buy (LB/z)")) || swapPressed) {
+              new GUIContent ("Buy (LB/q)")) || swapPressed) {
                 StartBuying (activePlayerIndex);
                 swapPressed = false;
             }
         } else {
             if (GUI.Button (new Rect (shopWidth - btnWidth * 2, shopHeight - BTN_H, btnWidth, BTN_H),
-              new GUIContent ("Sell (LB/z)")) || swapPressed) {
+              new GUIContent ("Sell (LB/q)")) || swapPressed) {
                 StartSelling (activePlayerIndex);
                 swapPressed = false;
             }
