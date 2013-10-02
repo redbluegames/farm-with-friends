@@ -34,7 +34,7 @@ public class Shop : MonoBehaviour
     // GUI Focus properties
     float lastVertAxis;
     bool upPressed, downPressed;
-    bool actionPressed, swapPressed, swapAltPressed, weaponPressed, exitPressed;
+    bool actionPressed, swapPressed, weaponPressed, exitPressed;
     int focusId;
 
     // Sounds
@@ -125,7 +125,7 @@ public class Shop : MonoBehaviour
                     SellItem (selectedItem, 1);
                 }
                 if (GUI.Button (new Rect (shopWidth - (2 * btnWidth) - (2 * PADDING), innerBoxH / 2 + LABEL_H, btnWidth, BTN_H),
-                        "Sell ALL ITEMS (X/click)") || weaponPressed) {
+                        "Sell ALL ITEMS (Y/right-click)") || weaponPressed) {
                     weaponPressed = false;
                     SellItem (selectedItem, playerInventory.GetItemCount (itemDB.GetItemByName (selectedItem).id));
                 }
@@ -151,13 +151,11 @@ public class Shop : MonoBehaviour
               new GUIContent ("Buy (LB/z)")) || swapPressed) {
                 StartBuying (activePlayerIndex);
                 swapPressed = false;
-                swapAltPressed = false;
             }
         } else {
             if (GUI.Button (new Rect (shopWidth - btnWidth * 2, shopHeight - BTN_H, btnWidth, BTN_H),
-              new GUIContent ("Sell (RB/c)")) || swapAltPressed) {
+              new GUIContent ("Sell (LB/z)")) || swapPressed) {
                 StartSelling (activePlayerIndex);
-                swapAltPressed = false;
                 swapPressed = false;
             }
         }
@@ -178,16 +176,22 @@ public class Shop : MonoBehaviour
         scrollPos = GUI.BeginScrollView (new Rect (PADDING * 2, LABEL_H, leftSideW, innerBoxH), scrollPos,
             new Rect (SCROLL_W, 0, SCROLL_W, itemNames.Length * LABEL_H), false, false);
 
+        bool itemClicked = false;
         for (int i = 0; i < itemNames.Length; ++i) {
             GUI.SetNextControlName (i.ToString ());
             if (GUI.Button (new Rect (PADDING, i * LABEL_H, leftSideW - 4, LABEL_H), itemNames [i])) {
+                itemClicked = true;
                 selectedItem = itemNames [i];
                 rightHandLabel = itemDescriptions [i];
+                focusId = i;
             }
         }
-        focusId = ManageFocus (focusId, itemNames.Length);
-        selectedItem = itemNames [focusId];
-        rightHandLabel = itemDescriptions [focusId];
+        // Use our control stick input if mouse wasn't used to select an item
+        if (!itemClicked) {
+            focusId = ManageFocus (focusId, itemNames.Length);
+            selectedItem = itemNames [focusId];
+            rightHandLabel = itemDescriptions [focusId];
+        }
         GUI.FocusControl (focusId.ToString ());
         GUI.EndScrollView ();
     }
@@ -212,13 +216,8 @@ public class Shop : MonoBehaviour
         // Bumper buttons
         if (RBInput.GetButtonDownForPlayer (InputStrings.SWAPITEM, activePlayerIndex, device)) {
             swapPressed = true;
-            swapAltPressed = false;
-        } else if (RBInput.GetButtonDownForPlayer (InputStrings.SWAPITEM_ALT, activePlayerIndex, device)) {
-            swapPressed = false;
-            swapAltPressed = true;
         } else {
             swapPressed = false;
-            swapAltPressed = false;
         }
         // Action button (A)
         if (RBInput.GetButtonDownForPlayer (InputStrings.ACTION, activePlayerIndex, device)) {
@@ -226,8 +225,8 @@ public class Shop : MonoBehaviour
         } else {
             actionPressed = false;
         }
-        // Weapon buttons (X)
-        if (RBInput.GetButtonDownForPlayer (InputStrings.WEAPON1, activePlayerIndex, device)) {
+        // Weapon2 buttons (Y)
+        if (RBInput.GetButtonDownForPlayer (InputStrings.WEAPON2, activePlayerIndex, device)) {
             weaponPressed = true;
         } else {
             weaponPressed = false;
