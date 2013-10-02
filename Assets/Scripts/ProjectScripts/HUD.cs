@@ -13,6 +13,8 @@ public class HUD : MonoBehaviour
     GameManager gameManager;
     WorldTime gametime;
 
+    public GUIStyle HUDStyle;
+
     void Awake ()
     {
         GameObject obj = GameObject.FindGameObjectWithTag ("GameManager");
@@ -58,7 +60,8 @@ public class HUD : MonoBehaviour
         } else {
             itemXPos = Screen.width / 2;
         }
-        GUI.Label (new Rect (itemXPos - itemLabelWidth, itemLabelYOffset, itemLabelWidth, itemLabelHeight), itemName);
+        GUI.Label (new Rect (itemXPos - itemLabelWidth, itemLabelYOffset, itemLabelWidth, itemLabelHeight),
+            itemName, HUDStyle);
 
         if (player1 != null) {
             // Now draw player 2's
@@ -71,7 +74,8 @@ public class HUD : MonoBehaviour
             } else {
                 itemName = equippedItem.itemName;
             }
-            GUI.Label (new Rect (Screen.width - itemLabelWidth, itemLabelYOffset, itemLabelWidth, itemLabelHeight), itemName);
+            GUI.Label (new Rect (Screen.width - itemLabelWidth, itemLabelYOffset, itemLabelWidth, itemLabelHeight),
+                itemName, HUDStyle);
         } else {
             DisplayHowToEnterText ();
         }
@@ -104,7 +108,7 @@ public class HUD : MonoBehaviour
         inventoryMsg += "Onion Seeds: " + inventory.GetItemCount (ItemIDs.ONION_SEEDS) + "\n";
         inventoryMsg += "Potatoe Seeds: " + inventory.GetItemCount (ItemIDs.POTATO_SEEDS);
         GUI.Label (new Rect (10 + ((Screen.width / gameManager.NumPlayers) * viewPort),
-            Screen.height - 145, 150, 135), inventoryMsg);
+            Screen.height - 160, 155, 140), inventoryMsg, HUDStyle);
     }
 
     /*
@@ -115,6 +119,6 @@ public class HUD : MonoBehaviour
     {
         int width = Screen.width / 3;
         GUI.Label (new Rect (Screen.width - width, Screen.height - 20, width, 20), 
-            "Player 2 Press ENTER to join.");
+            "Player 2 Press ENTER to join.", HUDStyle);
     }
 }

@@ -239,6 +239,108 @@ Prefab:
       propertyPath: cashRegister
       value: 
       objectReference: {fileID: 8300000, guid: 2269527d113524b42a6d15ec53a91245, type: 3}
+    - target: {fileID: 10200000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 8221a641e39a08740a350defc14fb6b7,
+        type: 3}
+    - target: {fileID: 2300002, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8221a641e39a08740a350defc14fb6b7, type: 3}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 8221a641e39a08740a350defc14fb6b7,
+        type: 3}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_Normal.m_Background
+      value: 
+      objectReference: {fileID: 2800000, guid: 99a759b963a754f9fbffb8bc6d0ed764, type: 3}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_Normal.m_TextColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_Normal.m_TextColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_Normal.m_TextColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_Normal.m_TextColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_Alignment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_OnFocused.m_TextColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_OnFocused.m_TextColor.g
+      value: .901825607
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_OnFocused.m_TextColor.b
+      value: .110294104
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_OnActive.m_TextColor.r
+      value: .996078432
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_OnActive.m_TextColor.g
+      value: .898039222
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_OnActive.m_TextColor.b
+      value: .109803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_Border.m_Left
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_Border.m_Right
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_Border.m_Top
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_Border.m_Bottom
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_Active.m_TextColor.r
+      value: .992156863
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_Active.m_TextColor.g
+      value: .894117653
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_Active.m_TextColor.b
+      value: .109803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_Focused.m_TextColor.r
+      value: .992156863
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_Focused.m_TextColor.g
+      value: .894117653
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
+      propertyPath: style.m_Focused.m_TextColor.b
+      value: .109803922
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f50769493c69fd44c8a48c51fd3fa3d6, type: 2}
   m_RootGameObject: {fileID: 971311141}
@@ -282,7 +384,7 @@ TextMesh:
   m_GameObject: {fileID: 60775809}
   m_Text: Enter to Shop
   m_OffsetZ: 0
-  m_CharacterSize: 1
+  m_CharacterSize: .75
   m_LineSpacing: 1
   m_Anchor: 4
   m_Alignment: 1
@@ -290,7 +392,7 @@ TextMesh:
   m_FontSize: 0
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Font: {fileID: 12800000, guid: 8221a641e39a08740a350defc14fb6b7, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
@@ -307,7 +409,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8221a641e39a08740a350defc14fb6b7, type: 3}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -397,6 +499,7 @@ MonoBehaviour:
   maxCount: 100
   price: 100
   sellPrice: 80
+  isEquippable: 0
   plantPrefab: {fileID: 0}
 --- !u!1 &213392392
 GameObject:
@@ -1183,7 +1286,7 @@ TextMesh:
   m_GameObject: {fileID: 537792576}
   m_Text: Enter to Sleep
   m_OffsetZ: 0
-  m_CharacterSize: 1
+  m_CharacterSize: .75
   m_LineSpacing: 1
   m_Anchor: 4
   m_Alignment: 1
@@ -1191,7 +1294,7 @@ TextMesh:
   m_FontSize: 0
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Font: {fileID: 12800000, guid: 8221a641e39a08740a350defc14fb6b7, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
@@ -1208,7 +1311,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8221a641e39a08740a350defc14fb6b7, type: 3}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -1469,8 +1572,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77bb2ef7027d4aa43b7045455b438c1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemDescriptionStyle:
+    m_Name: 
+    m_Normal:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 1, g: 1, b: 1, a: 1}
+    m_Hover:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Active:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Focused:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnNormal:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnHover:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnActive:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnFocused:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Border:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Margin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Padding:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Overflow:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Font: {fileID: 12800000, guid: 8221a641e39a08740a350defc14fb6b7, type: 3}
+    m_FontSize: 18
+    m_FontStyle: 0
+    m_Alignment: 0
+    m_WordWrap: 1
+    m_RichText: 1
+    m_TextClipping: 0
+    m_ImagePosition: 0
+    m_ContentOffset: {x: 0, y: 0}
+    m_FixedWidth: 0
+    m_FixedHeight: 0
+    m_StretchWidth: 1
+    m_StretchHeight: 0
   cashRegister: {fileID: 8300000, guid: 2269527d113524b42a6d15ec53a91245, type: 3}
-  errorSound: {fileID: 0}
+  errorSound: {fileID: 8300000, guid: bf5eff71fdfdfb2499585e7fe6bc55ea, type: 3}
 --- !u!1001 &668249928
 Prefab:
   m_ObjectHideFlags: 0
@@ -1967,6 +2129,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53a21367ce0fd4ebc8f0449df51941a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HUDStyle:
+    m_Name: 
+    m_Normal:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 1, g: 1, b: 1, a: 1}
+    m_Hover:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Active:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Focused:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnNormal:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnHover:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnActive:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnFocused:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Border:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Margin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Padding:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Overflow:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Font: {fileID: 12800000, guid: 8221a641e39a08740a350defc14fb6b7, type: 3}
+    m_FontSize: 13
+    m_FontStyle: 0
+    m_Alignment: 0
+    m_WordWrap: 0
+    m_RichText: 1
+    m_TextClipping: 0
+    m_ImagePosition: 0
+    m_ContentOffset: {x: 0, y: 0}
+    m_FixedWidth: 0
+    m_FixedHeight: 0
+    m_StretchWidth: 1
+    m_StretchHeight: 0
 --- !u!1 &836828612
 GameObject:
   m_ObjectHideFlags: 0
@@ -2241,6 +2462,7 @@ MonoBehaviour:
   maxCount: 100
   price: 30
   sellPrice: 20
+  isEquippable: 0
   plantPrefab: {fileID: 0}
 --- !u!1 &1051007514
 GameObject:
@@ -2537,6 +2759,7 @@ MonoBehaviour:
   maxCount: 100
   price: 5
   sellPrice: 2
+  isEquippable: 0
   plantPrefab: {fileID: 100002, guid: e0237023f1451914e881728e4c0318ac, type: 2}
 --- !u!1 &1208635473
 GameObject:
@@ -3243,6 +3466,7 @@ MonoBehaviour:
   maxCount: 100
   price: 5
   sellPrice: 2
+  isEquippable: 0
   plantPrefab: {fileID: 100002, guid: e0876456fef1eac428533b80c2a22632, type: 2}
 --- !u!1 &1641319992
 GameObject:
@@ -3795,6 +4019,7 @@ MonoBehaviour:
   maxCount: 100
   price: 5
   sellPrice: 2
+  isEquippable: 0
   plantPrefab: {fileID: 100002, guid: 3661df00131ba5e46b8a891623754d82, type: 2}
 --- !u!1 &1853264554
 GameObject:
@@ -4328,6 +4553,22 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: df96a14b757be46548cf082520dca043, type: 2}
+      propertyPath: HUDStyle.m_FontSize
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: df96a14b757be46548cf082520dca043, type: 2}
+      propertyPath: HUDStyle.m_Normal.m_TextColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: df96a14b757be46548cf082520dca043, type: 2}
+      propertyPath: HUDStyle.m_Normal.m_TextColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: df96a14b757be46548cf082520dca043, type: 2}
+      propertyPath: HUDStyle.m_Normal.m_TextColor.b
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: df96a14b757be46548cf082520dca043, type: 2}
   m_RootGameObject: {fileID: 825467209}
@@ -4540,6 +4781,7 @@ MonoBehaviour:
   maxCount: 100
   price: 30
   sellPrice: 20
+  isEquippable: 0
   plantPrefab: {fileID: 0}
 --- !u!1 &2136416139
 GameObject:

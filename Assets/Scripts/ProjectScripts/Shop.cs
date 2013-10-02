@@ -13,6 +13,7 @@ public class Shop : MonoBehaviour
     int activePlayerIndex;
 
     // GUI properties
+    public GUIStyle itemDescriptionStyle;
     int shopHeight = (int)(Screen.height * 0.75);
     int shopWidth = (int)(Screen.width * 0.75);
     int leftStart = 0;
@@ -202,7 +203,8 @@ public class Shop : MonoBehaviour
      */
     void DisplayItemDescription ()
     {
-        GUI.Box (new Rect (leftSideW + (3 * PADDING), LABEL_H, rightSideW, innerBoxH / 2), rightHandLabel);
+        GUI.Box (new Rect (leftSideW + (3 * PADDING), LABEL_H, rightSideW, innerBoxH / 2), rightHandLabel,
+            itemDescriptionStyle);
     }
 
     /*
