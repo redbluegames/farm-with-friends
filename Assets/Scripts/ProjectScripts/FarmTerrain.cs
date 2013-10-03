@@ -5,6 +5,8 @@ public class FarmTerrain : MonoBehaviour
 {
     public GameObject groundTilePrefab;
     public int grassPercent = 75;
+    public int wildfruitSpawnPercent = 1;
+    public int wildfruitSpawnsPerDay = 5;
  
     void Start ()
     {
@@ -51,6 +53,11 @@ public class FarmTerrain : MonoBehaviour
         float rand = Random.Range (0, 100);
         if (rand < grassPercent) {
             tileScript.SetState (GroundTile.GroundState.Grass);
+            // Check if we should spawn a wild fruit
+            float rand2 = Random.Range (0, 100);
+            if (rand2 < wildfruitSpawnPercent) {
+                tileScript.PlantAdult (ItemIDs.ONION_SEEDS);
+            }
         } else {
             tileScript.SetState (GroundTile.GroundState.Dirt);
         }

@@ -88,6 +88,17 @@ public class GroundTile : MonoBehaviour
         SetState (GroundState.Planted);
         SpawnPlant (plantPrefab);
     }
+
+    /*
+  * Plant a plant on the tile.
+  */
+    public void Plant (int plantID)
+    {
+        SetState (GroundState.Planted);
+        GameObject itemDB = GameObject.Find("ItemDatabase");
+        Item plant = (Item) itemDB.GetComponent<ItemDatabase>().GetItem(plantID);
+        SpawnPlant (plant.plantPrefab);
+    }
  
     /*
   * Remove the plant from the tile.
@@ -128,8 +139,20 @@ public class GroundTile : MonoBehaviour
         float halfPlantHeight = curPlant.transform.lossyScale.y / 2;
         float heightOffset = (SIZE_Y / 2 ) + halfPlantHeight;
         curPlant.transform.position = transform.position + new Vector3( 0, heightOffset, 0);
+
+        // Attach the plant to this ground tile
+        curPlant.transform.parent = transform;
     }
- 
+
+    /*
+     * Plant an adult plant on this tile
+     */
+    public void PlantAdult(int plantID)
+    {
+        Plant(plantID);
+        curPlant.GetComponent<Plant>().StartAsAdult();
+    }
+
     /*
   * Spawns dirt fx with default orientation
  */

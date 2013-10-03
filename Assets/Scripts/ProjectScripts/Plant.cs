@@ -13,7 +13,8 @@ public class Plant : MonoBehaviour
     int nightsSinceGrowth;
     int curLife;
     bool canBeWatered;
-    PlantStates plantState;
+    PlantState plantState;
+    PlantState initialState = PlantState.Seed;
     GameObject waterDrop;
 
     // Public Attributes
@@ -27,7 +28,7 @@ public class Plant : MonoBehaviour
     public Material adultMat;
     public Material witheredMat;
 
-    public enum PlantStates
+    public enum PlantState
     {
         Seed = 0,
         Sprout,
@@ -63,7 +64,7 @@ public class Plant : MonoBehaviour
         if (curLife == MIN_LIFE) {
             SetDry (true);
         }
-        SetPlantState (PlantStates.Seed);
+        SetPlantState (initialState);
 
         // Initialize the text
         TextMesh textMesh = (TextMesh)GetComponentInChildren<TextMesh> ();
@@ -80,10 +81,10 @@ public class Plant : MonoBehaviour
         nightsSinceGrowth++;
         curLife--;
 
-        if (plantState != PlantStates.Withered) {
+        if (plantState != PlantState.Withered) {
             // Check for wither
             if (curLife < MIN_LIFE) {
-                SetPlantState (PlantStates.Withered);
+                SetPlantState (PlantState.Withered);
                 return;
             }
             // Check if the plant needs water.
@@ -103,13 +104,13 @@ public class Plant : MonoBehaviour
     private void Grow ()
     {
         // Withered and Adult plants can't grow
-        PlantStates nextState;
-        if (plantState == PlantStates.Adult || plantState == PlantStates.Withered) {
+        PlantState nextState;
+        if (plantState == PlantState.Adult || plantState == PlantState.Withered) {
             return;
-        } else if (plantState == PlantStates.Seed) {
-            nextState = PlantStates.Sprout;
-        } else if (plantState == PlantStates.Sprout) {
-            nextState = PlantStates.Adult;
+        } else if (plantState == PlantState.Seed) {
+            nextState = PlantState.Sprout;
+        } else if (plantState == PlantState.Sprout) {
+            nextState = PlantState.Adult;
         } else {
             Debug.LogError ("Plant is trying to grow from an unknown state!");
             return;
@@ -123,10 +124,10 @@ public class Plant : MonoBehaviour
     /*
      * Set the Plant's state to the specified state and render it.
      */
-    private void SetPlantState (PlantStates newState)
+    private void SetPlantState (PlantState newState)
     {
         plantState = newState;
-        if (newState == PlantStates.Withered || newState == PlantStates.Adult) {
+        if (newState == PlantState.Withered || newState == PlantState.Adult) {
             SetDry (false);
             canBeWatered = false;
         }
@@ -142,13 +143,13 @@ public class Plant : MonoBehaviour
     void RenderPlantState ()
     {
         Material stateMaterial = seedMat;
-        if (plantState == PlantStates.Seed) {
+        if (plantState == PlantState.Seed) {
             stateMaterial = seedMat;
-        } else if (plantState == PlantStates.Sprout) {
+        } else if (plantState == PlantState.Sprout) {
             stateMaterial = sproutMat;
-        } else if (plantState == PlantStates.Adult) {
+        } else if (plantState == PlantState.Adult) {
             stateMaterial = adultMat;
-        } else if (plantState == PlantStates.Withered) {
+        } else if (plantState == PlantState.Withered) {
             stateMaterial = witheredMat;
         }
         renderer.material = stateMaterial;
@@ -177,7 +178,7 @@ public class Plant : MonoBehaviour
      */
     public bool isWithered ()
     {
-        return plantState == PlantStates.Withered;
+        return plantState == PlantState.Withered;
     }
 
     /*
@@ -185,7 +186,14 @@ public class Plant : MonoBehaviour
      */
     public bool isRipe ()
     {
-        return plantState == PlantStates.Adult;
+        return plantState == PlantState.Adult;
     }
 
+    /*
+     * Sets the plant to initialze to the adult state.
+     */
+    public void StartAsAdult()
+    {
+        initialState = PlantState.Adult;
+    }
 }

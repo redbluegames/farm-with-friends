@@ -619,7 +619,7 @@ Transform:
   m_GameObject: {fileID: 100040}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -40.8851242, y: 9.99744892, z: 28.9610939}
-  m_LocalScale: {x: 5, y: 1, z: 5}
+  m_LocalScale: {x: 2, y: 1, z: 2}
   m_Children: []
   m_Father: {fileID: 400036}
 --- !u!20 &2000000
@@ -1286,6 +1286,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundTilePrefab: {fileID: 100000, guid: e5c2f5093a7d74ac0aba956ed7ed768a, type: 2}
   grassPercent: 90
+  wildfruitSpawnPercent: 0
+  wildfruitSpawnsPerDay: 0
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1
