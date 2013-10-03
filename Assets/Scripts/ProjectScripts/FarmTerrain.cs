@@ -69,7 +69,7 @@ public class FarmTerrain : MonoBehaviour
         //TODO: This could really be optimized
         // Spawn wild fruit
         foreach (Transform child in transform) {
-            if (!child.GetComponent<GroundTile> ().isSoil ()) {
+            if (child.GetComponent<GroundTile> ().isGrass ()) {
                 if (RBRandom.PercentageChance(wildrfruitNightlySpawnPercent)) {
                     SpawnWildFruitOnTile (child.gameObject);
                 }

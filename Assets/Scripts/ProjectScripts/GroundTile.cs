@@ -126,6 +126,14 @@ public class GroundTile : MonoBehaviour
     {
         return curState == GroundState.Soil;
     }
+
+    /*
+     * Returns true if the ground is grass.
+     */
+    public bool isGrass()
+    {
+        return curState == GroundState.Grass;
+    }
  
     /*
   * Spawn a plant on the tile.
