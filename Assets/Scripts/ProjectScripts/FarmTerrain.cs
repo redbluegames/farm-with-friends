@@ -6,8 +6,8 @@ public class FarmTerrain : MonoBehaviour
     public GameObject groundTilePrefab;
     public int grassPercent = 75;
     public int wildfruitSpawnPercent = 1;
-    public int wildfruitSpawnsPerDay = 5;
- 
+    public float wildrfruitNightlySpawnPercent = 0.15f;
+
     void Start ()
     {
         GenerateGroundTiles ();
@@ -50,16 +50,39 @@ public class FarmTerrain : MonoBehaviour
 
         // Turn this tile into a grass or dirt tile based on settings
         GroundTile tileScript = tile.GetComponent<GroundTile> ();
-        float rand = Random.Range (0, 100);
-        if (rand < grassPercent) {
+        if (RBRandom.PercentageChance(grassPercent)) {
             tileScript.SetState (GroundTile.GroundState.Grass);
             // Check if we should spawn a wild fruit
-            float rand2 = Random.Range (0, 100);
-            if (rand2 < wildfruitSpawnPercent) {
+            if (RBRandom.PercentageChance(wildfruitSpawnPercent)) {
                 tileScript.PlantAdult (ItemIDs.ONION_SEEDS);
             }
         } else {
             tileScript.SetState (GroundTile.GroundState.Dirt);
         }
+    }
+
+    /*
+     * Performs nightly decay on all ground tiles
+     */
+    public void DoNightlyDecay ()
+    {
+        //TODO: This could really be optimized
+        // Spawn wild fruit
+        foreach (Transform child in transform) {
+            if (!child.GetComponent<GroundTile> ().isSoil ()) {
+                if (RBRandom.PercentageChance(wildrfruitNightlySpawnPercent)) {
+                    SpawnWildFruitOnTile (child.gameObject);
+                }
+            }
+        }
+    }
+
+    /*
+     * Spawn a single wild fruit plant on the specified tile
+     */
+    private void SpawnWildFruitOnTile (GameObject tileObj)
+    {
+        GroundTile tile = tileObj.GetComponent<GroundTile> ();
+        tile.PlantAdult (ItemIDs.ONION_SEEDS);
     }
 }

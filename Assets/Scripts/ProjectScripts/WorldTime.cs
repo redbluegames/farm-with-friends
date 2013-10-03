@@ -80,6 +80,9 @@ public class WorldTime : MonoBehaviour
             player.GetComponent<PlayerController>().SnapToPoint(startPoint);
         }
 
+        GameObject terrain = GameObject.Find ("FarmTerrain");
+        terrain.GetComponent<FarmTerrain>().DoNightlyDecay();
+
         AudioSource.PlayClipAtPoint (roosterSound, transform.position);
 
         day++;
