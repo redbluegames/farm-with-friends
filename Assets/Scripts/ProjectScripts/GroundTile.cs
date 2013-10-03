@@ -21,8 +21,7 @@ public class GroundTile : MonoBehaviour
     {
         Dirt,
         Grass,
-        Soil,
-        Planted
+        Soil
     }
 
     // The current state of the ground tile
@@ -50,6 +49,10 @@ public class GroundTile : MonoBehaviour
  */
     public void Hoe ()
     {
+        if(curPlant != null)
+        {
+            DestroyPlant();
+        }
         switch (curState) {
         case GroundState.Dirt :
             SetState (GroundState.Soil);
@@ -58,10 +61,6 @@ public class GroundTile : MonoBehaviour
             SetState (GroundState.Dirt);
             break;
         case GroundState.Soil :
-            break;
-        case GroundState.Planted :
-            SetState (GroundState.Soil);
-            DestroyPlant ();
             break;
         }
      
@@ -86,7 +85,6 @@ public class GroundTile : MonoBehaviour
   */
     public void Plant (GameObject plantPrefab)
     {
-        SetState (GroundState.Planted);
         SpawnPlant (plantPrefab);
     }
 
@@ -95,10 +93,9 @@ public class GroundTile : MonoBehaviour
   */
     public void Plant (int plantID)
     {
-        SetState (GroundState.Planted);
         GameObject itemDB = GameObject.Find("ItemDatabase");
         Item plant = (Item) itemDB.GetComponent<ItemDatabase>().GetItem(plantID);
-        SpawnPlant (plant.plantPrefab);
+        Plant (plant.plantPrefab);
     }
  
     /*
