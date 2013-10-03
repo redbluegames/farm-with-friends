@@ -275,7 +275,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemGrownID: 6
   nightsPerGrowth: 4
-  maxLife: 2
+  maxLife: 1
   isRepickable: 1
   seedMat: {fileID: 2100000, guid: 9d36863ace7a64be3b1f61f4db9061e1, type: 2}
   sproutMat: {fileID: 2100000, guid: c326cf10169bf476f858f75d17eb6609, type: 2}

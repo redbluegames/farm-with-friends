@@ -195,7 +195,7 @@ public class PlayerController : MonoBehaviour
             if (actionTile != null) {
                 GroundTile tile = (GroundTile)actionTile.GetComponent<GroundTile> ();
                 //TODO This violates MVC, fix it
-                if (tile.isSoil ()) {
+                if (tile.isSoil () && tile.getPlant() == null) {
                     Inventory inventory = (Inventory)GetComponent<Inventory> ();
                     if (inventory.GetEquippedItem () != null) {
                         GameObject plant = inventory.GetEquippedItem ().plantPrefab;

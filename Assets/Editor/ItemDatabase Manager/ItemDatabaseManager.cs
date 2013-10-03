@@ -155,7 +155,7 @@ public class ItemDatabaseManager : EditorWindow
         Item tomatoSeeds = (Item)ScriptableObject.CreateInstance (typeof(Item));
         tomatoSeeds.name = "Tomato Seeds";
         tomatoSeeds.itemName = "Tomato Seeds";
-        tomatoSeeds.description = "Time to grow: 12 nights but repickable every 4.\nWater needed: Every 2 Days\nTomatos sell for 50 gold.";
+        tomatoSeeds.description = "Time to grow: 8 nights but repickable every 4.\nWater needed: Daily\nTomatos sell for 50 gold.";
         tomatoSeeds.maxCount = 200;
         tomatoSeeds.price = 100;
         tomatoSeeds.sellPrice = 100;

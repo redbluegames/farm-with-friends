@@ -4121,7 +4121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundTilePrefab: {fileID: 100000, guid: e5c2f5093a7d74ac0aba956ed7ed768a, type: 2}
   grassPercent: 90
-  wildflowerSpawnPercent: 1
+  wildflowerSpawnPercent: .5
   wildflowerNightlySpawnPercent: .300000012
 --- !u!23 &1729394326
 Renderer:
@@ -4809,7 +4809,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundTilePrefab: {fileID: 100000, guid: e5c2f5093a7d74ac0aba956ed7ed768a, type: 2}
   grassPercent: 75
-  wildflowerSpawnPercent: 1
+  wildflowerSpawnPercent: .5
   wildflowerNightlySpawnPercent: .300000012
 --- !u!23 &1979331452
 Renderer:
