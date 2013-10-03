@@ -6,7 +6,7 @@ using System;
 public class ItemDatabase : MonoBehaviour
 {
     // TODO: Store items in a structure that can grow as we add items to the file
-    public Item[] items = new Item[10];
+    public Item[] items = new Item[20];
 
     /*
   * Retrieve an item from the database by id. Constant time.

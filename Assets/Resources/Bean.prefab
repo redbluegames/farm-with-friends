@@ -273,7 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1838b7128b69d54d9a4afd49c78fbdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemGrownID: 0
+  itemGrownID: 8
   nightsPerGrowth: 1
   maxLife: 3
   isRepickable: 1

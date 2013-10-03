@@ -110,9 +110,10 @@ public class HUD : MonoBehaviour
         inventoryMsg += "Radishes: " + inventory.GetItemCount (ItemIDs.RADISH) + "\n";
         inventoryMsg += "Onions: " + inventory.GetItemCount (ItemIDs.ONION) + "\n";
         inventoryMsg += "Potatoes: " + inventory.GetItemCount (ItemIDs.POTATO) + "\n";
-        inventoryMsg += "Tomatoes: " + inventory.GetItemCount (ItemIDs.TOMATO);
+        inventoryMsg += "Tomatoes: " + inventory.GetItemCount (ItemIDs.TOMATO) + "\n";
+        inventoryMsg += "Wildflowers: " + inventory.GetItemCount (ItemIDs.WILDFLOWER);
         GUI.Label (new Rect (10 + ((Screen.width / gameManager.NumPlayers) * viewPort),
-            Screen.height - 240, 200, 220), inventoryMsg, HUDStyle);
+            Screen.height - 260, 200, 240), inventoryMsg, HUDStyle);
     }
 
     /*

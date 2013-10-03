@@ -5,8 +5,8 @@ public class FarmTerrain : MonoBehaviour
 {
     public GameObject groundTilePrefab;
     public int grassPercent = 75;
-    public int wildfruitSpawnPercent = 1;
-    public float wildrfruitNightlySpawnPercent = 0.15f;
+    public int wildflowerSpawnPercent = 1;
+    public float wildflowerNightlySpawnPercent = 0.3f;
 
     void Start ()
     {
@@ -53,8 +53,8 @@ public class FarmTerrain : MonoBehaviour
         if (RBRandom.PercentageChance(grassPercent)) {
             tileScript.SetState (GroundTile.GroundState.Grass);
             // Check if we should spawn a wild fruit
-            if (RBRandom.PercentageChance(wildfruitSpawnPercent)) {
-                tileScript.PlantAdult (ItemIDs.ONION_SEEDS);
+            if (RBRandom.PercentageChance(wildflowerSpawnPercent)) {
+                SpawnWildFruitOnTile(tile);
             }
         } else {
             tileScript.SetState (GroundTile.GroundState.Dirt);
@@ -70,7 +70,7 @@ public class FarmTerrain : MonoBehaviour
         // Spawn wild fruit
         foreach (Transform child in transform) {
             if (child.GetComponent<GroundTile> ().isGrass ()) {
-                if (RBRandom.PercentageChance(wildrfruitNightlySpawnPercent)) {
+                if (RBRandom.PercentageChance(wildflowerNightlySpawnPercent)) {
                     SpawnWildFruitOnTile (child.gameObject);
                 }
             }
@@ -83,6 +83,6 @@ public class FarmTerrain : MonoBehaviour
     private void SpawnWildFruitOnTile (GameObject tileObj)
     {
         GroundTile tile = tileObj.GetComponent<GroundTile> ();
-        tile.PlantAdult (ItemIDs.ONION_SEEDS);
+        tile.PlantAdult (ItemIDs.WILDFLOWER_SEEDS);
     }
 }

@@ -74,7 +74,6 @@ public class GroundTile : MonoBehaviour
   */
     public int Pick ()
     {
-        SetState (GroundState.Soil);
         int grownItemId = curPlant.GetComponent<Plant>().PickFruit ();
         if (!curPlant.GetComponent<Plant> ().isRepickable) {
             DestroyPlant ();

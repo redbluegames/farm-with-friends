@@ -82,7 +82,7 @@ MonoBehaviour:
   groundTilePrefab: {fileID: 100000, guid: e5c2f5093a7d74ac0aba956ed7ed768a, type: 2}
   grassPercent: 75
   wildfruitSpawnPercent: 1
-  wildrfruitNightlySpawnPercent: .150000006
+  wildrfruitNightlySpawnPercent: .300000012
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

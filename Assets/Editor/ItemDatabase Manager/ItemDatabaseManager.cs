@@ -35,6 +35,8 @@ public class ItemDatabaseManager : EditorWindow
     int tomatoSeedsID = 7;
     int beanID = 8;
     int beanSeedsID = 9;
+    int wildflowerID = 10;
+    int wildflowerSeedsID = 11;
 
     /*
      * Writes item ids parsed out from a file of Items.
@@ -56,7 +58,9 @@ public class ItemDatabaseManager : EditorWindow
             itemDeclaration + "TOMATO = " + tomatoID.ToString () + ";" +
             itemDeclaration + "TOMATO_SEEDS = " + tomatoSeedsID.ToString () + ";" +
             itemDeclaration + "BEAN = " + beanID.ToString () + ";" +
-            itemDeclaration + "BEAN_SEEDS = " + beanSeedsID.ToString () + ";";
+            itemDeclaration + "BEAN_SEEDS = " + beanSeedsID.ToString () + ";" +
+            itemDeclaration + "WILDFLOWER = " + wildflowerID.ToString () + ";" +
+            itemDeclaration + "WILDFLOWER_SEEDS = " + wildflowerSeedsID.ToString () + ";";
 
         string output = header + body + footer;
 
@@ -88,7 +92,7 @@ public class ItemDatabaseManager : EditorWindow
         radishSeeds.description = "Time to grow: 3 nights.\nWater needed: Daily\nRadishes sell for 8 gold.";
         radishSeeds.maxCount = 200;
         radishSeeds.price = 5;
-        radishSeeds.sellPrice = 2;
+        radishSeeds.sellPrice = 5;
         radishSeeds.isEquippable = true;
         radishSeeds.id = radishSeedsID;
         radishSeeds.plantPrefab = (GameObject)Resources.Load ("Radish");
@@ -110,7 +114,7 @@ public class ItemDatabaseManager : EditorWindow
         onionSeeds.description = "Time to grow: 3 nights.\nOnions Sell for 8 gold, but never need water.";
         onionSeeds.maxCount = 200;
         onionSeeds.price = 5;
-        onionSeeds.sellPrice = 2;
+        onionSeeds.sellPrice = 5;
         onionSeeds.isEquippable = true;
         onionSeeds.id = onionSeedsID;
         onionSeeds.plantPrefab = (GameObject)Resources.Load ("Onion");
@@ -132,7 +136,7 @@ public class ItemDatabaseManager : EditorWindow
         potatoSeeds.description = "Time to grow: 6 nights.\nWater needed: Daily\nPotatos sell for 50 gold.";
         potatoSeeds.maxCount = 200;
         potatoSeeds.price = 20;
-        potatoSeeds.sellPrice = 4;
+        potatoSeeds.sellPrice = 20;
         potatoSeeds.isEquippable = true;
         potatoSeeds.id = potatoSeedsID;
         potatoSeeds.plantPrefab = (GameObject)Resources.Load ("Potato");
@@ -153,8 +157,8 @@ public class ItemDatabaseManager : EditorWindow
         tomatoSeeds.itemName = "Tomato Seeds";
         tomatoSeeds.description = "Time to grow: 12 nights but repickable every 4.\nWater needed: Every 2 Days\nTomatos sell for 50 gold.";
         tomatoSeeds.maxCount = 200;
-        tomatoSeeds.price = 75;
-        tomatoSeeds.sellPrice = 20;
+        tomatoSeeds.price = 100;
+        tomatoSeeds.sellPrice = 100;
         tomatoSeeds.isEquippable = true;
         tomatoSeeds.id = tomatoSeedsID;
         tomatoSeeds.plantPrefab = (GameObject)Resources.Load ("Tomato");
@@ -176,12 +180,33 @@ public class ItemDatabaseManager : EditorWindow
         beanSeeds.description = "Time to grow: 3 nights but repickable every night.\nWater needed: Every 3 Days\nBeans sell for 5 gold.";
         beanSeeds.maxCount = 200;
         beanSeeds.price = 20;
-        beanSeeds.sellPrice = 10;
+        beanSeeds.sellPrice = 20;
         beanSeeds.isEquippable = true;
         beanSeeds.id = beanSeedsID;
         beanSeeds.plantPrefab = (GameObject)Resources.Load ("Bean");
         itemDatabase.AddItem (beanSeeds);
 
+        Item wildflower = (Item)ScriptableObject.CreateInstance (typeof(Item));
+        wildflower.name = "Wildflower";
+        wildflower.itemName = "Wildflower";
+        wildflower.maxCount = 200;
+        wildflower.price = 20;
+        wildflower.sellPrice = 20;
+        wildflower.isEquippable = false;
+        wildflower.id = wildflowerID;
+        itemDatabase.AddItem (wildflower);
+
+        Item wildflowerSeeds = (Item)ScriptableObject.CreateInstance (typeof(Item));
+        wildflowerSeeds.name = "Wildflower Seeds";
+        wildflowerSeeds.itemName = "Wildflower Seeds";
+        wildflowerSeeds.description = "STUB WILDFLOWER SEED TEXT";
+        wildflowerSeeds.maxCount = 200;
+        wildflowerSeeds.price = 20;
+        wildflowerSeeds.sellPrice = 20;
+        wildflowerSeeds.isEquippable = true;
+        wildflowerSeeds.id = wildflowerSeedsID;
+        wildflowerSeeds.plantPrefab = (GameObject)Resources.Load ("Wildflower");
+        itemDatabase.AddItem (wildflowerSeeds);
         // Write out the parsed IDs to a file so that we can access them in script
         WriteItemIDs ();
     }

@@ -11,7 +11,7 @@ GameObject:
   - 23: {fileID: 2300000}
   - 102: {fileID: 10200000}
   m_Layer: 0
-  m_Name: TomatoText
+  m_Name: WildflowerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ GameObject:
   - 23: {fileID: 2300002}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: Tomato
+  m_Name: Wildflower
   m_TagString: Plant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,7 +91,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: .707106888, y: 0, z: 0, w: .707106769}
-  m_LocalPosition: {x: -.100000001, y: .550000012, z: 0}
+  m_LocalPosition: {x: -.0500000007, y: .550000012, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400002}
@@ -102,7 +102,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: .25, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: .5, z: 1}
   m_Children:
   - {fileID: 400000}
@@ -155,7 +155,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: ea2e2365180c7614db2734ad4c5cd6cd, type: 2}
+  - {fileID: 2100000, guid: 7fb3074bdc588ec42930497d8ed496f1, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -230,7 +230,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_Text: T
+  m_Text: W
   m_OffsetZ: 0
   m_CharacterSize: .600000024
   m_LineSpacing: 1
@@ -243,7 +243,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 8221a641e39a08740a350defc14fb6b7, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4278190294
+    rgba: 4294473168
 --- !u!111 &11100000
 Animation:
   m_ObjectHideFlags: 1
@@ -273,10 +273,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1838b7128b69d54d9a4afd49c78fbdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemGrownID: 6
-  nightsPerGrowth: 4
-  maxLife: 2
-  isRepickable: 1
+  itemGrownID: 10
+  nightsPerGrowth: 2
+  maxLife: 10
+  isRepickable: 0
   seedMat: {fileID: 2100000, guid: 9d36863ace7a64be3b1f61f4db9061e1, type: 2}
   sproutMat: {fileID: 2100000, guid: c326cf10169bf476f858f75d17eb6609, type: 2}
   ripeMat: {fileID: 2100000, guid: b5d53875c84a6421f810ff16db23fe28, type: 2}
