@@ -3079,7 +3079,7 @@ GUIText:
   m_GameObject: {fileID: 1258741920}
   m_Enabled: 1
   serializedVersion: 3
-  m_Text: Welcome to Farm Town!!
+  m_Text: Welcome to Frontier Ranchers!
   m_Anchor: 1
   m_Alignment: 1
   m_PixelOffset: {x: 0, y: 0}
@@ -3626,6 +3626,10 @@ Prefab:
     - target: {fileID: 13200000, guid: d0f5c7867f5614823aee45aefccc6ce8, type: 2}
       propertyPath: m_FontSize
       value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 13200000, guid: d0f5c7867f5614823aee45aefccc6ce8, type: 2}
+      propertyPath: m_Text
+      value: Welcome to Frontier Ranchers!
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d0f5c7867f5614823aee45aefccc6ce8, type: 2}

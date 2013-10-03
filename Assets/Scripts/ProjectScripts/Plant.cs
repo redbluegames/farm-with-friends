@@ -68,7 +68,6 @@ public class Plant : MonoBehaviour
         // Initialize the text
         TextMesh textMesh = (TextMesh)GetComponentInChildren<TextMesh> ();
         textMesh.text = (this.name.Substring (0, 1));
-        textMesh.characterSize = 0.7f;
     }
 
     /*
