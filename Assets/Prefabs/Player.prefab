@@ -68,6 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movespeed: 5
+  sprintspeed: 8
   reticulePrefab: {fileID: 100000, guid: 0929eaf06f50b420f9d6aecfccb66ef1, type: 2}
   waterFXPrefab: {fileID: 100000, guid: 649d6f9b793223e43b2b25f351c25e81, type: 2}
   waterSound: {fileID: 8300000, guid: d46ef9c1e541f9540a1f4e72d12fdd6f, type: 3}

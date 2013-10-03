@@ -137,7 +137,7 @@ public class Shop : MonoBehaviour
         DisplayBuySellButton ();
 
         if (GUI.Button (new Rect (shopWidth - btnWidth, shopHeight - BTN_H, btnWidth, BTN_H),
-          new GUIContent ("Stop Shopping (B/Ld)")) || exitPressed) {
+          new GUIContent ("Stop Shopping (B/L)")) || exitPressed) {
             exitPressed = false;
             StopShopping (activePlayerIndex);
         }
@@ -151,13 +151,13 @@ public class Shop : MonoBehaviour
     {
         if (state == ShopState.SELLING) {
             if (GUI.Button (new Rect (shopWidth - btnWidth * 3, shopHeight - BTN_H, btnWidth, BTN_H),
-              new GUIContent ("Buy (LB/q)")) || swapPressed) {
+              new GUIContent ("Buy (RB/q)")) || swapPressed) {
                 StartBuying (activePlayerIndex);
                 swapPressed = false;
             }
         } else {
             if (GUI.Button (new Rect (shopWidth - btnWidth * 2, shopHeight - BTN_H, btnWidth, BTN_H),
-              new GUIContent ("Sell (LB/q)")) || swapPressed) {
+              new GUIContent ("Sell (RB/q)")) || swapPressed) {
                 StartSelling (activePlayerIndex);
                 swapPressed = false;
             }

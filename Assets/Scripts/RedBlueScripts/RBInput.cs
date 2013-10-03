@@ -11,6 +11,11 @@ public class RBInput {
         return Input.GetButtonDown (ConcatPlayerIndex (buttonName, playerIndex, device));
     }
 
+    public static bool GetButtonForPlayer(string buttonName, int playerIndex, InputDevice device)
+    {
+        return Input.GetButton (ConcatPlayerIndex (buttonName, playerIndex, device));
+    }
+
     public static float GetAxisRawForPlayer (string axisName, int playerIndex, InputDevice device)
     {
         return Input.GetAxisRaw (ConcatPlayerIndex(axisName, playerIndex, device));

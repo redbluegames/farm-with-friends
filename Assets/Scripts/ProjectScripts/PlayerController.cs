@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
     public float movespeed;
+    public float sprintspeed;
     public GameObject reticulePrefab;
     public GameObject waterFXPrefab;
     public AudioClip waterSound;
@@ -141,8 +142,15 @@ public class PlayerController : MonoBehaviour
         if (targetDirection != Vector3.zero) {
             moveDirection = Vector3.RotateTowards (moveDirection, targetDirection, Mathf.Infinity, 1000);
             moveDirection = moveDirection.normalized;
-         
-            targetSpeed = movespeed; 
+
+            if(RBInput.GetButtonForPlayer(InputStrings.SPRINT, PlayerIndex, playerDevice))
+            {
+                targetSpeed = sprintspeed;
+            }
+            else
+            {
+                targetSpeed = movespeed;
+            }
         }
 
         // Get movement vector

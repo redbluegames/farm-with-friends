@@ -5,7 +5,7 @@ public class FarmTerrain : MonoBehaviour
 {
     public GameObject groundTilePrefab;
     public int grassPercent = 75;
-    public int wildflowerSpawnPercent = 1;
+    public int wildflowerSpawnPercent = 0.5f;
     public float wildflowerNightlySpawnPercent = 0.3f;
 
     void Start ()
@@ -52,7 +52,7 @@ public class FarmTerrain : MonoBehaviour
         GroundTile tileScript = tile.GetComponent<GroundTile> ();
         if (RBRandom.PercentageChance(grassPercent)) {
             tileScript.SetState (GroundTile.GroundState.Grass);
-            // Check if we should spawn a wild fruit
+            // Check if we should spawn a wildflower
             if (RBRandom.PercentageChance(wildflowerSpawnPercent)) {
                 SpawnWildFruitOnTile(tile);
             }
