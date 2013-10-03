@@ -21,26 +21,26 @@ public class Plant : MonoBehaviour
     public int itemGrownID;
     public int nightsPerGrowth;
     public int maxLife;
+    public bool isRepickable;
 
     // Materials
     public Material seedMat;
     public Material sproutMat;
-    public Material adultMat;
+    public Material ripeMat;
     public Material witheredMat;
 
     public enum PlantState
     {
         Seed = 0,
         Sprout,
-        Adult,
+        Ripe,
         Withered
     }
 
-    void Awake()
+    void Awake ()
     {
         Transform lastChild = transform;
-        foreach ( Transform child in transform )
-        {
+        foreach (Transform child in transform) {
             lastChild = child;
         }
         waterDrop = lastChild.gameObject;
@@ -61,10 +61,8 @@ public class Plant : MonoBehaviour
 
         // Set HP to one less than full so watering can make a difference on first day.
         curLife = maxLife - 1;
-        if (curLife == MIN_LIFE) {
-            SetDry (true);
-        }
         SetPlantState (initialState);
+        ShowIfDry ();
 
         // Initialize the text
         TextMesh textMesh = (TextMesh)GetComponentInChildren<TextMesh> ();
@@ -88,8 +86,7 @@ public class Plant : MonoBehaviour
                 return;
             }
             // Check if the plant needs water.
-            bool isDry = canBeWatered && curLife == MIN_LIFE;
-            SetDry (isDry);
+            ShowIfDry ();
 
             // Try to grow
             if (nightsSinceGrowth >= nightsPerGrowth) {
@@ -103,14 +100,14 @@ public class Plant : MonoBehaviour
      */
     private void Grow ()
     {
-        // Withered and Adult plants can't grow
+        // Withered and Ripe plants can't grow
         PlantState nextState;
-        if (plantState == PlantState.Adult || plantState == PlantState.Withered) {
+        if (plantState == PlantState.Ripe || plantState == PlantState.Withered) {
             return;
         } else if (plantState == PlantState.Seed) {
             nextState = PlantState.Sprout;
         } else if (plantState == PlantState.Sprout) {
-            nextState = PlantState.Adult;
+            nextState = PlantState.Ripe;
         } else {
             Debug.LogError ("Plant is trying to grow from an unknown state!");
             return;
@@ -127,11 +124,10 @@ public class Plant : MonoBehaviour
     private void SetPlantState (PlantState newState)
     {
         plantState = newState;
-        if (newState == PlantState.Withered || newState == PlantState.Adult) {
-            SetDry (false);
+        if (newState == PlantState.Withered || (newState == PlantState.Ripe && !isRepickable)) {
             canBeWatered = false;
-        }
-        else {
+            ShowIfDry ();
+        } else {
             canBeWatered = true;
         }
         RenderPlantState ();
@@ -147,8 +143,8 @@ public class Plant : MonoBehaviour
             stateMaterial = seedMat;
         } else if (plantState == PlantState.Sprout) {
             stateMaterial = sproutMat;
-        } else if (plantState == PlantState.Adult) {
-            stateMaterial = adultMat;
+        } else if (plantState == PlantState.Ripe) {
+            stateMaterial = ripeMat;
         } else if (plantState == PlantState.Withered) {
             stateMaterial = witheredMat;
         }
@@ -158,9 +154,25 @@ public class Plant : MonoBehaviour
     /*
      * Turn on or off the elements that show a plant needs water
      */
-    private void SetDry (bool dry)
+    private void ShowIfDry ()
     {
-        waterDrop.SetActive(dry);
+        waterDrop.SetActive (canBeWatered && curLife <= MIN_LIFE);
+    }
+
+    /*
+     * If possible, pick the fruit and return it's item ID. The plant will
+     * be marked as not hasFruit and will go back to sprout if it can
+     * still be picked.
+     */
+    public int PickFruit ()
+    {
+        // Go back to sprout if necessary
+        if (isRepickable) {
+            SetPlantState (PlantState.Sprout);
+            RenderPlantState ();
+            ShowIfDry ();
+        }
+        return itemGrownID;
     }
 
     /*
@@ -169,8 +181,8 @@ public class Plant : MonoBehaviour
      */
     public void Water ()
     {
-        SetDry (false);
         curLife = maxLife;
+        ShowIfDry ();
     }
 
     /*
@@ -186,14 +198,14 @@ public class Plant : MonoBehaviour
      */
     public bool isRipe ()
     {
-        return plantState == PlantState.Adult;
+        return plantState == PlantState.Ripe;
     }
 
     /*
      * Sets the plant to initialze to the adult state.
      */
-    public void StartAsAdult()
+    public void StartAsAdult ()
     {
-        initialState = PlantState.Adult;
+        initialState = PlantState.Ripe;
     }
 }

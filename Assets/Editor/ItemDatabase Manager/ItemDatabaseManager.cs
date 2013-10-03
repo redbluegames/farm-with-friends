@@ -31,6 +31,10 @@ public class ItemDatabaseManager : EditorWindow
     int onionSeedsID = 3;
     int pototoID = 4;
     int potatoSeedsID = 5;
+    int tomatoID = 6;
+    int tomatoSeedsID = 7;
+    int beanID = 8;
+    int beanSeedsID = 9;
 
     /*
      * Writes item ids parsed out from a file of Items.
@@ -48,7 +52,11 @@ public class ItemDatabaseManager : EditorWindow
             itemDeclaration + "ONION = " + onionID.ToString () + ";" +
             itemDeclaration + "ONION_SEEDS = " + onionSeedsID.ToString () + ";" +
             itemDeclaration + "POTATO = " + pototoID.ToString () + ";" +
-            itemDeclaration + "POTATO_SEEDS = " + potatoSeedsID.ToString () + ";";
+            itemDeclaration + "POTATO_SEEDS = " + potatoSeedsID.ToString () + ";" +
+            itemDeclaration + "TOMATO = " + tomatoID.ToString () + ";" +
+            itemDeclaration + "TOMATO_SEEDS = " + tomatoSeedsID.ToString () + ";" +
+            itemDeclaration + "BEAN = " + beanID.ToString () + ";" +
+            itemDeclaration + "BEAN_SEEDS = " + beanSeedsID.ToString () + ";";
 
         string output = header + body + footer;
 
@@ -67,7 +75,7 @@ public class ItemDatabaseManager : EditorWindow
         Item radish = (Item)ScriptableObject.CreateInstance (typeof(Item));
         radish.name = "Radish";
         radish.itemName = "Radish";
-        radish.maxCount = 100;
+        radish.maxCount = 200;
         radish.price = 16;
         radish.sellPrice = 8;
         radish.isEquippable = false;
@@ -77,8 +85,8 @@ public class ItemDatabaseManager : EditorWindow
         Item radishSeeds = (Item)ScriptableObject.CreateInstance (typeof(Item));
         radishSeeds.name = "Radish Seeds";
         radishSeeds.itemName = "Radish Seeds";
-        radishSeeds.description = "Time to grow: Short.\nWater needed: Daily\nRadishes sell for 8 gold.";
-        radishSeeds.maxCount = 100;
+        radishSeeds.description = "Time to grow: 3 nights.\nWater needed: Daily\nRadishes sell for 8 gold.";
+        radishSeeds.maxCount = 200;
         radishSeeds.price = 5;
         radishSeeds.sellPrice = 2;
         radishSeeds.isEquippable = true;
@@ -89,7 +97,7 @@ public class ItemDatabaseManager : EditorWindow
         Item onion = (Item)ScriptableObject.CreateInstance (typeof(Item));
         onion.name = "Onion";
         onion.itemName = "Onion";
-        onion.maxCount = 100;
+        onion.maxCount = 200;
         onion.price = 16;
         onion.sellPrice = 8;
         onion.isEquippable = false;
@@ -99,8 +107,8 @@ public class ItemDatabaseManager : EditorWindow
         Item onionSeeds = (Item)ScriptableObject.CreateInstance (typeof(Item));
         onionSeeds.name = "Onion Seeds";
         onionSeeds.itemName = "Onion Seeds";
-        onionSeeds.description = "Time to grow: Long.\nOnions Sell for 8 gold, but never need water.";
-        onionSeeds.maxCount = 100;
+        onionSeeds.description = "Time to grow: 3 nights.\nOnions Sell for 8 gold, but never need water.";
+        onionSeeds.maxCount = 200;
         onionSeeds.price = 5;
         onionSeeds.sellPrice = 2;
         onionSeeds.isEquippable = true;
@@ -111,9 +119,9 @@ public class ItemDatabaseManager : EditorWindow
         Item potato = (Item)ScriptableObject.CreateInstance (typeof(Item));
         potato.name = "Potato";
         potato.itemName = "Potato";
-        potato.maxCount = 100;
-        potato.price = 48;
-        potato.sellPrice = 48;
+        potato.maxCount = 200;
+        potato.price = 60;
+        potato.sellPrice = 50;
         potato.isEquippable = false;
         potato.id = pototoID;
         itemDatabase.AddItem (potato);
@@ -121,14 +129,58 @@ public class ItemDatabaseManager : EditorWindow
         Item potatoSeeds = (Item)ScriptableObject.CreateInstance (typeof(Item));
         potatoSeeds.name = "Potato Seeds";
         potatoSeeds.itemName = "Potato Seeds";
-        potatoSeeds.description = "Time to grow: Very Long.\nWater needed: Daily\nPotatos sell for 48 gold.";
-        potatoSeeds.maxCount = 100;
+        potatoSeeds.description = "Time to grow: 6 nights.\nWater needed: Daily\nPotatos sell for 50 gold.";
+        potatoSeeds.maxCount = 200;
         potatoSeeds.price = 20;
         potatoSeeds.sellPrice = 4;
         potatoSeeds.isEquippable = true;
         potatoSeeds.id = potatoSeedsID;
         potatoSeeds.plantPrefab = (GameObject)Resources.Load ("Potato");
         itemDatabase.AddItem (potatoSeeds);
+
+        Item tomato = (Item)ScriptableObject.CreateInstance (typeof(Item));
+        tomato.name = "Tomato";
+        tomato.itemName = "Tomato";
+        tomato.maxCount = 200;
+        tomato.price = 70;
+        tomato.sellPrice = 50;
+        tomato.isEquippable = false;
+        tomato.id = tomatoID;
+        itemDatabase.AddItem (tomato);
+
+        Item tomatoSeeds = (Item)ScriptableObject.CreateInstance (typeof(Item));
+        tomatoSeeds.name = "Tomato Seeds";
+        tomatoSeeds.itemName = "Tomato Seeds";
+        tomatoSeeds.description = "Time to grow: 12 nights but repickable every 4.\nWater needed: Every 2 Days\nTomatos sell for 50 gold.";
+        tomatoSeeds.maxCount = 200;
+        tomatoSeeds.price = 75;
+        tomatoSeeds.sellPrice = 20;
+        tomatoSeeds.isEquippable = true;
+        tomatoSeeds.id = tomatoSeedsID;
+        tomatoSeeds.plantPrefab = (GameObject)Resources.Load ("Tomato");
+        itemDatabase.AddItem (tomatoSeeds);
+
+        Item bean = (Item)ScriptableObject.CreateInstance (typeof(Item));
+        bean.name = "Bean";
+        bean.itemName = "Bean";
+        bean.maxCount = 200;
+        bean.price = 10;
+        bean.sellPrice = 5;
+        bean.isEquippable = false;
+        bean.id = beanID;
+        itemDatabase.AddItem (bean);
+
+        Item beanSeeds = (Item)ScriptableObject.CreateInstance (typeof(Item));
+        beanSeeds.name = "Bean Seeds";
+        beanSeeds.itemName = "Bean Seeds";
+        beanSeeds.description = "Time to grow: 3 nights but repickable every night.\nWater needed: Every 3 Days\nBeans sell for 5 gold.";
+        beanSeeds.maxCount = 200;
+        beanSeeds.price = 20;
+        beanSeeds.sellPrice = 10;
+        beanSeeds.isEquippable = true;
+        beanSeeds.id = beanSeedsID;
+        beanSeeds.plantPrefab = (GameObject)Resources.Load ("Bean");
+        itemDatabase.AddItem (beanSeeds);
 
         // Write out the parsed IDs to a file so that we can access them in script
         WriteItemIDs ();

@@ -9,4 +9,8 @@ public class ItemIDs : ScriptableObject
     public static readonly int ONION_SEEDS = 3;
     public static readonly int POTATO = 4;
     public static readonly int POTATO_SEEDS = 5;
+    public static readonly int TOMATO = 6;
+    public static readonly int TOMATO_SEEDS = 7;
+    public static readonly int BEAN = 8;
+    public static readonly int BEAN_SEEDS = 9;
 }

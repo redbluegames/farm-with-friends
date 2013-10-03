@@ -11,7 +11,7 @@ GameObject:
   - 23: {fileID: 2300000}
   - 102: {fileID: 10200000}
   m_Layer: 0
-  m_Name: RadishText
+  m_Name: BeanText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ GameObject:
   - 23: {fileID: 2300002}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: Radish
+  m_Name: Bean
   m_TagString: Plant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -155,7 +155,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 192b9dd27bd9f42fca4a0492fdf7f12b, type: 2}
+  - {fileID: 2100000, guid: 3e32ad6b3109de640a33c8035d699d99, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -230,7 +230,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_Text: R
+  m_Text: B
   m_OffsetZ: 0
   m_CharacterSize: .600000024
   m_LineSpacing: 1
@@ -243,7 +243,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 8221a641e39a08740a350defc14fb6b7, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4289901311
+    rgba: 4278242576
 --- !u!111 &11100000
 Animation:
   m_ObjectHideFlags: 1
@@ -275,8 +275,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemGrownID: 0
   nightsPerGrowth: 1
-  maxLife: 1
-  isRepickable: 0
+  maxLife: 3
+  isRepickable: 1
   seedMat: {fileID: 2100000, guid: 9d36863ace7a64be3b1f61f4db9061e1, type: 2}
   sproutMat: {fileID: 2100000, guid: c326cf10169bf476f858f75d17eb6609, type: 2}
   ripeMat: {fileID: 2100000, guid: b5d53875c84a6421f810ff16db23fe28, type: 2}

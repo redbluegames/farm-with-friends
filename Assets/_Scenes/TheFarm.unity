@@ -113,16 +113,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items:
-  - {fileID: 616999133}
-  - {fileID: 1926188368}
-  - {fileID: 2000697689}
-  - {fileID: 307668630}
-  - {fileID: 393753824}
-  - {fileID: 1447720977}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 291811380}
+  - {fileID: 76589206}
+  - {fileID: 934451839}
+  - {fileID: 32846386}
+  - {fileID: 1215013209}
+  - {fileID: 1346139578}
+  - {fileID: 1916311866}
+  - {fileID: 1040090427}
+  - {fileID: 486586869}
+  - {fileID: 348576771}
 --- !u!1 &8164867
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,6 +193,27 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1559355796}
   m_GameObject: {fileID: 8164867}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &32846386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
+  m_Name: Onion Seeds
+  m_EditorClassIdentifier: 
+  id: 3
+  itemName: Onion Seeds
+  description: 'Time to grow: 3 nights.
+
+    Onions Sell for 8 gold, but never need water.'
+  maxCount: 200
+  price: 5
+  sellPrice: 2
+  isEquippable: 1
+  plantPrefab: {fileID: 100002, guid: e0876456fef1eac428533b80c2a22632, type: 2}
 --- !u!1 &42776910
 GameObject:
   m_ObjectHideFlags: 0
@@ -218,8 +239,8 @@ Transform:
   m_PrefabInternal: {fileID: 2059270237}
   m_GameObject: {fileID: 42776910}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.5, y: .5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 50}
+  m_LocalPosition: {x: 25.5, y: .5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 52}
   m_Children: []
   m_Father: {fileID: 1303309391}
 --- !u!23 &42776912
@@ -262,6 +283,29 @@ MeshFilter:
   m_PrefabInternal: {fileID: 2059270237}
   m_GameObject: {fileID: 42776910}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &76589206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
+  m_Name: Radish Seeds
+  m_EditorClassIdentifier: 
+  id: 1
+  itemName: Radish Seeds
+  description: 'Time to grow: 3 nights.
+
+    Water needed: Daily
+
+    Radishes sell for 8 gold.'
+  maxCount: 200
+  price: 5
+  sellPrice: 2
+  isEquippable: 1
+  plantPrefab: {fileID: 100002, guid: e0237023f1451914e881728e4c0318ac, type: 2}
 --- !u!1001 &137632015
 Prefab:
   m_ObjectHideFlags: 0
@@ -463,6 +507,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundTilePrefab: {fileID: 100000, guid: e5c2f5093a7d74ac0aba956ed7ed768a, type: 2}
   grassPercent: 75
+  wildfruitSpawnPercent: 1
+  wildfruitSpawnsPerDay: 5
 --- !u!1001 &237813874
 Prefab:
   m_ObjectHideFlags: 0
@@ -823,7 +869,7 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
---- !u!114 &307668630
+--- !u!114 &291811380
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -832,18 +878,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
-  m_Name: Onion Seeds
+  m_Name: Radish
   m_EditorClassIdentifier: 
-  id: 3
-  itemName: Onion Seeds
-  description: 'Time to grow: Long.
-
-    Onions Sell for 8 gold, but never need water.'
-  maxCount: 100
-  price: 5
-  sellPrice: 2
-  isEquippable: 1
-  plantPrefab: {fileID: 100002, guid: e0876456fef1eac428533b80c2a22632, type: 2}
+  id: 0
+  itemName: Radish
+  description: 
+  maxCount: 200
+  price: 16
+  sellPrice: 8
+  isEquippable: 0
+  plantPrefab: {fileID: 0}
 --- !u!1 &312394846
 GameObject:
   m_ObjectHideFlags: 0
@@ -1029,6 +1073,29 @@ Prefab:
   m_RootGameObject: {fileID: 550811615}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!114 &348576771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
+  m_Name: Bean Seeds
+  m_EditorClassIdentifier: 
+  id: 9
+  itemName: Bean Seeds
+  description: 'Time to grow: 3 nights but repickable every night.
+
+    Water needed: Every 3 Days
+
+    Beans sell for 5 gold.'
+  maxCount: 200
+  price: 20
+  sellPrice: 10
+  isEquippable: 1
+  plantPrefab: {fileID: 100002, guid: 580589d2d7230eb4d9223cfebe6b7941, type: 2}
 --- !u!1 &359444668
 GameObject:
   m_ObjectHideFlags: 0
@@ -1168,25 +1235,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 237813874}
   m_GameObject: {fileID: 361603573}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &393753824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
-  m_Name: Potato
-  m_EditorClassIdentifier: 
-  id: 4
-  itemName: Potato
-  description: 
-  maxCount: 100
-  price: 48
-  sellPrice: 48
-  isEquippable: 0
-  plantPrefab: {fileID: 0}
 --- !u!1 &395769318
 GameObject:
   m_ObjectHideFlags: 0
@@ -1577,6 +1625,25 @@ Transform:
   m_Children:
   - {fileID: 1069227444}
   m_Father: {fileID: 0}
+--- !u!114 &486586869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
+  m_Name: Bean
+  m_EditorClassIdentifier: 
+  id: 8
+  itemName: Bean
+  description: 
+  maxCount: 200
+  price: 10
+  sellPrice: 5
+  isEquippable: 0
+  plantPrefab: {fileID: 0}
 --- !u!1001 &494746998
 Prefab:
   m_ObjectHideFlags: 0
@@ -1829,8 +1896,8 @@ Transform:
   m_PrefabInternal: {fileID: 2059270237}
   m_GameObject: {fileID: 593716096}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -24.5, y: .5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 50}
+  m_LocalPosition: {x: -25.5, y: .5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 52}
   m_Children: []
   m_Father: {fileID: 1303309391}
 --- !u!23 &593716098
@@ -1873,25 +1940,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 2059270237}
   m_GameObject: {fileID: 593716096}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &616999133
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
-  m_Name: Radish
-  m_EditorClassIdentifier: 
-  id: 0
-  itemName: Radish
-  description: 
-  maxCount: 100
-  price: 16
-  sellPrice: 8
-  isEquippable: 0
-  plantPrefab: {fileID: 0}
 --- !u!1001 &629594278
 Prefab:
   m_ObjectHideFlags: 0
@@ -2467,7 +2515,7 @@ Transform:
   m_PrefabInternal: {fileID: 2059270237}
   m_GameObject: {fileID: 914954780}
   m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106829}
-  m_LocalPosition: {x: 0, y: .5, z: -24.5}
+  m_LocalPosition: {x: 0, y: .5, z: -25.5}
   m_LocalScale: {x: 1, y: 1, z: 50}
   m_Children: []
   m_Father: {fileID: 1303309391}
@@ -2511,6 +2559,25 @@ MeshFilter:
   m_PrefabInternal: {fileID: 2059270237}
   m_GameObject: {fileID: 914954780}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &934451839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
+  m_Name: Onion
+  m_EditorClassIdentifier: 
+  id: 2
+  itemName: Onion
+  description: 
+  maxCount: 200
+  price: 16
+  sellPrice: 8
+  isEquippable: 0
+  plantPrefab: {fileID: 0}
 --- !u!1 &963934349
 GameObject:
   m_ObjectHideFlags: 0
@@ -2658,6 +2725,29 @@ GUITexture:
   m_RightBorder: 0
   m_TopBorder: 0
   m_BottomBorder: 0
+--- !u!114 &1040090427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
+  m_Name: Tomato Seeds
+  m_EditorClassIdentifier: 
+  id: 7
+  itemName: Tomato Seeds
+  description: 'Time to grow: 12 nights but repickable every 4.
+
+    Water needed: Every 2 Days
+
+    Tomatos sell for 50 gold.'
+  maxCount: 200
+  price: 75
+  sellPrice: 20
+  isEquippable: 1
+  plantPrefab: {fileID: 100002, guid: f30645609c9037644b9f6baa8a31a2b2, type: 2}
 --- !u!1 &1056469243
 GameObject:
   m_ObjectHideFlags: 0
@@ -2916,6 +3006,25 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1559355796}
   m_GameObject: {fileID: 1159950230}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1215013209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
+  m_Name: Potato
+  m_EditorClassIdentifier: 
+  id: 4
+  itemName: Potato
+  description: 
+  maxCount: 200
+  price: 60
+  sellPrice: 50
+  isEquippable: 0
+  plantPrefab: {fileID: 0}
 --- !u!1 &1222708098
 GameObject:
   m_ObjectHideFlags: 0
@@ -3292,6 +3401,29 @@ Prefab:
   m_RootGameObject: {fileID: 1069227442}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!114 &1346139578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
+  m_Name: Potato Seeds
+  m_EditorClassIdentifier: 
+  id: 5
+  itemName: Potato Seeds
+  description: 'Time to grow: 6 nights.
+
+    Water needed: Daily
+
+    Potatos sell for 50 gold.'
+  maxCount: 200
+  price: 20
+  sellPrice: 4
+  isEquippable: 1
+  plantPrefab: {fileID: 100002, guid: 3661df00131ba5e46b8a891623754d82, type: 2}
 --- !u!1 &1393646659
 GameObject:
   m_ObjectHideFlags: 0
@@ -3417,29 +3549,6 @@ Transform:
   m_LocalScale: {x: 8, y: 3.31596088, z: 1}
   m_Children: []
   m_Father: {fileID: 550811616}
---- !u!114 &1447720977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
-  m_Name: Potato Seeds
-  m_EditorClassIdentifier: 
-  id: 5
-  itemName: Potato Seeds
-  description: 'Time to grow: Very Long.
-
-    Water needed: Daily
-
-    Potatos sell for 48 gold.'
-  maxCount: 100
-  price: 20
-  sellPrice: 4
-  isEquippable: 1
-  plantPrefab: {fileID: 100002, guid: 3661df00131ba5e46b8a891623754d82, type: 2}
 --- !u!1 &1498349618
 GameObject:
   m_ObjectHideFlags: 0
@@ -3452,7 +3561,7 @@ GameObject:
   - 65: {fileID: 1498349620}
   - 23: {fileID: 1498349619}
   m_Layer: 0
-  m_Name: SouthWall
+  m_Name: NorthWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3505,7 +3614,7 @@ Transform:
   m_PrefabInternal: {fileID: 2059270237}
   m_GameObject: {fileID: 1498349618}
   m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106829}
-  m_LocalPosition: {x: 0, y: .5, z: 24.5}
+  m_LocalPosition: {x: 0, y: .5, z: 25.5}
   m_LocalScale: {x: 1, y: 1, z: 50.0000153}
   m_Children: []
   m_Father: {fileID: 1303309391}
@@ -4012,7 +4121,7 @@ Transform:
   m_GameObject: {fileID: 1729394323}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -40.8851242, y: 9.99744892, z: 28.9610939}
-  m_LocalScale: {x: 5, y: 1, z: 5}
+  m_LocalScale: {x: 2, y: 1, z: 2}
   m_Children: []
   m_Father: {fileID: 2088919639}
 --- !u!114 &1729394325
@@ -4029,6 +4138,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundTilePrefab: {fileID: 100000, guid: e5c2f5093a7d74ac0aba956ed7ed768a, type: 2}
   grassPercent: 90
+  wildfruitSpawnPercent: 0
+  wildfruitSpawnsPerDay: 0
 --- !u!23 &1729394326
 Renderer:
   m_ObjectHideFlags: 0
@@ -4385,7 +4496,7 @@ Transform:
   - {fileID: 8164868}
   - {fileID: 1939293773}
   m_Father: {fileID: 2088919639}
---- !u!114 &1926188368
+--- !u!114 &1916311866
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -4394,20 +4505,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
-  m_Name: Radish Seeds
+  m_Name: Tomato
   m_EditorClassIdentifier: 
-  id: 1
-  itemName: Radish Seeds
-  description: 'Time to grow: Short.
-
-    Water needed: Daily
-
-    Radishes sell for 8 gold.'
-  maxCount: 100
-  price: 5
-  sellPrice: 2
-  isEquippable: 1
-  plantPrefab: {fileID: 100002, guid: e0237023f1451914e881728e4c0318ac, type: 2}
+  id: 6
+  itemName: Tomato
+  description: 
+  maxCount: 200
+  price: 70
+  sellPrice: 50
+  isEquippable: 0
+  plantPrefab: {fileID: 0}
 --- !u!1 &1933486348
 GameObject:
   m_ObjectHideFlags: 0
@@ -4663,25 +4770,6 @@ GUITexture:
   m_RightBorder: 0
   m_TopBorder: 0
   m_BottomBorder: 0
---- !u!114 &2000697689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd4b5138663c59b4b9389325fe08b0f6, type: 3}
-  m_Name: Onion
-  m_EditorClassIdentifier: 
-  id: 2
-  itemName: Onion
-  description: 
-  maxCount: 100
-  price: 16
-  sellPrice: 8
-  isEquippable: 0
-  plantPrefab: {fileID: 0}
 --- !u!1 &2005278674
 GameObject:
   m_ObjectHideFlags: 0

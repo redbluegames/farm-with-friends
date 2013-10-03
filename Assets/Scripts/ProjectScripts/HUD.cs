@@ -101,14 +101,18 @@ public class HUD : MonoBehaviour
      */
     void DisplayInventoryItems (Inventory inventory, int viewPort) {
         string inventoryMsg = "Gold: " + inventory.money + "\n\n";
+        inventoryMsg += "Bean Seeds: " + inventory.GetItemCount (ItemIDs.BEAN_SEEDS) + "\n";
+        inventoryMsg += "Radish Seeds: " + inventory.GetItemCount (ItemIDs.RADISH_SEEDS) + "\n";
+        inventoryMsg += "Onion Seeds: " + inventory.GetItemCount (ItemIDs.ONION_SEEDS) + "\n";
+        inventoryMsg += "Potato Seeds: " + inventory.GetItemCount (ItemIDs.POTATO_SEEDS) + "\n";
+        inventoryMsg += "Tomato Seeds: " + inventory.GetItemCount (ItemIDs.TOMATO_SEEDS) + "\n\n";
+        inventoryMsg += "Beans: " + inventory.GetItemCount (ItemIDs.BEAN) + "\n";
         inventoryMsg += "Radishes: " + inventory.GetItemCount (ItemIDs.RADISH) + "\n";
         inventoryMsg += "Onions: " + inventory.GetItemCount (ItemIDs.ONION) + "\n";
         inventoryMsg += "Potatoes: " + inventory.GetItemCount (ItemIDs.POTATO) + "\n";
-        inventoryMsg += "Radish Seeds: " + inventory.GetItemCount (ItemIDs.RADISH_SEEDS) + "\n";
-        inventoryMsg += "Onion Seeds: " + inventory.GetItemCount (ItemIDs.ONION_SEEDS) + "\n";
-        inventoryMsg += "Potatoe Seeds: " + inventory.GetItemCount (ItemIDs.POTATO_SEEDS);
+        inventoryMsg += "Tomatoes: " + inventory.GetItemCount (ItemIDs.TOMATO);
         GUI.Label (new Rect (10 + ((Screen.width / gameManager.NumPlayers) * viewPort),
-            Screen.height - 160, 155, 140), inventoryMsg, HUDStyle);
+            Screen.height - 240, 200, 220), inventoryMsg, HUDStyle);
     }
 
     /*

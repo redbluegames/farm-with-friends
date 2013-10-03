@@ -90,7 +90,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106709}
+  m_LocalRotation: {x: .707106888, y: 0, z: 0, w: .707106769}
   m_LocalPosition: {x: -.0500000007, y: .550000012, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -276,9 +276,10 @@ MonoBehaviour:
   itemGrownID: 2
   nightsPerGrowth: 2
   maxLife: 20
+  isRepickable: 0
   seedMat: {fileID: 2100000, guid: 9d36863ace7a64be3b1f61f4db9061e1, type: 2}
   sproutMat: {fileID: 2100000, guid: c326cf10169bf476f858f75d17eb6609, type: 2}
-  adultMat: {fileID: 2100000, guid: b5d53875c84a6421f810ff16db23fe28, type: 2}
+  ripeMat: {fileID: 2100000, guid: b5d53875c84a6421f810ff16db23fe28, type: 2}
   witheredMat: {fileID: 2100000, guid: bfbc0e166b0b6408190f5a4f062951a2, type: 2}
 --- !u!1001 &100100000
 Prefab:
