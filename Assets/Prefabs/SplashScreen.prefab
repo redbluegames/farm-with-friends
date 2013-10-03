@@ -1301,7 +1301,7 @@ GUIText:
   m_GameObject: {fileID: 100014}
   m_Enabled: 1
   serializedVersion: 3
-  m_Text: Welcome to Farm Town!!
+  m_Text: Welcome to Frontier Ranchers!!
   m_Anchor: 1
   m_Alignment: 1
   m_PixelOffset: {x: 0, y: 0}
