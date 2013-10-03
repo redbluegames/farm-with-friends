@@ -61,6 +61,8 @@ public class Shop : MonoBehaviour
         shopInventory.AddItem (ItemIDs.RADISH_SEEDS, INFINITE);
         shopInventory.AddItem (ItemIDs.ONION_SEEDS, INFINITE);
         shopInventory.AddItem (ItemIDs.POTATO_SEEDS, INFINITE);
+        shopInventory.AddItem (ItemIDs.TOMATO_SEEDS, INFINITE);
+        shopInventory.AddItem (ItemIDs.BEAN_SEEDS, INFINITE);
         scrollPos = Vector2.zero;
         ResetItemData ();
     }
