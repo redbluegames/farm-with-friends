@@ -115,6 +115,14 @@ public class Shop : MonoBehaviour
                         AudioSource.PlayClipAtPoint (errorSound, transform.position);
                     }
                 }
+                int bulkBuyAmount = 10;
+                if (CanBuy (selectedItem, bulkBuyAmount)) {
+                    if (GUI.Button (new Rect (shopWidth - (2 * btnWidth) - (2 * PADDING), innerBoxH / 2 + LABEL_H, btnWidth, BTN_H),
+                        "Buy 10 (Y/k)") || weaponPressed) {
+                        BuyItem (selectedItem, bulkBuyAmount);
+                        weaponPressed = false;
+                    }
+                }
             }
         }
         if (state == ShopState.SELLING) {

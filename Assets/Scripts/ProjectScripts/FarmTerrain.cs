@@ -5,7 +5,7 @@ public class FarmTerrain : MonoBehaviour
 {
     public GameObject groundTilePrefab;
     public int grassPercent = 75;
-    public int wildflowerSpawnPercent = 0.5f;
+    public float wildflowerSpawnPercent = 0.5f;
     public float wildflowerNightlySpawnPercent = 0.3f;
 
     void Start ()
