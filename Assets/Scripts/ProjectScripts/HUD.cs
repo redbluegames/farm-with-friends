@@ -12,8 +12,9 @@ public class HUD : MonoBehaviour
     string radishSeedMsg;
     GameManager gameManager;
     WorldTime gametime;
-
     public GUIStyle HUDStyle;
+    int finalScoreP0;
+    int finalScoreP1;
 
     void Awake ()
     {
@@ -31,11 +32,54 @@ public class HUD : MonoBehaviour
 
     private void DrawPlayerHUD ()
     {
-        GUI.BeginGroup (new Rect (10, 10, 120, 100));
-        GUI.Label (new Rect (0, 0, 120, 100), "Day: " + gametime.GetDay ());
-        GUI.Label (new Rect (0, 15, 120, 100), "Hour: " + gametime.GetHour ());
-        GUI.Label (new Rect (0, 30, 120, 100), "Minute: " + gametime.GetMinute ());
+        GUI.BeginGroup (new Rect (10, 10, 340, 150));
+        GUIStyle countdownStyle = new GUIStyle (HUDStyle);
+        countdownStyle.fontSize = 30;
+        countdownStyle.fontStyle = FontStyle.Bold;
+        countdownStyle.normal.textColor = Color.white;
+        // TODO: MAXDAYS should be on GameManager or somewhere else. But it's ok here for proto.
+        int MAXDAYS = 30;
+        int day = (int) (MAXDAYS - (gametime.GetDay () - 1));
+        string label = "Days Left: ";
+        if (day > 1) {
+            label += day.ToString();
+        } else if (day == 1){
+            label = "Last Day!";
+        }
+        else if (day == 0)
+        {
+            if(player0 != null)
+            {
+                finalScoreP0 = inventory0.money;
+            }
+            if(player1 != null)
+            {
+                finalScoreP1 = inventory1.money;
+            }
+            label = GetFinalScoreLabel();
+        }
+        else
+        {
+            label = GetFinalScoreLabel();
+        }
+
+        GUI.Label (new Rect (0, 0, 100, 100), label, countdownStyle);
+
+        GUI.Label (new Rect (0, 50, 120, 100), "Day: " + gametime.GetDay ());
+        GUI.Label (new Rect (0, 65, 120, 100), "Hour: " + gametime.GetHour ());
+        GUI.Label (new Rect (0, 80, 120, 100), "Minute: " + gametime.GetMinute ());
         GUI.EndGroup ();
+
+    }
+
+    private string GetFinalScoreLabel()
+    {
+        string label = "P1 Score: " + finalScoreP0;
+        if(player1 != null)
+        {
+            label += "\nP2 Score: " + finalScoreP1;
+        }
+        return label;
     }
 
     private void DrawInventory ()
@@ -99,7 +143,8 @@ public class HUD : MonoBehaviour
      * Show the inventory of the provided player and at the desired screen
      * position, depending on the number of players.
      */
-    void DisplayInventoryItems (Inventory inventory, int viewPort) {
+    void DisplayInventoryItems (Inventory inventory, int viewPort)
+    {
         string inventoryMsg = "Gold: " + inventory.money + "\n\n";
         inventoryMsg += "Bean Seeds: " + inventory.GetItemCount (ItemIDs.BEAN_SEEDS) + "\n";
         inventoryMsg += "Radish Seeds: " + inventory.GetItemCount (ItemIDs.RADISH_SEEDS) + "\n";
